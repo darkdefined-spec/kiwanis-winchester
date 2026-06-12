@@ -85,7 +85,7 @@
 {% include "nav.njk" %}
 
 <main id="main">
-{% block content %}{% endblock %}
+{{ content | safe }}
 </main>
 
 {% include "footer.njk" %}
