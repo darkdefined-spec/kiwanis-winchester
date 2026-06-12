@@ -81,7 +81,7 @@
     launcher.className = 'kw-chat-launcher';
     launcher.type = 'button';
     launcher.setAttribute('aria-label', 'Open Kiwanis assistant');
-    launcher.innerHTML = '<span class="kw-launcher-emblem" aria-hidden="true"><img src="assets/uploads/2023/03/kiwanis-seal.png" alt="" width="38" height="38"></span><strong>Ask Kiwanis</strong>';
+    launcher.innerHTML = '<span class="kw-launcher-emblem" aria-hidden="true"><img src="/assets/uploads/2023/03/kiwanis-seal.png" alt="" width="38" height="38"></span><strong>Ask Kiwanis</strong>';
 
     var panel = document.createElement('section');
     panel.id = 'kw-chat-panel';
