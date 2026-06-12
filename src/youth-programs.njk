@@ -1,0 +1,172 @@
+---
+layout: base.njk
+title: "Youth Programs"
+description: "Key Clubs, Builder's Clubs, Circle K, and other youth leadership programs sponsored by the Kiwanis Club of Winchester, Virginia."
+canonical: /youth-programs/
+navActive: youth-programs
+---
+
+  <div class="page-hero" style="--page-hero-image:url('/assets/uploads/2026/06/YouthProgramsHero.png'); --page-hero-position:center 35%;">
+    <div class="kw-container">
+      <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="breadcrumb-sep" aria-hidden="true">/</span>
+        <a href="/what-we-do/">What We Do</a>
+        <span class="breadcrumb-sep" aria-hidden="true">/</span>
+        <span style="color:rgba(255,255,255,0.9);">Youth Programs</span>
+      </nav>
+      <h1>Kiwanis Youth Programs</h1>
+      <p class="hero-sub">From middle school to college, Winchester Kiwanis invests in young leaders — giving students the skills, community, and purpose to make a real difference.</p>
+    </div>
+  </div>
+
+  <section style="padding:80px 0 0;" aria-labelledby="youth-intro-heading">
+    <div class="kw-container">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
+        <div class="reveal">
+          <span class="tag tag-blue" style="margin-bottom:16px; display:inline-flex;">Youth Leadership</span>
+          <h2 id="youth-intro-heading" class="section-title">Building the Next Generation of Servant Leaders</h2>
+          <div class="divider-gold"></div>
+          <p style="font-size:1.05rem; color:var(--kw-muted); line-height:1.75; margin-bottom:18px;">The Kiwanis family of youth clubs gives young people at every stage of their education the tools, experiences, and community to become confident leaders committed to service. Winchester's current public focus includes Key Club, Builder's Club, Circle K, and scholarships.</p>
+          <p style="color:var(--kw-muted); line-height:1.75;">Whether they're packing food bags alongside adult Kiwanis members, leading their own school projects, or organizing service events that impact thousands — Winchester's young people are making a real difference right now.</p>
+        </div>
+        <div class="reveal reveal-d2" style="border-radius:20px; overflow:hidden; aspect-ratio:4/3;">
+          <img src="/assets/uploads/2026/06/KidsActivity.png" alt="Young students engaged in a Kiwanis-sponsored leadership activity" class="img-cover" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key Clubs -->
+  <section class="section" id="key-clubs" aria-labelledby="key-clubs-heading">
+    <div class="kw-container">
+      <div class="reveal" style="margin-bottom:44px;">
+        <div style="display:flex; align-items:center; gap:16px; margin-bottom:20px;">
+          <div style="width:52px; height:52px; background:var(--kw-blue); border-radius:14px; display:flex; align-items:center; justify-content:center; color:white; flex-shrink:0;"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
+          <div>
+            <span class="tag tag-blue">High School</span>
+            <h2 id="key-clubs-heading" style="font-size:clamp(1.5rem,3vw,2.2rem); margin-top:6px;">Key Club — High School Leadership</h2>
+          </div>
+        </div>
+        <p style="color:var(--kw-muted); line-height:1.75; max-width:720px; margin-bottom:28px;">Key Club is the largest and oldest service program for high school students, and it's run entirely by the students themselves. Members lead community service initiatives, hold elected club positions, and participate in leadership training at local, district, and international levels. The club's three core values are <strong>Leadership, Character Building, and Inclusiveness.</strong></p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {% for school in ["Handley High School", "James Wood High School", "Millbrook High School"] %}
+        <div class="reveal{% if not loop.first %} reveal-d{{ loop.index0 }}{% endif %} program-card">
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
+            <div class="prog-icon" style="margin-bottom:0; width:44px; height:44px; border-radius:10px;"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+            <h3 style="font-size:1.1rem;">{{ school }}</h3>
+          </div>
+          <p style="font-size:0.9rem; color:var(--kw-muted); line-height:1.65;">Key Club chapter serving the Winchester-area community through student-led service projects, park cleanups, donation drives, and more.</p>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- Builder's Clubs -->
+  <section class="section bg-light" id="builders-clubs" aria-labelledby="builders-heading">
+    <div class="kw-container">
+      <div class="reveal" style="margin-bottom:44px;">
+        <div style="display:flex; align-items:center; gap:16px; margin-bottom:20px;">
+          <div style="width:52px; height:52px; background:var(--kw-navy); border-radius:14px; display:flex; align-items:center; justify-content:center; color:var(--kw-gold); flex-shrink:0;"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <div>
+            <span class="tag tag-navy" style="background:rgba(0,26,92,0.1); color:var(--kw-navy);">Middle School</span>
+            <h2 id="builders-heading" style="font-size:clamp(1.5rem,3vw,2.2rem); margin-top:6px;">Builder's Club — Middle School Service</h2>
+          </div>
+        </div>
+        <p style="color:var(--kw-muted); line-height:1.75; max-width:720px; margin-bottom:28px;">Builder's Club gives middle school students a chance to get involved in community service before high school. Student members choose their own service projects and causes, building a sense of personal responsibility, teamwork, and community awareness. Our Builder's Clubs regularly participate in Pancake Day and partner with area organizations on projects that matter to them.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {% for school in ["Frederick County Middle School", "James Wood Middle School", "Daniel Morgan Middle School"] %}
+        <div class="reveal{% if not loop.first %} reveal-d{{ loop.index0 }}{% endif %}" style="background:white; border-radius:var(--radius-card); padding:28px; border:1px solid var(--kw-border);">
+          <h3 style="font-size:1.05rem; margin-bottom:10px; color:var(--kw-navy);">{{ school }}</h3>
+          <p style="font-size:0.875rem; color:var(--kw-muted); line-height:1.65;">Builder's Club members select and lead community service projects that reflect what matters to their peers and their neighborhood.</p>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- Circle K -->
+  <section class="section" id="circle-k" aria-labelledby="circlek-heading">
+    <div class="kw-container">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div class="reveal">
+          <span class="tag tag-blue" style="margin-bottom:16px; display:inline-flex;">College Level</span>
+          <h2 id="circlek-heading" class="section-title">Circle K International</h2>
+          <div class="divider-gold"></div>
+          <p style="color:var(--kw-muted); line-height:1.75; margin-bottom:18px;">Circle K is the collegiate level of the Kiwanis family — bringing the same values of service and leadership to university campuses. Circle K members enjoy social activities, service opportunities, and the chance to build friendships that last long after graduation.</p>
+          <p style="color:var(--kw-muted); line-height:1.75;">For students who grew up in Key Club or Builder's Club, Circle K is a natural continuation — a chance to keep serving and keep growing at the college level.</p>
+        </div>
+        <div class="reveal reveal-d2" style="background:var(--kw-blue); border-radius:20px; padding:40px; color:white;">
+          <h3 style="color:white; margin-bottom:20px; font-size:1.2rem;">Circle K Core Values</h3>
+          <div style="display:flex; flex-direction:column; gap:16px;">
+            {% for value in [
+              {name: "Service", desc: "Giving back to the campus and broader community through meaningful, student-driven projects"},
+              {name: "Leadership", desc: "Developing the skills and confidence to lead organizations and inspire others at every level"},
+              {name: "Fellowship", desc: "Building deep, lasting friendships through shared values, activities, and commitment to service"}
+            ] %}
+            <div style="display:flex; gap:14px; align-items:flex-start;">
+              <div style="width:36px; height:36px; background:rgba(255,209,0,0.2); border-radius:9px; display:flex; align-items:center; justify-content:center; flex-shrink:0; color:var(--kw-gold);"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div>
+                <p style="font-family:var(--font-display); font-weight:700; color:white; margin-bottom:4px;">{{ value.name }}</p>
+                <p style="font-size:0.875rem; color:rgba(255,255,255,0.7); line-height:1.6;">{{ value.desc }}</p>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Full Family Chart -->
+  <section class="section bg-light" aria-labelledby="family-heading">
+    <div class="kw-container">
+      <div class="text-center reveal" style="margin-bottom:48px;">
+        <span class="tag tag-blue" style="margin:0 auto 12px; display:inline-flex;">The Full Picture</span>
+        <h2 id="family-heading" class="section-title">The Kiwanis Family of Youth Clubs</h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 reveal">
+        <div style="background:white; border-radius:14px; padding:24px; text-align:center; border:1px solid var(--kw-border);">
+          <div style="font-family:var(--font-display); font-weight:800; font-size:1rem; color:var(--kw-blue); margin-bottom:8px;">K-Kids</div>
+          <div style="font-size:0.75rem; color:var(--kw-blue); background:var(--kw-blue-light); border-radius:100px; padding:3px 10px; display:inline-block; margin-bottom:10px; font-weight:600;">Elementary</div>
+          <p style="font-size:0.825rem; color:var(--kw-muted); line-height:1.5;">First service experiences for the youngest Kiwanis family members</p>
+        </div>
+        <div style="background:var(--kw-blue); border-radius:14px; padding:24px; text-align:center;">
+          <div style="font-family:var(--font-display); font-weight:800; font-size:1rem; color:var(--kw-gold); margin-bottom:8px;">Builder's Club</div>
+          <div style="font-size:0.75rem; color:var(--kw-navy); background:var(--kw-gold); border-radius:100px; padding:3px 10px; display:inline-block; margin-bottom:10px; font-weight:700;">Middle School</div>
+          <p style="font-size:0.825rem; color:rgba(255,255,255,0.78); line-height:1.5;">Student-chosen projects build character and community awareness</p>
+        </div>
+        <div style="background:white; border-radius:14px; padding:24px; text-align:center; border:2px solid var(--kw-blue);">
+          <div style="font-family:var(--font-display); font-weight:800; font-size:1rem; color:var(--kw-blue); margin-bottom:8px;">Key Club</div>
+          <div style="font-size:0.75rem; color:var(--kw-blue); background:var(--kw-blue-light); border-radius:100px; padding:3px 10px; display:inline-block; margin-bottom:10px; font-weight:600;">High School</div>
+          <p style="font-size:0.825rem; color:var(--kw-muted); line-height:1.5;">Student-run leadership and service — eligible for Kiwanis scholarships</p>
+        </div>
+        <div style="background:white; border-radius:14px; padding:24px; text-align:center; border:1px solid var(--kw-border);">
+          <div style="font-family:var(--font-display); font-weight:800; font-size:1rem; color:var(--kw-blue); margin-bottom:8px;">Circle K</div>
+          <div style="font-size:0.75rem; color:var(--kw-blue); background:var(--kw-blue-light); border-radius:100px; padding:3px 10px; display:inline-block; margin-bottom:10px; font-weight:600;">College</div>
+          <p style="font-size:0.825rem; color:var(--kw-muted); line-height:1.5;">Service, leadership, and fellowship at the university level</p>
+        </div>
+        <div style="background:white; border-radius:14px; padding:24px; text-align:center; border:1px solid var(--kw-border);">
+          <div style="font-family:var(--font-display); font-weight:800; font-size:1rem; color:var(--kw-blue); margin-bottom:8px;">Aktion Club</div>
+          <div style="font-size:0.75rem; color:var(--kw-blue); background:var(--kw-blue-light); border-radius:100px; padding:3px 10px; display:inline-block; margin-bottom:10px; font-weight:600;">Adults</div>
+          <p style="font-size:0.825rem; color:var(--kw-muted); line-height:1.5;">Kiwanis-family service leadership for adults living with disabilities</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--kw-blue); padding:100px 0;" aria-labelledby="youth-cta-heading">
+    <div class="kw-container text-center">
+      <div class="reveal" style="max-width:540px; margin:0 auto;">
+        <h2 id="youth-cta-heading" style="color:white; font-size:clamp(1.8rem,3.5vw,2.6rem); margin-bottom:18px;">Interested in Our Youth Programs?</h2>
+        <p style="color:rgba(255,255,255,0.78); font-size:1.05rem; line-height:1.7; margin-bottom:36px;">If you're a student, parent, or educator interested in starting or joining a Kiwanis youth club in Winchester, reach out to us — we'd love to help.</p>
+        <div style="display:flex; gap:14px; flex-wrap:wrap; justify-content:center;">
+          <a href="/contact/" class="btn btn-gold">Contact Us</a>
+          <a href="/join/" class="btn btn-outline-white">Join Kiwanis</a>
+        </div>
+      </div>
+    </div>
+  </section>

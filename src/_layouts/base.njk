@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if titleFull %}{{ title }}{% else %}{{ title }} — {{ site.name }}{% endif %}</title>
+  <meta name="description" content="{{ description }}">
+  <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1">
+  <link rel="canonical" href="{{ site.url }}{{ canonical }}">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicons/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicons/apple-touch-icon.png">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="{{ title }} — {{ site.name }}">
+  <meta property="og:description" content="{{ description }}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ site.url }}{{ canonical }}">
+  <meta property="og:image" content="{{ ogImage if ogImage else site.logo }}">
+  <meta property="og:site_name" content="{{ site.name }}">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ title }} — {{ site.name }}">
+  <meta name="twitter:description" content="{{ description }}">
+  <meta name="twitter:image" content="{{ ogImage if ogImage else site.logo }}">
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "{{ site.url }}/#organization",
+        "name": "{{ site.name }}",
+        "url": "{{ site.url }}/",
+        "logo": "{{ site.logo }}",
+        "email": "{{ site.email }}",
+        "address": {
+          "@type": "PostalAddress",
+          "postOfficeBoxNumber": "{{ site.address.po_box }}",
+          "addressLocality": "{{ site.address.city }}",
+          "addressRegion": "{{ site.address.state }}",
+          "postalCode": "{{ site.address.zip }}",
+          "addressCountry": "US"
+        },
+        "sameAs": ["{{ site.facebook }}"]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "{{ site.url }}/#website",
+        "name": "{{ site.name }}",
+        "url": "{{ site.url }}/",
+        "publisher": { "@id": "{{ site.url }}/#organization" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "{{ site.url }}{{ canonical }}#webpage",
+        "url": "{{ site.url }}{{ canonical }}",
+        "name": "{{ title }} — {{ site.name }}",
+        "description": "{{ description }}",
+        "isPartOf": { "@id": "{{ site.url }}/#website" },
+        "about": { "@id": "{{ site.url }}/#organization" }
+      }{% if extraSchema %},
+      {{ extraSchema | safe }}{% endif %}
+    ]
+  }
+  </script>
+
+  <!-- Fonts & Styles -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/css/kiwanis.css">
+
+  {% block headExtra %}{% endblock %}
+</head>
+<body>
+
+<a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[999] btn btn-primary">Skip to main content</a>
+
+{% include "nav.njk" %}
+
+<main id="main">
+{% block content %}{% endblock %}
+</main>
+
+{% include "footer.njk" %}
+
+{% include "scripts.njk" %}
+
+{% block pageScripts %}{% endblock %}
+
+<script src="/assets/js/kiwanis-assistant.js" defer></script>
+</body>
+</html>

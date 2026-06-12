@@ -1,0 +1,29 @@
+# Build output
+_site/
+.cloudflare-pages/
+
+# Dependencies
+node_modules/
+
+# Wrangler
+.wrangler/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Environment
+.env
+.env.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# Editor
+.vscode/
+.idea/
+
+# QA screenshots (large, not needed in repo)
+qa-screens/

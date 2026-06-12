@@ -1,0 +1,27 @@
+{
+  "name": "Kiwanis Club of Winchester, Virginia",
+  "shortName": "Kiwanis Club of Winchester",
+  "tagline": "Helping the Children",
+  "url": "https://winvakiw.org",
+  "email": "sec@winvakiw.org",
+  "facebook": "https://www.facebook.com/winkiwanis",
+  "facebookHandle": "@winkiwanis",
+  "address": {
+    "po_box": "P.O. Box 2591",
+    "city": "Winchester",
+    "state": "VA",
+    "zip": "22604"
+  },
+  "meetings": {
+    "day": "Wednesdays",
+    "time": "noon",
+    "location": "Winchester Moose Club",
+    "street": "215 E. Cork St."
+  },
+  "logo": "https://winvakiw.org/assets/uploads/2023/03/logo-1C-e1677883446960.png",
+  "seal": "assets/uploads/2023/03/kiwanis-seal.png",
+  "logoWhite": "assets/uploads/2023/03/logo-1C-e1677883446960.png",
+  "defaultImage": "https://winvakiw.org/assets/uploads/2023/03/logo-1C-e1677883446960.png",
+  "founded": "1922",
+  "description": "The Kiwanis Club of Winchester, VA — a nonprofit service club chartered in 1922, dedicated to improving the lives of children in our community."
+}

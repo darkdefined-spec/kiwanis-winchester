@@ -1,0 +1,69 @@
+<!-- ═══ NAVBAR ═══ -->
+<nav id="navbar" aria-label="Main navigation">
+  <div class="kw-container">
+    <a href="/" class="nav-logo-link" aria-label="Kiwanis Club of Winchester — Home">
+      <div class="nav-logo-lockup">
+        <img src="/assets/uploads/2023/03/kiwanis-seal.png" alt="" class="nav-seal" aria-hidden="true">
+        <div class="nav-logo-text">
+          <span class="nav-wordmark">Kiwanis</span>
+          <span class="nav-clubname">Club of Winchester</span>
+        </div>
+      </div>
+    </a>
+    <div class="nav-links" role="menubar">
+      <a href="/about/" class="nav-link{% if navActive == 'about' %} active{% endif %}" role="menuitem">About</a>
+      <div class="nav-dropdown" role="none">
+        <button class="nav-dropdown-btn{% if navActive == 'what-we-do' or navActive == 'youth-programs' %} active{% endif %}" aria-haspopup="true" aria-expanded="false" role="menuitem">
+          What We Do
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="dropdown-panel" role="menu">
+          <a href="/what-we-do/" role="menuitem">Our Programs</a>
+          <a href="/youth-programs/" role="menuitem">Youth Programs</a>
+        </div>
+      </div>
+      <a href="/pancake-day/" class="nav-link{% if navActive == 'pancake-day' %} active{% endif %}" role="menuitem">Pancake Day</a>
+      <a href="/events/" class="nav-link{% if navActive == 'events' %} active{% endif %}" role="menuitem">Events &amp; News</a>
+      <a href="/resources/" class="nav-link{% if navActive == 'resources' %} active{% endif %}" role="menuitem">Resources</a>
+      <a href="/contact/" class="nav-link{% if navActive == 'contact' %} active{% endif %}" role="menuitem">Contact</a>
+    </div>
+    <div class="nav-right">
+      <a href="/donate/" class="btn btn-primary hide-mobile" style="margin-right:6px;">Donate</a>
+      <a href="/join/" class="btn btn-gold hide-mobile">Join Us</a>
+      <button class="mobile-toggle hide-desktop" id="mobile-toggle" aria-label="Open navigation menu" aria-expanded="false">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div id="mobile-overlay" aria-hidden="true"></div>
+<div id="mobile-menu" role="dialog" aria-label="Navigation menu" aria-modal="true">
+  <div class="mobile-menu-header">
+    <div class="nav-logo-lockup">
+      <img src="/assets/uploads/2023/03/kiwanis-seal.png" alt="" style="height:38px;width:auto;" aria-hidden="true">
+      <div class="nav-logo-text">
+        <span class="nav-wordmark">Kiwanis</span>
+        <span class="nav-clubname">Club of Winchester</span>
+      </div>
+    </div>
+    <button class="mobile-menu-close" id="mobile-close" aria-label="Close navigation menu">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <nav>
+    <a href="/about/" class="mobile-nav-link{% if navActive == 'about' %}" style="color:var(--kw-blue);{% endif %}">About</a>
+    <span class="mobile-nav-group-label">What We Do</span>
+    <a href="/what-we-do/" class="mobile-nav-sub">Our Programs</a>
+    <a href="/youth-programs/" class="mobile-nav-sub">Youth Programs</a>
+    <div class="mobile-nav-divider"></div>
+    <a href="/pancake-day/" class="mobile-nav-link{% if navActive == 'pancake-day' %}" style="color:var(--kw-blue);{% endif %}">Pancake Day</a>
+    <a href="/events/" class="mobile-nav-link{% if navActive == 'events' %}" style="color:var(--kw-blue);{% endif %}">Events &amp; News</a>
+    <a href="/resources/" class="mobile-nav-link{% if navActive == 'resources' %}" style="color:var(--kw-blue);{% endif %}">Resources</a>
+    <a href="/contact/" class="mobile-nav-link{% if navActive == 'contact' %}" style="color:var(--kw-blue);{% endif %}">Contact</a>
+    <div style="margin-top:24px; display:flex; flex-direction:column; gap:10px;">
+      <a href="/donate/" class="btn btn-primary" style="width:100%;">Donate to Kiwanis</a>
+      <a href="/join/" class="btn btn-outline-blue" style="width:100%;">Join Our Club</a>
+    </div>
+  </nav>
+</div>

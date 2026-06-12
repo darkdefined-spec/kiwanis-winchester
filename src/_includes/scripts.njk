@@ -1,0 +1,60 @@
+<!-- ═══ SCRIPTS ═══ -->
+<script>
+  // Navbar scroll
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 20);
+  }, { passive: true });
+
+  // Mobile menu
+  const toggle  = document.getElementById('mobile-toggle');
+  const close   = document.getElementById('mobile-close');
+  const menu    = document.getElementById('mobile-menu');
+  const overlay = document.getElementById('mobile-overlay');
+
+  function openMenu() {
+    menu.classList.add('open');
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    toggle.setAttribute('aria-expanded', 'true');
+  }
+  function closeMenu() {
+    menu.classList.remove('open');
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+    toggle.setAttribute('aria-expanded', 'false');
+  }
+
+  toggle?.addEventListener('click', openMenu);
+  close?.addEventListener('click', closeMenu);
+  overlay?.addEventListener('click', closeMenu);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
+
+  // Dropdowns
+  document.querySelectorAll('.nav-dropdown-btn').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var panel = this.nextElementSibling;
+      var isOpen = panel.classList.contains('open');
+      document.querySelectorAll('.dropdown-panel').forEach(function(p) { p.classList.remove('open'); });
+      document.querySelectorAll('.nav-dropdown-btn').forEach(function(b) { b.setAttribute('aria-expanded','false'); });
+      if (!isOpen) { panel.classList.add('open'); this.setAttribute('aria-expanded','true'); }
+    });
+  });
+  document.addEventListener('click', function() {
+    document.querySelectorAll('.dropdown-panel').forEach(function(p) { p.classList.remove('open'); });
+    document.querySelectorAll('.nav-dropdown-btn').forEach(function(b) { b.setAttribute('aria-expanded','false'); });
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.dropdown-panel').forEach(function(p) { p.classList.remove('open'); });
+      document.querySelectorAll('.nav-dropdown-btn').forEach(function(b) { b.setAttribute('aria-expanded','false'); });
+    }
+  });
+
+  // Scroll reveal
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); } });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+</script>

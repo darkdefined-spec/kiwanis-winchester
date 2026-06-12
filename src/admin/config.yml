@@ -1,0 +1,142 @@
+# ═══════════════════════════════════════════════════
+#  Sveltia CMS — Kiwanis Club of Winchester
+#  Free, Git-based CMS powered by GitHub
+# ═══════════════════════════════════════════════════
+
+backend:
+  name: github
+  repo: YOUR_GITHUB_USERNAME/YOUR_REPO_NAME   # ← Update this after pushing to GitHub
+  branch: main
+  base_url: https://YOUR_AUTH_WORKER.workers.dev  # ← Update after deploying sveltia-cms-auth
+
+# Where to store media uploads
+media_folder: src/assets/uploads
+public_folder: /assets/uploads
+
+# Show live preview in the editor
+show_preview_links: true
+
+# ─── SITE SETTINGS ────────────────────────────────
+collections:
+
+  # ── Global Site Settings ──────────────────────────
+  - name: settings
+    label: "⚙️ Site Settings"
+    delete: false
+    editor:
+      preview: false
+    files:
+      - name: general
+        label: "General Settings"
+        file: src/_data/site.json
+        fields:
+          - { label: "Club Name", name: name, widget: string }
+          - { label: "Short Name", name: shortName, widget: string }
+          - { label: "Tagline", name: tagline, widget: string }
+          - { label: "Website URL", name: url, widget: string }
+          - { label: "Email Address", name: email, widget: string }
+          - { label: "Facebook URL", name: facebook, widget: string }
+          - { label: "Facebook Handle", name: facebookHandle, widget: string, hint: "e.g. @winkiwanis" }
+          - label: "Mailing Address"
+            name: address
+            widget: object
+            fields:
+              - { label: "P.O. Box", name: po_box, widget: string }
+              - { label: "City", name: city, widget: string }
+              - { label: "State", name: state, widget: string }
+              - { label: "ZIP Code", name: zip, widget: string }
+          - label: "Weekly Meetings"
+            name: meetings
+            widget: object
+            fields:
+              - { label: "Day", name: day, widget: string, hint: "e.g. Wednesdays" }
+              - { label: "Time", name: time, widget: string, hint: "e.g. noon" }
+              - { label: "Location Name", name: location, widget: string }
+              - { label: "Street Address", name: street, widget: string }
+          - { label: "Description", name: description, widget: text }
+
+  # ── Events ────────────────────────────────────────
+  - name: events
+    label: "📸 Events"
+    label_singular: "Event"
+    folder: src/content/events
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}} — {{date}}"
+    sortable_fields: [date, title]
+    view_filters:
+      - label: "Gold Header"
+        field: headerColor
+        pattern: gold
+      - label: "Blue Header"
+        field: headerColor
+        pattern: blue
+    fields:
+      - { label: "Event Title", name: title, widget: string }
+      - { label: "Event Date", name: date, widget: datetime, format: "YYYY-MM-DD", date_format: "MMMM D, YYYY", time_format: false }
+      - { label: "Category", name: category, widget: string, hint: "e.g. Community Event, Service, Fundraiser" }
+      - { label: "Event Details Line", name: eventMeta, widget: string, hint: "e.g. August 14, 2024 · Jim Barnett Park · Winchester, VA" }
+      - label: "Card Header Color"
+        name: headerColor
+        widget: select
+        options:
+          - { label: "🔵 Blue", value: blue }
+          - { label: "🟡 Gold", value: gold }
+        default: blue
+      - { label: "Facebook Link (optional)", name: facebookUrl, widget: string, required: false, hint: "Link to the Facebook post or page" }
+      - label: "Photos"
+        name: photos
+        widget: list
+        required: false
+        summary: "{{fields.alt}}"
+        fields:
+          - { label: "Photo", name: src, widget: image }
+          - { label: "Alt Text (describe the photo)", name: alt, widget: string }
+          - { label: "Object Position (optional)", name: objectPosition, widget: string, required: false, hint: "e.g. top center, center 30%" }
+
+  # ── Newsletters ────────────────────────────────────
+  - name: newsletters
+    label: "📰 Newsletters"
+    label_singular: "Newsletter"
+    folder: src/content/newsletters
+    create: true
+    slug: "{{year}}-{{month}}"
+    summary: "{{title}} ({{date}})"
+    sortable_fields: [date, title]
+    fields:
+      - { label: "Newsletter Title", name: title, widget: string, hint: "e.g. January 2026" }
+      - { label: "Publication Date", name: date, widget: datetime, format: "YYYY-MM-DD", date_format: "MMMM YYYY", time_format: false }
+      - { label: "PDF File", name: pdfUrl, widget: file, media_folder: src/assets/uploads, public_folder: /assets/uploads, hint: "Upload the PDF newsletter file" }
+
+  # ── Pages (Editable Content Blocks) ───────────────
+  - name: pages
+    label: "📄 Pages"
+    delete: false
+    editor:
+      preview: false
+    files:
+
+      - name: home
+        label: "Home Page"
+        file: src/_data/home.json
+        fields:
+          - { label: "Hero Eyebrow Text", name: heroEyebrow, widget: string, default: "Serving Winchester since 1922" }
+          - { label: "Hero Headline Line 1", name: heroLine1, widget: string, default: "Changing" }
+          - { label: "Hero Headline Line 2", name: heroLine2, widget: string, default: "Winchester," }
+          - { label: "Hero Headline Line 3", name: heroLine3, widget: string, default: "One" }
+          - { label: "Hero Highlighted Word", name: heroHighlight, widget: string, default: "Child" }
+          - { label: "Hero Lede Text", name: heroLede, widget: text, default: "A volunteer service club helping children, families, and neighbors across the Shenandoah Valley." }
+          - { label: "Meetings Note", name: meetingsNote, widget: string, default: "Weekly meetings: Wednesdays at noon at the Winchester Moose Club." }
+
+      - name: pancake
+        label: "Pancake Day Page"
+        file: src/_data/pancake.json
+        fields:
+          - { label: "Event Status Banner", name: statusBanner, widget: string, hint: "e.g. The April 25, 2026 event has concluded..." }
+          - { label: "Ticket Price — Adults", name: priceAdults, widget: string, default: "$10" }
+          - { label: "Ticket Price — Children (4–12)", name: priceKids, widget: string, default: "$5" }
+          - { label: "Ticket Price — Children 3 & under", name: priceFree, widget: string, default: "FREE" }
+          - { label: "Event Date (display text)", name: eventDate, widget: string, default: "April 25, 2026" }
+          - { label: "Event Hours", name: eventHours, widget: string, default: "8:00 AM – 4:00 PM" }
+          - { label: "Event Location", name: eventLocation, widget: string, default: "Jim Barnett Park, Winchester, VA" }
+          - { label: "ChildSafe Percentage", name: childsafePercent, widget: string, default: "20%" }

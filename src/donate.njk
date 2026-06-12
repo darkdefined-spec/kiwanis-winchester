@@ -1,0 +1,206 @@
+---
+layout: base.njk
+title: "Donate"
+description: "Support the Kiwanis Club of Winchester's programs for children and families through a donation."
+canonical: /donate/
+navActive: donate
+---
+
+  <!-- ── HERO ── -->
+  <div class="page-hero" style="--page-hero-image:url('/assets/uploads/2026/06/WhatWeDoHero.png'); --page-hero-position:center 30%;">
+    <div class="kw-container">
+      <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span class="breadcrumb-sep" aria-hidden="true">/</span>
+        <span style="color:rgba(255,255,255,0.9);">Donate</span>
+      </nav>
+      <h1>Support Our Mission</h1>
+      <p class="hero-sub">Your gift funds youth leadership, community grants, scholarships, and programs that put Winchester's children first.</p>
+    </div>
+  </div>
+
+  <!-- ── DONATION FORM ── -->
+  <section class="section" aria-labelledby="donate-heading">
+    <div class="kw-container">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+
+        <!-- Left: Amount selector + CTA -->
+        <div class="reveal">
+          <span class="eyebrow-rule" style="margin-bottom:16px;">Make a Gift</span>
+          <h2 id="donate-heading" class="section-title" style="margin-top:0;">Every Dollar Stays Local</h2>
+          <div class="divider-gold"></div>
+          <p style="color:var(--kw-muted); line-height:1.75; margin-bottom:32px;">
+            The Kiwanis Club of Winchester is a 501(c)(3) nonprofit organization. All donations are tax-deductible to the extent allowed by law and go directly toward programs serving Winchester children, families, and community organizations.
+          </p>
+
+          <!-- Amount tiles -->
+          <div style="margin-bottom:28px;">
+            <p style="font-family:var(--font-display); font-weight:700; font-size:0.85rem; letter-spacing:0.06em; text-transform:uppercase; color:var(--kw-navy); margin-bottom:14px;">Choose an amount</p>
+            <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:14px;" id="amount-grid">
+              <button class="donate-amt active" data-amount="25" onclick="selectAmt(this, 25)">$25</button>
+              <button class="donate-amt" data-amount="50" onclick="selectAmt(this, 50)">$50</button>
+              <button class="donate-amt" data-amount="100" onclick="selectAmt(this, 100)">$100</button>
+              <button class="donate-amt" data-amount="250" onclick="selectAmt(this, 250)">$250</button>
+              <button class="donate-amt" data-amount="500" onclick="selectAmt(this, 500)">$500</button>
+              <button class="donate-amt" data-amount="custom" onclick="selectAmt(this, 'custom')">Custom</button>
+            </div>
+            <div id="custom-amount-wrap" style="display:none; margin-bottom:8px;">
+              <label for="custom-amount" class="sr-only">Custom donation amount in dollars</label>
+              <div style="position:relative;">
+                <span style="position:absolute; left:14px; top:50%; transform:translateY(-50%); font-weight:700; color:var(--kw-navy); font-size:1.1rem;">$</span>
+                <input id="custom-amount" type="number" min="1" placeholder="Enter amount"
+                       style="width:100%; border:2px solid var(--kw-blue); border-radius:10px; padding:14px 14px 14px 28px; font-size:1.1rem; font-family:var(--font-display); font-weight:600; color:var(--kw-navy); outline:none;">
+              </div>
+            </div>
+          </div>
+
+          <!-- Stripe CTA -->
+          <a id="donate-cta" href="#stripe-payment-link-placeholder" target="_blank" rel="noopener noreferrer"
+             class="btn btn-gold" style="width:100%; justify-content:center; font-size:1.05rem; padding:16px 24px;">
+            Donate $25 Securely via Stripe
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+
+          <div style="display:flex; align-items:center; gap:10px; margin-top:16px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--kw-muted); flex-shrink:0;" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <p style="font-size:0.8rem; color:var(--kw-muted); line-height:1.5;">Payments are processed securely by <strong>Stripe</strong>. Your card details are never stored by Kiwanis. For questions, email <a href="mailto:sec@winvakiw.org" style="color:var(--kw-blue);">sec@winvakiw.org</a>.</p>
+          </div>
+
+          <div style="margin-top:20px; background:var(--kw-blue-light); border-radius:12px; padding:16px 20px; display:flex; gap:12px; align-items:flex-start;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--kw-blue); flex-shrink:0; margin-top:2px;" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <p style="font-size:0.85rem; color:var(--kw-navy); line-height:1.6;">Prefer to donate by check? Make it payable to <strong>Kiwanis Club of Winchester</strong> and mail to P.O. Box 2591, Winchester, VA 22604.</p>
+          </div>
+        </div>
+
+        <!-- Right: Where it goes -->
+        <div class="reveal reveal-d1">
+          <h3 style="font-size:1.2rem; font-family:var(--font-display); font-weight:700; color:var(--kw-navy); margin-bottom:24px;">Where Your Gift Goes</h3>
+          <div style="display:flex; flex-direction:column; gap:16px;">
+
+            <div style="display:flex; gap:16px; align-items:flex-start; padding:20px; background:white; border-radius:14px; border:1px solid var(--kw-border);">
+              <div style="width:46px; height:46px; background:var(--kw-blue-light); border-radius:12px; flex-shrink:0; display:flex; align-items:center; justify-content:center; color:var(--kw-blue);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+              </div>
+              <div>
+                <p style="font-weight:700; color:var(--kw-navy); margin-bottom:4px;">Youth Scholarships</p>
+                <p style="font-size:0.875rem; color:var(--kw-muted); line-height:1.6;">Annual scholarships awarded to outstanding Key Club members who've demonstrated a commitment to service and leadership.</p>
+              </div>
+            </div>
+
+            <div style="display:flex; gap:16px; align-items:flex-start; padding:20px; background:white; border-radius:14px; border:1px solid var(--kw-border);">
+              <div style="width:46px; height:46px; background:var(--kw-blue-light); border-radius:12px; flex-shrink:0; display:flex; align-items:center; justify-content:center; color:var(--kw-blue);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+              <div>
+                <p style="font-weight:700; color:var(--kw-navy); margin-bottom:4px;">K Clubs &amp; Youth Programs</p>
+                <p style="font-size:0.875rem; color:var(--kw-muted); line-height:1.6;">Supporting Key Clubs at 3 high schools and Builder's Clubs at 3 middle schools across the Winchester area.</p>
+              </div>
+            </div>
+
+            <div style="display:flex; gap:16px; align-items:flex-start; padding:20px; background:white; border-radius:14px; border:1px solid var(--kw-border);">
+              <div style="width:46px; height:46px; background:var(--kw-blue-light); border-radius:12px; flex-shrink:0; display:flex; align-items:center; justify-content:center; color:var(--kw-blue);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              </div>
+              <div>
+                <p style="font-weight:700; color:var(--kw-navy); margin-bottom:4px;">Community Grants</p>
+                <p style="font-size:0.875rem; color:var(--kw-muted); line-height:1.6;">Financial support distributed to local organizations and causes serving children, families, and the Winchester community — including 20% of Pancake Day proceeds to ChildSafe Center.</p>
+              </div>
+            </div>
+
+            <div style="display:flex; gap:16px; align-items:flex-start; padding:20px; background:white; border-radius:14px; border:1px solid var(--kw-border);">
+              <div style="width:46px; height:46px; background:var(--kw-blue-light); border-radius:12px; flex-shrink:0; display:flex; align-items:center; justify-content:center; color:var(--kw-blue);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/><path d="M13 13l6 6"/></svg>
+              </div>
+              <div>
+                <p style="font-weight:700; color:var(--kw-navy); margin-bottom:4px;">Community Events &amp; Service</p>
+                <p style="font-size:0.875rem; color:var(--kw-muted); line-height:1.6;">Funding the club's annual events — Pancake Day, Kids Christmas Party, Salvation Army bell ringing, highway cleanup, and blood drives.</p>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:24px; background:var(--kw-navy); border-radius:14px; padding:24px; border-left:4px solid var(--kw-gold);">
+            <p style="color:rgba(255,255,255,0.6); font-size:0.75rem; font-family:var(--font-display); font-weight:700; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:8px;">Tax Deductibility</p>
+            <p style="color:rgba(255,255,255,0.82); font-size:0.875rem; line-height:1.65;">The Kiwanis Club of Winchester is a 501(c)(3) nonprofit organization. Donations are tax-deductible to the full extent permitted by law. A receipt will be provided for your records.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── MEMORIAL / OTHER WAYS ── -->
+  <section class="section section-tint" aria-labelledby="other-giving-heading">
+    <div class="kw-container">
+      <div class="text-center reveal" style="max-width:600px; margin:0 auto 56px;">
+        <span class="eyebrow-rule center" style="margin-bottom:16px;">Other Ways to Give</span>
+        <h2 id="other-giving-heading" class="section-title" style="margin-top:0;">More Ways to Support Kiwanis</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="accent-card reveal">
+          <div class="accent-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </div>
+          <h3>Memorial Gifts</h3>
+          <p>Honor a loved one with a memorial donation to the Kiwanis Club of Winchester. Contact our secretary to arrange a memorial gift and receive acknowledgment.</p>
+          <a href="mailto:sec@winvakiw.org?subject=Memorial%20Gift" style="display:inline-flex; align-items:center; gap:6px; color:var(--kw-blue); font-weight:600; font-size:0.9rem; margin-top:16px; text-decoration:none;">Email the Secretary <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+        <div class="accent-card reveal reveal-d1">
+          <div class="accent-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg>
+          </div>
+          <h3>Pancake Day Tickets</h3>
+          <p>Every Pancake Day ticket purchase directly supports local youth programs, scholarships, and grants. Come hungry — leave knowing you made a difference.</p>
+          <a href="/pancake-day/" style="display:inline-flex; align-items:center; gap:6px; color:var(--kw-blue); font-weight:600; font-size:0.9rem; margin-top:16px; text-decoration:none;">Pancake Day Details <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+        <div class="accent-card reveal reveal-d2">
+          <div class="accent-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <h3>Volunteer Your Time</h3>
+          <p>Can't give financially right now? Your time is equally valuable. Join us for a Wednesday meeting or reach out about upcoming service opportunities.</p>
+          <a href="/join/" style="display:inline-flex; align-items:center; gap:6px; color:var(--kw-blue); font-weight:600; font-size:0.9rem; margin-top:16px; text-decoration:none;">Get Involved <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% block pageScripts %}
+<style>
+  .donate-amt {
+    padding: 14px 10px;
+    border-radius: 10px;
+    border: 2px solid var(--kw-border);
+    background: white;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--kw-navy);
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s, color 0.15s;
+  }
+  .donate-amt:hover { border-color: var(--kw-blue); color: var(--kw-blue); }
+  .donate-amt.active { background: var(--kw-blue); border-color: var(--kw-blue); color: white; }
+</style>
+<script>
+  // Donation amount selector
+  var selectedAmt = 25;
+  function selectAmt(btn, val) {
+    document.querySelectorAll('.donate-amt').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    var wrap = document.getElementById('custom-amount-wrap');
+    var cta = document.getElementById('donate-cta');
+    if (val === 'custom') {
+      wrap.style.display = 'block';
+      cta.textContent = 'Donate a Custom Amount Securely';
+      document.getElementById('custom-amount').addEventListener('input', function() {
+        var v = parseFloat(this.value);
+        if (v > 0) cta.textContent = 'Donate $' + v.toFixed(0) + ' Securely via Stripe';
+      });
+    } else {
+      wrap.style.display = 'none';
+      selectedAmt = val;
+      cta.innerHTML = 'Donate $' + val + ' Securely via Stripe <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>';
+    }
+  }
+</script>
+{% endblock %}
