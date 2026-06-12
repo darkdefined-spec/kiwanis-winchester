@@ -1165,7 +1165,7 @@ p { line-height: 1.75; }
 }
 @media (max-width: 767px) {
   :root {
-    --home-stats-h: 156px;
+    --home-stats-h: 188px;
   }
   html { font-size: 16px; }
   .hero-section {
@@ -1222,18 +1222,16 @@ p { line-height: 1.75; }
     display: none;
   }
   .stats-bar {
-    padding: 14px 0;
+    padding: 18px 0;
   }
   .stats-bar .grid {
-    gap: 12px !important;
+    gap: 28px 12px !important;
   }
   .stat-num {
-    font-size: clamp(1.65rem, 8vw, 2.1rem);
+    font-size: clamp(1.75rem, 9vw, 2.35rem);
   }
   .stat-label {
-    font-size: 0.82rem;
-    line-height: 1.25;
-    margin-top: 2px;
+    font-size: 0.92rem;
   }
   .page-hero {
     min-height: 430px;
