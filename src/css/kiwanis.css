@@ -2,7 +2,7 @@
    KIWANIS CLUB OF WINCHESTER, VIRGINIA
    Design System — Custom Styles
    Brand: Kiwanis Blue #003DA5 / Gold #FFD100
-   Fonts: Kiwanis brand stacks with official fallbacks
+   Fonts: Barlow Condensed (headlines) + Plus Jakarta Sans (display) + Inter (body)
    ═══════════════════════════════════════════════════ */
 
 /* ── Brand Tokens ── */
@@ -21,10 +21,9 @@
   --kw-border:      rgba(0, 61, 165, 0.1);
   --kw-light:       #F5F7FA;
   --kw-white:       #FFFFFF;
-  --font-condensed: 'Knockout HTF69 FullLiteweight', 'Knockout HTF67 FullBantamwt', Haettenschweiler, 'Arial Narrow', Arial, sans-serif;
-  --font-display:   'Avenir Next LT Pro', 'Avenir Next', Avenir, Arial, sans-serif;
-  --font-body:      'Avenir Next LT Pro', 'Avenir Next', Avenir, Arial, sans-serif;
-  --font-editorial: 'Adobe Garamond Pro', 'Adobe Garamond', Garamond, Georgia, serif;
+  --font-condensed: 'Barlow Condensed', system-ui, sans-serif;
+  --font-display:   'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body:      'Inter', system-ui, sans-serif;
   --nav-h:          76px;
   --radius-card:    16px;
   --radius-btn:     10px;
@@ -124,11 +123,11 @@ p { line-height: 1.75; }
   line-height: 1;
 }
 .nav-clubname {
-  font-family: var(--font-display);
-  font-weight: 400;
+  font-family: var(--font-condensed);
+  font-weight: 700;
   font-size: 0.58rem;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   color: var(--kw-navy);
   line-height: 1.2;
 }
