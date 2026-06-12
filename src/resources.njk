@@ -6,15 +6,15 @@ canonical: /resources/
 navActive: resources
 ---
 
-  <div class="page-hero" style="--page-hero-image:url('/assets/uploads/2023/02/Bright-Futures.png'); --page-hero-position:center 42%;">
+  <div class="page-hero" style="--page-hero-image:url('{{ cms.resources.heroImage }}'); --page-hero-position:{{ cms.resources.heroPosition }};">
     <div class="kw-container">
       <nav class="breadcrumb-nav" aria-label="Breadcrumb">
         <a href="/">Home</a>
         <span class="breadcrumb-sep" aria-hidden="true">/</span>
         <span style="color:rgba(255,255,255,0.9);">Resources</span>
       </nav>
-      <h1>Resources &amp; Support</h1>
-      <p class="hero-sub">A practical hub for member information, community support requests, donations, club documents, and next steps for prospective members.</p>
+      <h1>{{ cms.resources.heroTitle }}</h1>
+      <p class="hero-sub">{{ cms.resources.heroSubtitle }}</p>
     </div>
   </div>
 
@@ -23,8 +23,8 @@ navActive: resources
     <div class="kw-container">
       <div class="text-center reveal" style="margin-bottom:46px;">
         <span class="eyebrow-rule center" style="margin-bottom:14px;">Start Here</span>
-        <h2 id="quick-links-heading" class="section-title" style="margin-top:0;">Find What You Need</h2>
-        <p class="section-body" style="margin:0 auto;">The club is still building out some online tools. Until those are approved and published, the links below make the right next step clear.</p>
+        <h2 id="quick-links-heading" class="section-title" style="margin-top:0;">{{ cms.resources.quickLinksTitle }}</h2>
+        <p class="section-body" style="margin:0 auto;">{{ cms.resources.quickLinksIntro }}</p>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
         <a href="#member-resources" class="accent-card reveal" style="text-decoration:none; display:block;">

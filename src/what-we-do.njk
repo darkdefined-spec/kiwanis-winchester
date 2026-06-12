@@ -6,23 +6,23 @@ canonical: /what-we-do/
 navActive: what-we-do
 ---
 
-  <div class="page-hero" style="--page-hero-image:url('/assets/uploads/2026/06/WhatWeDoHero.png'); --page-hero-position:center 40%;">
+  <div class="page-hero" style="--page-hero-image:url('{{ cms.whatWeDo.heroImage }}'); --page-hero-position:{{ cms.whatWeDo.heroPosition }};">
     <div class="kw-container">
       <nav class="breadcrumb-nav" aria-label="Breadcrumb">
         <a href="/">Home</a>
         <span class="breadcrumb-sep" aria-hidden="true">/</span>
         <span style="color:rgba(255,255,255,0.9);">What We Do</span>
       </nav>
-      <h1>What We Do</h1>
-      <p class="hero-sub">Real programs. Real impact. Serving children, families, and the Winchester community every week.</p>
+      <h1>{{ cms.whatWeDo.heroTitle }}</h1>
+      <p class="hero-sub">{{ cms.whatWeDo.heroSubtitle }}</p>
     </div>
   </div>
 
   <section class="section" style="padding-bottom:24px;" aria-labelledby="intro-heading">
     <div class="kw-container text-center reveal" style="max-width:720px; margin:0 auto;">
-      <span class="eyebrow-rule center" style="margin-bottom:16px;">Service in Action</span>
-      <h2 id="intro-heading" class="section-title" style="margin-top:0;">Real Work, Real Impact — Every Week</h2>
-      <p class="section-body" style="margin:0 auto;">Since 1922, the Kiwanis Club of Winchester has organized dozens of programs and thousands of service hours — each one making a direct, tangible difference for our neighbors.</p>
+      <span class="eyebrow-rule center" style="margin-bottom:16px;">{{ cms.whatWeDo.introEyebrow }}</span>
+      <h2 id="intro-heading" class="section-title" style="margin-top:0;">{{ cms.whatWeDo.introTitle }}</h2>
+      <p class="section-body" style="margin:0 auto;">{{ cms.whatWeDo.introBody }}</p>
     </div>
   </section>
 
@@ -31,7 +31,7 @@ navActive: what-we-do
       <article class="feature-row reverse reveal" id="k-clubs-program">
         <div class="feature-row__media">
           <div class="feature-media">
-            <img src="/assets/uploads/2026/06/KidsClub.png" alt="Students participating in a Kiwanis-sponsored youth leadership club" loading="lazy">
+            <img src="{{ cms.whatWeDo.youthProgramImage }}" alt="Students participating in a Kiwanis-sponsored youth leadership club" loading="lazy">
             <span class="corner-tag">6 school clubs</span>
           </div>
         </div>
@@ -53,7 +53,7 @@ navActive: what-we-do
     <div class="kw-container">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
         <div class="reveal" style="border-radius:22px; overflow:hidden; aspect-ratio:16/11; box-shadow:0 30px 70px rgba(0,0,0,0.4); border:1px solid rgba(255,255,255,0.12);">
-          <img src="/assets/uploads/2023/02/Pancake.png" alt="Kiwanis Pancake Day" class="img-cover">
+          <img src="{{ cms.whatWeDo.pancakeImage }}" alt="Kiwanis Pancake Day" class="img-cover">
         </div>
         <div class="reveal reveal-d1">
           <span class="eyebrow-rule on-dark" style="margin-bottom:18px;">Our Signature Event</span>

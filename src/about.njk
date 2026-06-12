@@ -7,15 +7,15 @@ navActive: about
 ---
 
   <!-- Page Hero -->
-  <div class="page-hero" style="--page-hero-image:url('/assets/uploads/2026/06/KiwanisHero.png'); --page-hero-position:center 42%;">
+  <div class="page-hero" style="--page-hero-image:url('{{ cms.about.heroImage }}'); --page-hero-position:{{ cms.about.heroPosition }};">
     <div class="kw-container">
       <nav class="breadcrumb-nav" aria-label="Breadcrumb">
         <a href="/">Home</a>
         <span class="breadcrumb-sep" aria-hidden="true">/</span>
         <span style="color:rgba(255,255,255,0.9);">About</span>
       </nav>
-      <h1>About Our Club</h1>
-      <p class="hero-sub">Chartered in 1922, we've spent over a century making Winchester, Virginia a better place for children and families.</p>
+      <h1>{{ cms.about.heroTitle }}</h1>
+      <p class="hero-sub">{{ cms.about.heroSubtitle }}</p>
     </div>
   </div>
 
@@ -24,17 +24,17 @@ navActive: about
     <div class="kw-container">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
         <div class="reveal">
-          <span class="tag tag-blue" style="margin-bottom:16px; display:inline-flex;">Who We Are</span>
-          <h2 id="overview-heading" class="section-title">The Kiwanis Club of Winchester</h2>
+          <span class="tag tag-blue" style="margin-bottom:16px; display:inline-flex;">{{ cms.about.overviewEyebrow }}</span>
+          <h2 id="overview-heading" class="section-title">{{ cms.about.overviewTitle }}</h2>
           <div class="divider-gold"></div>
           <p style="font-size:1.05rem; color:var(--kw-muted); line-height:1.75; margin-bottom:18px;">
-            We are the Kiwanis Club of Winchester, Virginia — a non-profit service club focused on one simple idea: <em>change the world one community and one child at a time.</em>
+            {{ cms.about.overviewBody1 }}
           </p>
           <p style="color:var(--kw-muted); line-height:1.75; margin-bottom:18px;">
-            Chartered in 1922, our club has a long history of raising and distributing funds for the benefit of our community, with a special emphasis on children. Over the decades we've grown into an active group of dedicated volunteers who show up every week — and for every cause.
+            {{ cms.about.overviewBody2 }}
           </p>
           <p style="color:var(--kw-muted); line-height:1.75; margin-bottom:32px;">
-            We meet at noon every Wednesday at the Winchester Moose Club, located at 215 E. Cork St. Guests are always welcome — come see what we're about before you commit.
+            {{ cms.about.overviewBody3 }}
           </p>
 
           <!-- Meeting Details Card -->
@@ -50,8 +50,8 @@ navActive: about
         </div>
 
         <div class="reveal reveal-d2" style="border-radius:20px; overflow:hidden; aspect-ratio:4/3; background:var(--kw-light);">
-          <img src="/assets/uploads/2023/02/Pancake.png"
-               alt="Kiwanis Club of Winchester serving at the annual Community Pancake Day fundraiser"
+          <img src="{{ cms.about.overviewImage }}"
+               alt="{{ cms.about.overviewImageAlt }}"
                class="img-cover"
                loading="lazy">
         </div>

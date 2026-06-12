@@ -9,8 +9,8 @@ navActive: home
 
   <!-- ── HERO ── -->
   <section class="hero-section home-hero" aria-label="Hero">
-    <img src="/assets/uploads/2026/06/WincKiwan.png"
-         alt="Children smiling together in a warm Winchester Kiwanis community service scene"
+    <img src="{{ cms.home.heroImage }}"
+         alt="{{ cms.home.heroImageAlt }}"
          class="hero-bg-img"
          loading="eager"
          fetchpriority="high">
@@ -18,14 +18,14 @@ navActive: home
 
     <div class="hero-content kw-container">
       <div class="hero-copy">
-        <p class="hero-eyebrow">Serving Winchester since 1922</p>
+        <p class="hero-eyebrow">{{ cms.home.heroEyebrow }}</p>
 
         <h1>
-          Changing<br>Winchester,<br>One <span class="gold-text">Child</span><br>at a Time.
+          {{ cms.home.heroLine1 }}<br>{{ cms.home.heroLine2 }}<br>{{ cms.home.heroLine3 }} <span class="gold-text">{{ cms.home.heroHighlight }}</span><br>at a Time.
         </h1>
 
         <p class="hero-lede">
-          A volunteer service club helping children, families, and neighbors across the Shenandoah Valley.
+          {{ cms.home.heroLede }}
         </p>
 
         <div class="hero-actions">
@@ -36,7 +36,7 @@ navActive: home
           <a href="/what-we-do/" class="btn btn-outline-white">See Our Work</a>
         </div>
 
-        <p class="hero-note">Weekly meetings: Wednesdays at noon at the Winchester Moose Club.</p>
+        <p class="hero-note">{{ cms.home.heroNote }}</p>
       </div>
     </div>
 
@@ -76,13 +76,13 @@ navActive: home
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         <div class="reveal">
           <span class="tag tag-blue">Our Mission</span>
-          <h2 id="mission-heading" class="section-title">Dedicated to Children &amp; Community Since Day One</h2>
+          <h2 id="mission-heading" class="section-title">{{ cms.home.missionTitle }}</h2>
           <div class="divider-gold"></div>
           <p class="section-body" style="margin-bottom:20px;">
-            Kiwanis is a global organization of volunteers dedicated to improving the world one child and one community at a time. Our Winchester club has embodied this mission since we were chartered in 1922.
+            {{ cms.home.missionBody }}
           </p>
           <p style="font-size:1rem; color:#6B7280; line-height:1.7; margin-bottom:32px;">
-            We meet every Wednesday at noon at the Winchester Moose Club, and we welcome guests to join us at any service project. Whether you're looking to volunteer, donate, or become a full member — there's a place for you here.
+            {{ cms.home.missionBody2 }}
           </p>
           <a href="/about/" class="btn btn-outline-blue">Learn About Us</a>
         </div>

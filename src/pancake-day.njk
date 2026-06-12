@@ -8,15 +8,15 @@ navActive: pancake-day
 
   <!-- ── HERO ── -->
   <section class="hero-section" aria-label="Pancake Day Hero">
-    <img src="/assets/uploads/2026/06/PancakeDayHero.png"
-         alt="Kiwanis Annual Community Pancake Day — families and volunteers at Jim Barnett Park"
+    <img src="{{ cms.pancake.heroImage }}"
+         alt="{{ cms.pancake.heroImageAlt }}"
          class="hero-bg-img">
     <div class="hero-overlay" style="background: linear-gradient(105deg, rgba(0,26,92,0.9) 0%, rgba(0,40,128,0.7) 50%, rgba(0,26,92,0.4) 100%);"></div>
     <div class="hero-content kw-container">
       <div class="hero-copy">
-        <p class="hero-eyebrow">Winchester's Signature Tradition · Since 1922</p>
-        <h1>Community<br><span class="gold-text">Pancake Day</span></h1>
-        <p class="hero-lede">Every spring, Winchester gathers at Jim Barnett Park for a literal ton of sausage, thousands of pancakes, and a morning that funds local grants, scholarships, and youth programs.</p>
+        <p class="hero-eyebrow">{{ cms.pancake.heroEyebrow }}</p>
+        <h1>Community<br><span class="gold-text">{{ cms.pancake.heroHighlight }}</span></h1>
+        <p class="hero-lede">{{ cms.pancake.heroLede }}</p>
         <div class="hero-actions">
           <a href="#details" class="btn btn-gold">
             Event Details
@@ -24,7 +24,7 @@ navActive: pancake-day
           </a>
           <a href="/contact/" class="btn btn-outline-white">Volunteer With Us</a>
         </div>
-        <p class="hero-note">Spring 2026 was held April 25 at Jim Barnett Park War Memorial Building. Next date TBD — follow us on Facebook for announcements.</p>
+        <p class="hero-note">{{ cms.pancake.heroNote }}</p>
       </div>
     </div>
   </section>
@@ -65,7 +65,7 @@ navActive: pancake-day
           <div style="background:var(--kw-navy); border-radius:20px; padding:36px; color:white; position:sticky; top:100px;">
             <span class="tag tag-gold" style="margin-bottom:20px; display:inline-flex;">Spring 2026 Recap</span>
             <h3 style="color:white; font-size:1.4rem; margin-bottom:16px;">Thanks for Supporting Pancake Day</h3>
-            <p style="color:rgba(255,255,255,0.72); font-size:0.95rem; line-height:1.7; margin-bottom:28px;">The April 25, 2026 event has concluded. Children 3 and under ate free, guests brought non-perishable food donations, and proceeds supported local children and families.</p>
+            <p style="color:rgba(255,255,255,0.72); font-size:0.95rem; line-height:1.7; margin-bottom:28px;">{{ cms.pancake.statusBanner }}</p>
             <a href="/contact/" class="btn btn-gold" style="width:100%; margin-bottom:16px;">Ask About Next Year's Event</a>
             <p style="color:rgba(255,255,255,0.5); font-size:0.8rem; text-align:center;">Ticket sales reopen when the next date is announced.</p>
             <div style="border-top:1px solid rgba(255,255,255,0.12); margin:24px 0 20px;"></div>
