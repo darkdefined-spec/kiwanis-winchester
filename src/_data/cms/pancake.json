@@ -1,13 +1,17 @@
 {
-  "heroImage": "/assets/uploads/2026/06/PancakeDayHero.png",
-  "heroImageAlt": "Kiwanis Annual Community Pancake Day - families and volunteers at Jim Barnett Park",
-  "heroEyebrow": "Winchester's Signature Tradition - Since 1922",
-  "heroTitle": "Community Pancake Day",
-  "heroHighlight": "Pancake Day",
-  "heroLede": "Every spring, Winchester gathers at Jim Barnett Park for a literal ton of sausage, thousands of pancakes, and a morning that funds local grants, scholarships, and youth programs.",
-  "heroNote": "Spring 2026 was held April 25 at Jim Barnett Park War Memorial Building. Next date TBD - follow us on Facebook for announcements.",
-  "statusBanner": "The April 25, 2026 event has concluded. Children 3 and under ate free, guests brought non-perishable food donations, and proceeds supported local children and families.",
-  "eventHours": "8:00am - 4:00pm",
-  "eventLocation": "Jim Barnett Park War Memorial Building, 1001 E Cork St, Winchester, VA 22601",
-  "childsafePercent": "20%"
+  "hero": {
+    "image": "/assets/uploads/2026/06/PancakeDayHero.png",
+    "imageAlt": "Kiwanis Annual Community Pancake Day - families and volunteers at Jim Barnett Park",
+    "eyebrow": "Winchester's Signature Tradition - Since 1922",
+    "title": "Community Pancake Day",
+    "highlight": "Pancake Day",
+    "lede": "Every spring, Winchester gathers at Jim Barnett Park for a literal ton of sausage, thousands of pancakes, and a morning that funds local grants, scholarships, and youth programs.",
+    "note": "Spring 2026 was held April 25 at Jim Barnett Park War Memorial Building. Next date TBD - follow us on Facebook for announcements."
+  },
+  "event": {
+    "statusBanner": "The April 25, 2026 event has concluded. Children 3 and under ate free, guests brought non-perishable food donations, and proceeds supported local children and families.",
+    "hours": "8:00am - 4:00pm",
+    "location": "Jim Barnett Park War Memorial Building, 1001 E Cork St, Winchester, VA 22601",
+    "childsafePercent": "20%"
+  }
 }

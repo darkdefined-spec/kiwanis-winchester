@@ -9,8 +9,8 @@ navActive: home
 
   <!-- ── HERO ── -->
   <section class="hero-section home-hero" aria-label="Hero">
-    <img src="{{ cms.home.heroImage }}"
-         alt="{{ cms.home.heroImageAlt }}"
+    <img src="{{ cms.home.hero.image }}"
+         alt="{{ cms.home.hero.imageAlt }}"
          class="hero-bg-img"
          loading="eager"
          fetchpriority="high">
@@ -18,14 +18,14 @@ navActive: home
 
     <div class="hero-content kw-container">
       <div class="hero-copy">
-        <p class="hero-eyebrow">{{ cms.home.heroEyebrow }}</p>
+        <p class="hero-eyebrow">{{ cms.home.hero.eyebrow }}</p>
 
         <h1>
-          {{ cms.home.heroLine1 }}<br>{{ cms.home.heroLine2 }}<br>{{ cms.home.heroLine3 }} <span class="gold-text">{{ cms.home.heroHighlight }}</span><br>at a Time.
+          {{ cms.home.hero.line1 }}<br>{{ cms.home.hero.line2 }}<br>{{ cms.home.hero.line3 }} <span class="gold-text">{{ cms.home.hero.highlight }}</span><br>at a Time.
         </h1>
 
         <p class="hero-lede">
-          {{ cms.home.heroLede }}
+          {{ cms.home.hero.lede | markdownInline | safe }}
         </p>
 
         <div class="hero-actions">
@@ -36,7 +36,7 @@ navActive: home
           <a href="/what-we-do/" class="btn btn-outline-white">See Our Work</a>
         </div>
 
-        <p class="hero-note">{{ cms.home.heroNote }}</p>
+        <p class="hero-note">{{ cms.home.hero.note }}</p>
       </div>
     </div>
 
@@ -76,13 +76,13 @@ navActive: home
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         <div class="reveal">
           <span class="tag tag-blue">Our Mission</span>
-          <h2 id="mission-heading" class="section-title">{{ cms.home.missionTitle }}</h2>
+          <h2 id="mission-heading" class="section-title">{{ cms.home.mission.title }}</h2>
           <div class="divider-gold"></div>
           <p class="section-body" style="margin-bottom:20px;">
-            {{ cms.home.missionBody }}
+            {{ cms.home.mission.body | markdownInline | safe }}
           </p>
           <p style="font-size:1rem; color:#6B7280; line-height:1.7; margin-bottom:32px;">
-            {{ cms.home.missionBody2 }}
+            {{ cms.home.mission.body2 | markdownInline | safe }}
           </p>
           <a href="/about/" class="btn btn-outline-blue">Learn About Us</a>
         </div>

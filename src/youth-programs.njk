@@ -6,7 +6,7 @@ canonical: /youth-programs/
 navActive: youth-programs
 ---
 
-  <div class="page-hero" style="--page-hero-image:url('{{ cms.youthPrograms.heroImage }}'); --page-hero-position:{{ cms.youthPrograms.heroPosition }};">
+  <div class="page-hero" style="--page-hero-image:url('{{ cms.youthPrograms.hero.image }}'); --page-hero-position:{{ cms.youthPrograms.hero.position }};">
     <div class="kw-container">
       <nav class="breadcrumb-nav" aria-label="Breadcrumb">
         <a href="/">Home</a>
@@ -15,8 +15,8 @@ navActive: youth-programs
         <span class="breadcrumb-sep" aria-hidden="true">/</span>
         <span style="color:rgba(255,255,255,0.9);">Youth Programs</span>
       </nav>
-      <h1>{{ cms.youthPrograms.heroTitle }}</h1>
-      <p class="hero-sub">{{ cms.youthPrograms.heroSubtitle }}</p>
+      <h1>{{ cms.youthPrograms.hero.title }}</h1>
+      <p class="hero-sub">{{ cms.youthPrograms.hero.subtitle | markdownInline | safe }}</p>
     </div>
   </div>
 
@@ -24,14 +24,14 @@ navActive: youth-programs
     <div class="kw-container">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
         <div class="reveal">
-          <span class="tag tag-blue" style="margin-bottom:16px; display:inline-flex;">{{ cms.youthPrograms.introEyebrow }}</span>
-          <h2 id="youth-intro-heading" class="section-title">{{ cms.youthPrograms.introTitle }}</h2>
+          <span class="tag tag-blue" style="margin-bottom:16px; display:inline-flex;">{{ cms.youthPrograms.intro.eyebrow }}</span>
+          <h2 id="youth-intro-heading" class="section-title">{{ cms.youthPrograms.intro.title }}</h2>
           <div class="divider-gold"></div>
-          <p style="font-size:1.05rem; color:var(--kw-muted); line-height:1.75; margin-bottom:18px;">{{ cms.youthPrograms.introBody1 }}</p>
-          <p style="color:var(--kw-muted); line-height:1.75;">{{ cms.youthPrograms.introBody2 }}</p>
+          <p style="font-size:1.05rem; color:var(--kw-muted); line-height:1.75; margin-bottom:18px;">{{ cms.youthPrograms.intro.body1 | markdownInline | safe }}</p>
+          <p style="color:var(--kw-muted); line-height:1.75;">{{ cms.youthPrograms.intro.body2 | markdownInline | safe }}</p>
         </div>
         <div class="reveal reveal-d2" style="border-radius:20px; overflow:hidden; aspect-ratio:4/3;">
-          <img src="{{ cms.youthPrograms.introImage }}" alt="{{ cms.youthPrograms.introImageAlt }}" class="img-cover" loading="lazy">
+          <img src="{{ cms.youthPrograms.intro.image }}" alt="{{ cms.youthPrograms.intro.imageAlt }}" class="img-cover" loading="lazy">
         </div>
       </div>
     </div>

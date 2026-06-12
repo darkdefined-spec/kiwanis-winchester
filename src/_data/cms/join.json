@@ -1,12 +1,18 @@
 {
-  "heroImage": "/assets/uploads/2026/06/KiwanisHero.png",
-  "heroPosition": "center 42%",
-  "heroTitle": "Become a Member",
-  "heroSubtitle": "Have you been looking to volunteer for good causes? Do you like helping kids and feeling like you made a difference? There's a place for you here.",
-  "whyTitle": "More Than Volunteering - It's a Community",
-  "whyIntro": "Kiwanis membership is about friendship, purpose, and impact. Here's what you gain when you join the Winchester club.",
-  "featureImage": "/assets/uploads/2026/06/JoinPage2.png",
-  "featureImageAlt": "Children in the Winchester community supported by Kiwanis volunteers",
-  "featureHeadline": "Kids in Winchester need people who show up.",
-  "featureBody": "Every Wednesday at noon, Kiwanis members do exactly that - for over a century."
+  "hero": {
+    "image": "/assets/uploads/2026/06/KiwanisHero.png",
+    "position": "center 42%",
+    "title": "Become a Member",
+    "subtitle": "Have you been looking to volunteer for good causes? Do you like helping kids and feeling like you made a difference? There's a place for you here."
+  },
+  "why": {
+    "title": "More Than Volunteering - It's a Community",
+    "intro": "Kiwanis membership is about friendship, purpose, and impact. Here's what you gain when you join the Winchester club."
+  },
+  "feature": {
+    "image": "/assets/uploads/2026/06/JoinPage2.png",
+    "imageAlt": "Children in the Winchester community supported by Kiwanis volunteers",
+    "headline": "Kids in Winchester need people who show up.",
+    "body": "Every Wednesday at noon, Kiwanis members do exactly that - for over a century."
+  }
 }

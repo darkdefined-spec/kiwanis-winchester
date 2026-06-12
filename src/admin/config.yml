@@ -13,37 +13,54 @@ site_url: https://kiwanis-winchester.pages.dev
 display_url: https://kiwanis-winchester.pages.dev
 logo_url: /assets/uploads/2023/03/logo-1C-e1677883446960.png
 
-# Where to store media uploads
-media_folder: src/assets/uploads
+# Where to store media uploads.
+media_folder: /src/assets/uploads
 public_folder: /assets/uploads
 
-# Show live preview in the editor
+# Make uploaded images easier to reuse and safer for page speed.
+media_libraries:
+  default:
+    config:
+      slugify_filename: true
+      transformations:
+        raster_image:
+          format: webp
+          quality: 85
+          width: 2048
+          height: 2048
+        svg:
+          optimize: true
+
+# Show links out to the rendered site where supported.
 show_preview_links: true
 
-# ─── SITE SETTINGS ────────────────────────────────
 collections:
 
   # ── Global Site Settings ──────────────────────────
   - name: settings
     label: "⚙️ Site Settings"
+    icon: settings
+    description: "Club-wide contact information, meeting details, and social links used throughout the site."
     delete: false
     editor:
-      preview: false
+      preview: true
     files:
       - name: general
         label: "General Settings"
+        icon: tune
         file: src/_data/site.json
         fields:
-          - { label: "Club Name", name: name, widget: string }
-          - { label: "Short Name", name: shortName, widget: string }
+          - { label: "Club Name", name: name, widget: string, hint: "Full official club name." }
+          - { label: "Short Name", name: shortName, widget: string, hint: "Short version used in compact areas." }
           - { label: "Tagline", name: tagline, widget: string }
-          - { label: "Website URL", name: url, widget: string }
-          - { label: "Email Address", name: email, widget: string }
-          - { label: "Facebook URL", name: facebook, widget: string }
-          - { label: "Facebook Handle", name: facebookHandle, widget: string, hint: "e.g. @winkiwanis" }
+          - { label: "Website URL", name: url, widget: string, type: url }
+          - { label: "Email Address", name: email, widget: string, type: email }
+          - { label: "Facebook URL", name: facebook, widget: string, type: url }
+          - { label: "Facebook Handle", name: facebookHandle, widget: string, hint: "Example: @winkiwanis" }
           - label: "Mailing Address"
             name: address
             widget: object
+            collapsed: false
             fields:
               - { label: "P.O. Box", name: po_box, widget: string }
               - { label: "City", name: city, widget: string }
@@ -52,22 +69,33 @@ collections:
           - label: "Weekly Meetings"
             name: meetings
             widget: object
+            collapsed: false
             fields:
-              - { label: "Day", name: day, widget: string, hint: "e.g. Wednesdays" }
-              - { label: "Time", name: time, widget: string, hint: "e.g. noon" }
+              - { label: "Day", name: day, widget: string, hint: "Example: Wednesdays" }
+              - { label: "Time", name: time, widget: string, hint: "Example: noon" }
               - { label: "Location Name", name: location, widget: string }
               - { label: "Street Address", name: street, widget: string }
-          - { label: "Description", name: description, widget: text }
+          - { label: "Site Description", name: description, widget: text, hint: "Used in search/social metadata and short summaries." }
 
   # ── Events ────────────────────────────────────────
   - name: events
     label: "📸 Events"
     label_singular: "Event"
+    icon: photo_camera
+    description: "Add event recaps and photo galleries. Uploaded images are stored under `/assets/uploads/events/`."
     folder: src/content/events
+    media_folder: /src/assets/uploads/events
+    public_folder: /assets/uploads/events
     create: true
     slug: "{{slug}}"
     summary: "{{title}} — {{date}}"
+    thumbnail: photos.*.src
+    preview_path: /events/
     sortable_fields: [date, title]
+    view_groups:
+      - label: "By year"
+        field: date
+        pattern: \d{4}
     view_filters:
       - label: "Gold Header"
         field: headerColor
@@ -78,8 +106,8 @@ collections:
     fields:
       - { label: "Event Title", name: title, widget: string }
       - { label: "Event Date", name: date, widget: datetime, format: "YYYY-MM-DD", date_format: "MMMM D, YYYY", time_format: false }
-      - { label: "Category", name: category, widget: string, hint: "e.g. Community Event, Service, Fundraiser" }
-      - { label: "Event Details Line", name: eventMeta, widget: string, hint: "e.g. August 14, 2024 · Jim Barnett Park · Winchester, VA" }
+      - { label: "Category", name: category, widget: string, hint: "Example: Community Event, Service, Fundraiser" }
+      - { label: "Event Details Line", name: eventMeta, widget: string, hint: "Example: August 14, 2024 · Jim Barnett Park · Winchester, VA" }
       - label: "Card Header Color"
         name: headerColor
         widget: select
@@ -87,174 +115,375 @@ collections:
           - { label: "🔵 Blue", value: blue }
           - { label: "🟡 Gold", value: gold }
         default: blue
-      - { label: "Facebook Link (optional)", name: facebookUrl, widget: string, required: false, hint: "Link to the Facebook post or page" }
+      - { label: "Facebook Link", name: facebookUrl, widget: string, type: url, required: false, hint: "Optional link to the Facebook post or album." }
       - label: "Photos"
         name: photos
         widget: list
         required: false
         summary: "{{fields.alt}}"
         fields:
-          - { label: "Photo", name: src, widget: image }
-          - { label: "Alt Text (describe the photo)", name: alt, widget: string }
-          - { label: "Object Position (optional)", name: objectPosition, widget: string, required: false, hint: "e.g. top center, center 30%" }
+          - { label: "Photo", name: src, widget: image, hint: "Upload or select an event photo. Landscape photos usually work best." }
+          - { label: "Alt Text", name: alt, widget: string, hint: "Describe the photo for visitors using screen readers." }
+          - label: "Photo Crop Focus"
+            name: objectPosition
+            widget: select
+            required: false
+            hint: "Choose where the important part of the photo sits."
+            options:
+              - { label: "Center", value: "center center" }
+              - { label: "Top", value: "top center" }
+              - { label: "Bottom", value: "bottom center" }
+              - { label: "Left", value: "center left" }
+              - { label: "Right", value: "center right" }
 
   # ── Newsletters ────────────────────────────────────
   - name: newsletters
     label: "📰 Newsletters"
     label_singular: "Newsletter"
+    icon: article
+    description: "Upload PDF newsletters. Files are stored under `/assets/uploads/newsletters/`."
     folder: src/content/newsletters
+    media_folder: /src/assets/uploads/newsletters
+    public_folder: /assets/uploads/newsletters
     create: true
     slug: "{{year}}-{{month}}"
     summary: "{{title}} ({{date}})"
+    preview_path: /events/#newsletters
     sortable_fields: [date, title]
+    view_groups:
+      - label: "By year"
+        field: date
+        pattern: \d{4}
     fields:
-      - { label: "Newsletter Title", name: title, widget: string, hint: "e.g. January 2026" }
+      - { label: "Newsletter Title", name: title, widget: string, hint: "Example: January 2026" }
       - { label: "Publication Date", name: date, widget: datetime, format: "YYYY-MM-DD", date_format: "MMMM YYYY", time_format: false }
-      - { label: "PDF File", name: pdfUrl, widget: file, media_folder: src/assets/uploads, public_folder: /assets/uploads, hint: "Upload the PDF newsletter file" }
+      - { label: "PDF File", name: pdfUrl, widget: file, media_folder: /src/assets/uploads/newsletters, public_folder: /assets/uploads/newsletters, hint: "Upload the PDF newsletter file." }
 
   # ── Pages (Editable Content Blocks) ───────────────
   - name: pages
     label: "📄 Pages"
+    icon: web
+    description: "Main website page copy and images, grouped by the sections visitors see on each page."
     delete: false
     editor:
-      preview: false
+      preview: true
     files:
 
       - name: home
         label: "Home Page"
+        icon: home
         file: src/_data/cms/home.json
+        preview_path: /
+        media_folder: /src/assets/uploads/pages/home
+        public_folder: /assets/uploads/pages/home
+        thumbnail: hero.image
         fields:
-          - { label: "Hero Image", name: heroImage, widget: image }
-          - { label: "Hero Image Alt Text", name: heroImageAlt, widget: string }
-          - { label: "Hero Eyebrow", name: heroEyebrow, widget: string }
-          - { label: "Hero Headline Line 1", name: heroLine1, widget: string }
-          - { label: "Hero Headline Line 2", name: heroLine2, widget: string }
-          - { label: "Hero Headline Line 3", name: heroLine3, widget: string }
-          - { label: "Hero Highlighted Word", name: heroHighlight, widget: string }
-          - { label: "Hero Lede", name: heroLede, widget: text }
-          - { label: "Hero Note", name: heroNote, widget: string }
-          - { label: "Mission Title", name: missionTitle, widget: string }
-          - { label: "Mission Paragraph 1", name: missionBody, widget: text }
-          - { label: "Mission Paragraph 2", name: missionBody2, widget: text }
+          - label: "Hero Section"
+            name: hero
+            widget: object
+            collapsed: false
+            summary: "{{fields.line1}} {{fields.line2}} {{fields.line3}}"
+            fields:
+              - { label: "Background Image", name: image, widget: image, hint: "First-screen hero image. Recommended: landscape, at least 1800px wide, no text baked into the image." }
+              - { label: "Image Alt Text", name: imageAlt, widget: string, hint: "Describe the image for accessibility." }
+              - { label: "Eyebrow", name: eyebrow, widget: string }
+              - { label: "Headline Line 1", name: line1, widget: string }
+              - { label: "Headline Line 2", name: line2, widget: string }
+              - { label: "Headline Line 3", name: line3, widget: string }
+              - { label: "Highlighted Word", name: highlight, widget: string }
+              - { label: "Lead Text", name: lede, widget: markdown, buttons: [bold, italic, link], editor_components: [], hint: "Short intro below the headline. Basic formatting and links are supported." }
+              - { label: "Small Note", name: note, widget: string, hint: "Small text below the buttons." }
+          - label: "Mission Section"
+            name: mission
+            widget: object
+            collapsed: false
+            fields:
+              - { label: "Section Title", name: title, widget: string }
+              - { label: "Paragraph 1", name: body, widget: markdown, buttons: [bold, italic, link], editor_components: [] }
+              - { label: "Paragraph 2", name: body2, widget: markdown, buttons: [bold, italic, link], editor_components: [] }
 
       - name: about
         label: "About Page"
+        icon: groups
         file: src/_data/cms/about.json
+        preview_path: /about/
+        media_folder: /src/assets/uploads/pages/about
+        public_folder: /assets/uploads/pages/about
+        thumbnail: hero.image
         fields:
-          - { label: "Hero Image", name: heroImage, widget: image }
-          - { label: "Hero Image Position", name: heroPosition, widget: string, hint: "CSS object-position value, e.g. center 42%" }
-          - { label: "Hero Title", name: heroTitle, widget: string }
-          - { label: "Hero Subtitle", name: heroSubtitle, widget: text }
-          - { label: "Overview Eyebrow", name: overviewEyebrow, widget: string }
-          - { label: "Overview Title", name: overviewTitle, widget: string }
-          - { label: "Overview Paragraph 1", name: overviewBody1, widget: text }
-          - { label: "Overview Paragraph 2", name: overviewBody2, widget: text }
-          - { label: "Overview Paragraph 3", name: overviewBody3, widget: text }
-          - { label: "Overview Image", name: overviewImage, widget: image }
-          - { label: "Overview Image Alt Text", name: overviewImageAlt, widget: string }
+          - label: "Hero Section"
+            name: hero
+            widget: object
+            collapsed: false
+            fields:
+              - { label: "Background Image", name: image, widget: image, hint: "Top-of-page background image. Recommended: landscape, at least 1800px wide." }
+              - label: "Image Crop Focus"
+                name: position
+                widget: select
+                options: &hero_position_options
+                  - { label: "Center", value: "center center" }
+                  - { label: "Top", value: "top center" }
+                  - { label: "Bottom", value: "bottom center" }
+                  - { label: "Left", value: "center left" }
+                  - { label: "Right", value: "center right" }
+                  - { label: "Slightly high", value: "center 35%" }
+                  - { label: "Balanced high", value: "center 40%" }
+                  - { label: "Balanced", value: "center 42%" }
+                  - { label: "Slightly low", value: "center 48%" }
+                  - { label: "Higher focus", value: "center 30%" }
+                  - { label: "Contact-card focus", value: "center 46%" }
+              - { label: "Page Title", name: title, widget: string }
+              - { label: "Subtitle", name: subtitle, widget: markdown, buttons: [bold, italic, link], editor_components: [] }
+          - label: "Club Overview Section"
+            name: overview
+            widget: object
+            collapsed: false
+            fields:
+              - { label: "Eyebrow", name: eyebrow, widget: string }
+              - { label: "Section Title", name: title, widget: string }
+              - { label: "Paragraph 1", name: body1, widget: markdown, buttons: [bold, italic, link], editor_components: [] }
+              - { label: "Paragraph 2", name: body2, widget: markdown, buttons: [bold, italic, link], editor_components: [] }
+              - { label: "Paragraph 3", name: body3, widget: markdown, buttons: [bold, italic, link], editor_components: [] }
+              - { label: "Overview Image", name: image, widget: image, hint: "Image shown beside the overview copy." }
+              - { label: "Overview Image Alt Text", name: imageAlt, widget: string }
 
       - name: whatWeDo
         label: "What We Do Page"
+        icon: volunteer_activism
         file: src/_data/cms/whatWeDo.json
+        preview_path: /what-we-do/
+        media_folder: /src/assets/uploads/pages/what-we-do
+        public_folder: /assets/uploads/pages/what-we-do
+        thumbnail: hero.image
         fields:
-          - { label: "Hero Image", name: heroImage, widget: image }
-          - { label: "Hero Image Position", name: heroPosition, widget: string }
-          - { label: "Hero Title", name: heroTitle, widget: string }
-          - { label: "Hero Subtitle", name: heroSubtitle, widget: text }
-          - { label: "Intro Eyebrow", name: introEyebrow, widget: string }
-          - { label: "Intro Title", name: introTitle, widget: string }
-          - { label: "Intro Body", name: introBody, widget: text }
-          - { label: "Youth Program Image", name: youthProgramImage, widget: image }
-          - { label: "Pancake Spotlight Image", name: pancakeImage, widget: image }
+          - label: "Hero Section"
+            name: hero
+            widget: object
+            collapsed: false
+            fields:
+              - { label: "Background Image", name: image, widget: image, hint: "Top-of-page background image. Recommended: landscape, at least 1800px wide." }
+              - { label: "Image Crop Focus", name: position, widget: select, options: *hero_position_options }
+              - { label: "Page Title", name: title, widget: string }
+              - { label: "Subtitle", name: subtitle, widget: markdown, buttons: [bold, italic, link], editor_components: [] }
+          - label: "Intro Section"
+            name: intro
+            widget: object
+            collapsed: false
+            fields:
+              - { label: "Eyebrow", name: eyebrow, widget: string }
+              - { label: "Section Title", name: title, widget: string }
+              - { label: "Intro Body", name: body, widget: markdown, buttons: [bold, italic, link], editor_components: [] }
+          - label: "Feature Images"
+            name: featureImages
+            widget: object
+            collapsed: false
+            fields:
+              - { label: "Youth Program Image", name: youthProgram, widget: image, hint: "Used in the youth leadership feature row." }
+              - { label: "Pancake Spotlight Image", name: pancake, widget: image, hint: "Used in the Pancake Day spotlight section." }
 
       - name: youthPrograms
         label: "Youth Programs Page"
+        icon: school
         file: src/_data/cms/youthPrograms.json
+        preview_path: /youth-programs/
+        media_folder: /src/assets/uploads/pages/youth-programs
+        public_folder: /assets/uploads/pages/youth-programs
+        thumbnail: hero.image
         fields:
-          - { label: "Hero Image", name: heroImage, widget: image }
-          - { label: "Hero Image Position", name: heroPosition, widget: string }
-          - { label: "Hero Title", name: heroTitle, widget: string }
-          - { label: "Hero Subtitle", name: heroSubtitle, widget: text }
-          - { label: "Intro Eyebrow", name: introEyebrow, widget: string }
-          - { label: "Intro Title", name: introTitle, widget: string }
-          - { label: "Intro Paragraph 1", name: introBody1, widget: text }
-          - { label: "Intro Paragraph 2", name: introBody2, widget: text }
-          - { label: "Intro Image", name: introImage, widget: image }
-          - { label: "Intro Image Alt Text", name: introImageAlt, widget: string }
+          - label: "Hero Section"
+            name: hero
+            widget: object
+            collapsed: false
+            fields:
+              - { label: "Background Image", name: image, widget: image, hint: "Top-of-page background image. Recommended: landscape, at least 1800px wide." }
+              - { label: "Image Crop Focus", name: position, widget: select, options: *hero_position_options }
+              - { label: "Page Title", name: title, widget: string }
+              - { label: "Subtitle", name: subtitle, widget: markdown, buttons: [bold, italic, link], editor_components: [] }
+          - label: "Intro Section"
+            name: intro
+            widget: object
+            collapsed: false
+            fields:
+              - { label: "Eyebrow", name: eyebrow, widget: string }
+              - { label: "Section Title", name: title, widget: string }
+              - { label: "Paragraph 1", name: body1, widget: markdown, buttons: [bold, italic, link], editor_components: [] }
+              - { label: "Paragraph 2", name: body2, widget: markdown, buttons: [bold, italic, link], editor_components: [] }
+              - { label: "Intro Image", name: image, widget: image, hint: "Shown beside the intro copy." }
+              - { label: "Intro Image Alt Text", name: imageAlt, widget: string }
 
       - name: pancake
         label: "Pancake Day Page"
+        icon: local_dining
         file: src/_data/cms/pancake.json
+        preview_path: /pancake-day/
+        media_folder: /src/assets/uploads/pages/pancake-day
+        public_folder: /assets/uploads/pages/pancake-day
+        thumbnail: hero.image
         fields:
-          - { label: "Hero Image", name: heroImage, widget: image }
-          - { label: "Hero Image Alt Text", name: heroImageAlt, widget: string }
-          - { label: "Hero Eyebrow", name: heroEyebrow, widget: string }
-          - { label: "Hero Title", name: heroTitle, widget: string }
-          - { label: "Hero Highlighted Words", name: heroHighlight, widget: string }
-          - { label: "Hero Lede", name: heroLede, widget: text }
-          - { label: "Hero Note", name: heroNote, widget: text }
-          - { label: "Event Status Banner", name: statusBanner, widget: text, hint: "e.g. The April 25, 2026 event has concluded..." }
-          - { label: "Event Hours", name: eventHours, widget: string }
-          - { label: "Event Location", name: eventLocation, widget: string }
-          - { label: "ChildSafe Percentage", name: childsafePercent, widget: string }
+          - label: "Hero Section"
+            name: hero
+            widget: object
+            collapsed: false
+            fields:
+              - { label: "Background Image", name: image, widget: image, hint: "First-screen Pancake Day hero image. Recommended: landscape, at least 1800px wide." }
+              - { label: "Image Alt Text", name: imageAlt, widget: string }
+              - { label: "Eyebrow", name: eyebrow, widget: string }
+              - { label: "Page Title", name: title, widget: string }
+              - { label: "Highlighted Words", name: highlight, widget: string }
+              - { label: "Lead Text", name: lede, widget: markdown, buttons: [bold, italic, link], editor_components: [] }
+              - { label: "Small Note", name: note, widget: markdown, buttons: [bold, italic, link], editor_components: [] }
+          - label: "Event Details"
+            name: event
+            widget: object
+            collapsed: false
+            fields:
+              - { label: "Status Banner", name: statusBanner, widget: markdown, buttons: [bold, italic, link], editor_components: [], hint: "Example: The April 25, 2026 event has concluded..." }
+              - { label: "Event Hours", name: hours, widget: string }
+              - { label: "Event Location", name: location, widget: string }
+              - { label: "ChildSafe Percentage", name: childsafePercent, widget: string }
 
       - name: events
         label: "Events & Newsletters Page"
+        icon: event
         file: src/_data/cms/events.json
+        preview_path: /events/
+        media_folder: /src/assets/uploads/pages/events
+        public_folder: /assets/uploads/pages/events
+        thumbnail: hero.image
         fields:
-          - { label: "Hero Image", name: heroImage, widget: image }
-          - { label: "Hero Image Position", name: heroPosition, widget: string }
-          - { label: "Hero Title", name: heroTitle, widget: string }
-          - { label: "Hero Subtitle", name: heroSubtitle, widget: text }
-          - { label: "Events Section Title", name: eventsTitle, widget: string }
-          - { label: "Events Section Intro", name: eventsIntro, widget: text }
-          - { label: "Newsletters Section Title", name: newslettersTitle, widget: string }
-          - { label: "Newsletters Section Intro", name: newslettersIntro, widget: text }
+          - label: "Hero Section"
+            name: hero
+            widget: object
+            collapsed: false
+            fields:
+              - { label: "Background Image", name: image, widget: image, hint: "Top-of-page background image. Recommended: landscape, at least 1800px wide." }
+              - { label: "Image Crop Focus", name: position, widget: select, options: *hero_position_options }
+              - { label: "Page Title", name: title, widget: string }
+              - { label: "Subtitle", name: subtitle, widget: markdown, buttons: [bold, italic, link], editor_components: [] }
+          - label: "Recent Events Section"
+            name: eventsSection
+            widget: object
+            collapsed: false
+            fields:
+              - { label: "Section Title", name: title, widget: string }
+              - { label: "Intro Text", name: intro, widget: markdown, buttons: [bold, italic, link], editor_components: [] }
+          - label: "Newsletter Archive Section"
+            name: newslettersSection
+            widget: object
+            collapsed: false
+            fields:
+              - { label: "Section Title", name: title, widget: string }
+              - { label: "Intro Text", name: intro, widget: markdown, buttons: [bold, italic, link], editor_components: [] }
 
       - name: resources
         label: "Resources Page"
+        icon: folder_open
         file: src/_data/cms/resources.json
+        preview_path: /resources/
+        media_folder: /src/assets/uploads/pages/resources
+        public_folder: /assets/uploads/pages/resources
+        thumbnail: hero.image
         fields:
-          - { label: "Hero Image", name: heroImage, widget: image }
-          - { label: "Hero Image Position", name: heroPosition, widget: string }
-          - { label: "Hero Title", name: heroTitle, widget: string }
-          - { label: "Hero Subtitle", name: heroSubtitle, widget: text }
-          - { label: "Quick Links Title", name: quickLinksTitle, widget: string }
-          - { label: "Quick Links Intro", name: quickLinksIntro, widget: text }
+          - label: "Hero Section"
+            name: hero
+            widget: object
+            collapsed: false
+            fields:
+              - { label: "Background Image", name: image, widget: image, hint: "Top-of-page background image. Recommended: landscape, at least 1800px wide." }
+              - { label: "Image Crop Focus", name: position, widget: select, options: *hero_position_options }
+              - { label: "Page Title", name: title, widget: string }
+              - { label: "Subtitle", name: subtitle, widget: markdown, buttons: [bold, italic, link], editor_components: [] }
+          - label: "Quick Links Section"
+            name: quickLinks
+            widget: object
+            collapsed: false
+            fields:
+              - { label: "Section Title", name: title, widget: string }
+              - { label: "Intro Text", name: intro, widget: markdown, buttons: [bold, italic, link], editor_components: [] }
 
       - name: join
         label: "Join Page"
+        icon: person_add
         file: src/_data/cms/join.json
+        preview_path: /join/
+        media_folder: /src/assets/uploads/pages/join
+        public_folder: /assets/uploads/pages/join
+        thumbnail: hero.image
         fields:
-          - { label: "Hero Image", name: heroImage, widget: image }
-          - { label: "Hero Image Position", name: heroPosition, widget: string }
-          - { label: "Hero Title", name: heroTitle, widget: string }
-          - { label: "Hero Subtitle", name: heroSubtitle, widget: text }
-          - { label: "Why Join Title", name: whyTitle, widget: string }
-          - { label: "Why Join Intro", name: whyIntro, widget: text }
-          - { label: "Feature Image", name: featureImage, widget: image }
-          - { label: "Feature Image Alt Text", name: featureImageAlt, widget: string }
-          - { label: "Feature Headline", name: featureHeadline, widget: string }
-          - { label: "Feature Body", name: featureBody, widget: text }
+          - label: "Hero Section"
+            name: hero
+            widget: object
+            collapsed: false
+            fields:
+              - { label: "Background Image", name: image, widget: image, hint: "Top-of-page background image. Recommended: landscape, at least 1800px wide." }
+              - { label: "Image Crop Focus", name: position, widget: select, options: *hero_position_options }
+              - { label: "Page Title", name: title, widget: string }
+              - { label: "Subtitle", name: subtitle, widget: markdown, buttons: [bold, italic, link], editor_components: [] }
+          - label: "Why Join Section"
+            name: why
+            widget: object
+            collapsed: false
+            fields:
+              - { label: "Section Title", name: title, widget: string }
+              - { label: "Intro Text", name: intro, widget: markdown, buttons: [bold, italic, link], editor_components: [] }
+          - label: "Feature Section"
+            name: feature
+            widget: object
+            collapsed: false
+            fields:
+              - { label: "Feature Image", name: image, widget: image, hint: "Shown in the large feature section." }
+              - { label: "Feature Image Alt Text", name: imageAlt, widget: string }
+              - { label: "Feature Headline", name: headline, widget: string }
+              - { label: "Feature Body", name: body, widget: markdown, buttons: [bold, italic, link], editor_components: [] }
 
       - name: donate
         label: "Donate Page"
+        icon: payments
         file: src/_data/cms/donate.json
+        preview_path: /donate/
+        media_folder: /src/assets/uploads/pages/donate
+        public_folder: /assets/uploads/pages/donate
+        thumbnail: hero.image
         fields:
-          - { label: "Hero Image", name: heroImage, widget: image }
-          - { label: "Hero Image Position", name: heroPosition, widget: string }
-          - { label: "Hero Title", name: heroTitle, widget: string }
-          - { label: "Hero Subtitle", name: heroSubtitle, widget: text }
-          - { label: "Main Section Title", name: mainTitle, widget: string }
-          - { label: "Main Section Intro", name: mainIntro, widget: text }
+          - label: "Hero Section"
+            name: hero
+            widget: object
+            collapsed: false
+            fields:
+              - { label: "Background Image", name: image, widget: image, hint: "Top-of-page background image. Recommended: landscape, at least 1800px wide." }
+              - { label: "Image Crop Focus", name: position, widget: select, options: *hero_position_options }
+              - { label: "Page Title", name: title, widget: string }
+              - { label: "Subtitle", name: subtitle, widget: markdown, buttons: [bold, italic, link], editor_components: [] }
+          - label: "Main Donation Copy"
+            name: main
+            widget: object
+            collapsed: false
+            fields:
+              - { label: "Section Title", name: title, widget: string }
+              - { label: "Intro Text", name: intro, widget: markdown, buttons: [bold, italic, link], editor_components: [] }
 
       - name: contact
         label: "Contact Page"
+        icon: mail
         file: src/_data/cms/contact.json
+        preview_path: /contact/
+        media_folder: /src/assets/uploads/pages/contact
+        public_folder: /assets/uploads/pages/contact
+        thumbnail: hero.image
         fields:
-          - { label: "Hero Image", name: heroImage, widget: image }
-          - { label: "Hero Image Position", name: heroPosition, widget: string }
-          - { label: "Hero Title", name: heroTitle, widget: string }
-          - { label: "Hero Subtitle", name: heroSubtitle, widget: text }
-          - { label: "Form Title", name: formTitle, widget: string }
-          - { label: "Form Intro", name: formIntro, widget: text }
+          - label: "Hero Section"
+            name: hero
+            widget: object
+            collapsed: false
+            fields:
+              - { label: "Background Image", name: image, widget: image, hint: "Top-of-page background image. Recommended: landscape, at least 1800px wide." }
+              - { label: "Image Crop Focus", name: position, widget: select, options: *hero_position_options }
+              - { label: "Page Title", name: title, widget: string }
+              - { label: "Subtitle", name: subtitle, widget: markdown, buttons: [bold, italic, link], editor_components: [] }
+          - label: "Contact Form Intro"
+            name: form
+            widget: object
+            collapsed: false
+            fields:
+              - { label: "Form Title", name: title, widget: string }
+              - { label: "Intro Text", name: intro, widget: markdown, buttons: [bold, italic, link], editor_components: [] }

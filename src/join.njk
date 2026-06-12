@@ -6,15 +6,15 @@ canonical: /join/
 navActive: join
 ---
 
-  <div class="page-hero" style="--page-hero-image:url('{{ cms.join.heroImage }}'); --page-hero-position:{{ cms.join.heroPosition }};">
+  <div class="page-hero" style="--page-hero-image:url('{{ cms.join.hero.image }}'); --page-hero-position:{{ cms.join.hero.position }};">
     <div class="kw-container">
       <nav class="breadcrumb-nav" aria-label="Breadcrumb">
         <a href="/">Home</a>
         <span class="breadcrumb-sep" aria-hidden="true">/</span>
         <span style="color:rgba(255,255,255,0.9);">Join Us</span>
       </nav>
-      <h1>{{ cms.join.heroTitle }}</h1>
-      <p class="hero-sub">{{ cms.join.heroSubtitle }}</p>
+      <h1>{{ cms.join.hero.title }}</h1>
+      <p class="hero-sub">{{ cms.join.hero.subtitle | markdownInline | safe }}</p>
     </div>
   </div>
 
@@ -23,8 +23,8 @@ navActive: join
     <div class="kw-container">
       <div class="text-center reveal" style="margin-bottom:56px;">
         <span class="tag tag-blue" style="margin:0 auto 12px; display:inline-flex;">Why Kiwanis?</span>
-        <h2 id="why-heading" class="section-title">{{ cms.join.whyTitle }}</h2>
-        <p class="section-body" style="margin:0 auto;">{{ cms.join.whyIntro }}</p>
+        <h2 id="why-heading" class="section-title">{{ cms.join.why.title }}</h2>
+        <p class="section-body" style="margin:0 auto;">{{ cms.join.why.intro | markdownInline | safe }}</p>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -67,18 +67,18 @@ navActive: join
   <section style="padding:0 0 80px;" aria-label="Kids and community">
     <div class="kw-container">
       <div class="reveal" style="position:relative; border-radius:24px; overflow:hidden; aspect-ratio:21/9; box-shadow:0 32px 80px rgba(0,26,92,0.18);">
-        <img src="{{ cms.join.featureImage }}"
-             alt="{{ cms.join.featureImageAlt }}"
+        <img src="{{ cms.join.feature.image }}"
+             alt="{{ cms.join.feature.imageAlt }}"
              class="img-cover"
              loading="lazy">
         <div style="position:absolute; inset:0; background:linear-gradient(to right, rgba(0,26,92,0.72) 0%, rgba(0,26,92,0.2) 60%, transparent 100%);"></div>
         <div style="position:absolute; inset:0; display:flex; align-items:center; padding:48px;">
           <div style="max-width:480px;">
             <p style="font-family:var(--font-display); font-size:clamp(1.4rem,3vw,2.2rem); font-weight:800; color:white; line-height:1.25; margin-bottom:16px;">
-              {{ cms.join.featureHeadline }}
+              {{ cms.join.feature.headline }}
             </p>
             <p style="color:rgba(255,255,255,0.8); font-size:1rem; line-height:1.7; margin-bottom:24px;">
-              {{ cms.join.featureBody }}
+              {{ cms.join.feature.body | markdownInline | safe }}
             </p>
             <a href="mailto:pres@winvakiw.org?subject=Joining%20Kiwanis" class="btn btn-gold">Join the Club</a>
           </div>

@@ -1,4 +1,11 @@
 const { DateTime } = require("luxon");
+const markdownIt = require("markdown-it");
+
+const markdown = markdownIt({
+  breaks: true,
+  html: false,
+  linkify: true,
+});
 
 module.exports = function (eleventyConfig) {
   // Pass-through copies
@@ -11,6 +18,7 @@ module.exports = function (eleventyConfig) {
   // Watch targets
   eleventyConfig.addWatchTarget("src/css/");
   eleventyConfig.addWatchTarget("src/content/");
+  eleventyConfig.addWatchTarget("src/_data/");
 
   // Date filters
   eleventyConfig.addFilter("readableDate", (dateObj) =>
@@ -21,6 +29,9 @@ module.exports = function (eleventyConfig) {
   );
   eleventyConfig.addFilter("year", (dateObj) =>
     DateTime.fromJSDate(dateObj, { zone: "utc" }).toFormat("yyyy")
+  );
+  eleventyConfig.addFilter("markdownInline", (value) =>
+    markdown.renderInline(value || "")
   );
 
   // Sort newsletters by date descending, grouped by year

@@ -8,15 +8,15 @@ navActive: pancake-day
 
   <!-- ── HERO ── -->
   <section class="hero-section" aria-label="Pancake Day Hero">
-    <img src="{{ cms.pancake.heroImage }}"
-         alt="{{ cms.pancake.heroImageAlt }}"
+    <img src="{{ cms.pancake.hero.image }}"
+         alt="{{ cms.pancake.hero.imageAlt }}"
          class="hero-bg-img">
     <div class="hero-overlay" style="background: linear-gradient(105deg, rgba(0,26,92,0.9) 0%, rgba(0,40,128,0.7) 50%, rgba(0,26,92,0.4) 100%);"></div>
     <div class="hero-content kw-container">
       <div class="hero-copy">
-        <p class="hero-eyebrow">{{ cms.pancake.heroEyebrow }}</p>
-        <h1>Community<br><span class="gold-text">{{ cms.pancake.heroHighlight }}</span></h1>
-        <p class="hero-lede">{{ cms.pancake.heroLede }}</p>
+        <p class="hero-eyebrow">{{ cms.pancake.hero.eyebrow }}</p>
+        <h1>Community<br><span class="gold-text">{{ cms.pancake.hero.highlight }}</span></h1>
+        <p class="hero-lede">{{ cms.pancake.hero.lede | markdownInline | safe }}</p>
         <div class="hero-actions">
           <a href="#details" class="btn btn-gold">
             Event Details
@@ -24,7 +24,7 @@ navActive: pancake-day
           </a>
           <a href="/contact/" class="btn btn-outline-white">Volunteer With Us</a>
         </div>
-        <p class="hero-note">{{ cms.pancake.heroNote }}</p>
+        <p class="hero-note">{{ cms.pancake.hero.note | markdownInline | safe }}</p>
       </div>
     </div>
   </section>
@@ -44,11 +44,11 @@ navActive: pancake-day
           <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:14px;">
             <div style="background:var(--kw-blue-light); border-radius:12px; padding:20px; display:flex; gap:12px; align-items:flex-start;">
               <div style="color:var(--kw-blue); flex-shrink:0; margin-top:2px;"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-              <div><p style="font-family:var(--font-display); font-weight:700; font-size:0.875rem; color:var(--kw-blue); margin-bottom:3px;">Hours</p><p style="font-size:0.875rem; color:var(--kw-navy);">8:00am – 4:00pm</p></div>
+              <div><p style="font-family:var(--font-display); font-weight:700; font-size:0.875rem; color:var(--kw-blue); margin-bottom:3px;">Hours</p><p style="font-size:0.875rem; color:var(--kw-navy);">{{ cms.pancake.event.hours }}</p></div>
             </div>
             <div style="background:var(--kw-blue-light); border-radius:12px; padding:20px; display:flex; gap:12px; align-items:flex-start;">
               <div style="color:var(--kw-blue); flex-shrink:0; margin-top:2px;"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
-              <div><p style="font-family:var(--font-display); font-weight:700; font-size:0.875rem; color:var(--kw-blue); margin-bottom:3px;">Location</p><p style="font-size:0.875rem; color:var(--kw-navy);">Jim Barnett Park<br>War Memorial Building<br>1001 E Cork St, Winchester, VA 22601</p></div>
+              <div><p style="font-family:var(--font-display); font-weight:700; font-size:0.875rem; color:var(--kw-blue); margin-bottom:3px;">Location</p><p style="font-size:0.875rem; color:var(--kw-navy);">{{ cms.pancake.event.location }}</p></div>
             </div>
             <div style="background:var(--kw-blue-light); border-radius:12px; padding:20px; display:flex; gap:12px; align-items:flex-start;">
               <div style="color:var(--kw-blue); flex-shrink:0; margin-top:2px;"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg></div>
@@ -65,7 +65,7 @@ navActive: pancake-day
           <div style="background:var(--kw-navy); border-radius:20px; padding:36px; color:white; position:sticky; top:100px;">
             <span class="tag tag-gold" style="margin-bottom:20px; display:inline-flex;">Spring 2026 Recap</span>
             <h3 style="color:white; font-size:1.4rem; margin-bottom:16px;">Thanks for Supporting Pancake Day</h3>
-            <p style="color:rgba(255,255,255,0.72); font-size:0.95rem; line-height:1.7; margin-bottom:28px;">{{ cms.pancake.statusBanner }}</p>
+            <p style="color:rgba(255,255,255,0.72); font-size:0.95rem; line-height:1.7; margin-bottom:28px;">{{ cms.pancake.event.statusBanner | markdownInline | safe }}</p>
             <a href="/contact/" class="btn btn-gold" style="width:100%; margin-bottom:16px;">Ask About Next Year's Event</a>
             <p style="color:rgba(255,255,255,0.5); font-size:0.8rem; text-align:center;">Ticket sales reopen when the next date is announced.</p>
             <div style="border-top:1px solid rgba(255,255,255,0.12); margin:24px 0 20px;"></div>
@@ -94,7 +94,7 @@ navActive: pancake-day
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div class="reveal" style="background:white; border-radius:var(--radius-card); padding:36px; border:1px solid var(--kw-border); text-align:center;">
           <div style="width:60px; height:60px; background:rgba(220,38,38,0.1); border-radius:16px; display:flex; align-items:center; justify-content:center; margin:0 auto 20px; color:#DC2626;"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
-          <div style="font-family:var(--font-display); font-weight:800; font-size:2rem; color:var(--kw-blue); margin-bottom:8px;">20%</div>
+          <div style="font-family:var(--font-display); font-weight:800; font-size:2rem; color:var(--kw-blue); margin-bottom:8px;">{{ cms.pancake.event.childsafePercent }}</div>
           <h3 style="font-size:1rem; margin-bottom:10px;">ChildSafe Center</h3>
           <p style="font-size:0.875rem; color:var(--kw-muted); line-height:1.65;">Twenty percent of net proceeds go directly to the ChildSafe Center, supporting child advocacy and family safety in the Winchester area.</p>
         </div>

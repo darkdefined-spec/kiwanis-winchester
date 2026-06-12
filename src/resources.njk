@@ -6,15 +6,15 @@ canonical: /resources/
 navActive: resources
 ---
 
-  <div class="page-hero" style="--page-hero-image:url('{{ cms.resources.heroImage }}'); --page-hero-position:{{ cms.resources.heroPosition }};">
+  <div class="page-hero" style="--page-hero-image:url('{{ cms.resources.hero.image }}'); --page-hero-position:{{ cms.resources.hero.position }};">
     <div class="kw-container">
       <nav class="breadcrumb-nav" aria-label="Breadcrumb">
         <a href="/">Home</a>
         <span class="breadcrumb-sep" aria-hidden="true">/</span>
         <span style="color:rgba(255,255,255,0.9);">Resources</span>
       </nav>
-      <h1>{{ cms.resources.heroTitle }}</h1>
-      <p class="hero-sub">{{ cms.resources.heroSubtitle }}</p>
+      <h1>{{ cms.resources.hero.title }}</h1>
+      <p class="hero-sub">{{ cms.resources.hero.subtitle | markdownInline | safe }}</p>
     </div>
   </div>
 
@@ -23,8 +23,8 @@ navActive: resources
     <div class="kw-container">
       <div class="text-center reveal" style="margin-bottom:46px;">
         <span class="eyebrow-rule center" style="margin-bottom:14px;">Start Here</span>
-        <h2 id="quick-links-heading" class="section-title" style="margin-top:0;">{{ cms.resources.quickLinksTitle }}</h2>
-        <p class="section-body" style="margin:0 auto;">{{ cms.resources.quickLinksIntro }}</p>
+        <h2 id="quick-links-heading" class="section-title" style="margin-top:0;">{{ cms.resources.quickLinks.title }}</h2>
+        <p class="section-body" style="margin:0 auto;">{{ cms.resources.quickLinks.intro | markdownInline | safe }}</p>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
         <a href="#member-resources" class="accent-card reveal" style="text-decoration:none; display:block;">

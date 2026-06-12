@@ -7,15 +7,15 @@ navActive: about
 ---
 
   <!-- Page Hero -->
-  <div class="page-hero" style="--page-hero-image:url('{{ cms.about.heroImage }}'); --page-hero-position:{{ cms.about.heroPosition }};">
+  <div class="page-hero" style="--page-hero-image:url('{{ cms.about.hero.image }}'); --page-hero-position:{{ cms.about.hero.position }};">
     <div class="kw-container">
       <nav class="breadcrumb-nav" aria-label="Breadcrumb">
         <a href="/">Home</a>
         <span class="breadcrumb-sep" aria-hidden="true">/</span>
         <span style="color:rgba(255,255,255,0.9);">About</span>
       </nav>
-      <h1>{{ cms.about.heroTitle }}</h1>
-      <p class="hero-sub">{{ cms.about.heroSubtitle }}</p>
+      <h1>{{ cms.about.hero.title }}</h1>
+      <p class="hero-sub">{{ cms.about.hero.subtitle | markdownInline | safe }}</p>
     </div>
   </div>
 
@@ -24,17 +24,17 @@ navActive: about
     <div class="kw-container">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
         <div class="reveal">
-          <span class="tag tag-blue" style="margin-bottom:16px; display:inline-flex;">{{ cms.about.overviewEyebrow }}</span>
-          <h2 id="overview-heading" class="section-title">{{ cms.about.overviewTitle }}</h2>
+          <span class="tag tag-blue" style="margin-bottom:16px; display:inline-flex;">{{ cms.about.overview.eyebrow }}</span>
+          <h2 id="overview-heading" class="section-title">{{ cms.about.overview.title }}</h2>
           <div class="divider-gold"></div>
           <p style="font-size:1.05rem; color:var(--kw-muted); line-height:1.75; margin-bottom:18px;">
-            {{ cms.about.overviewBody1 }}
+            {{ cms.about.overview.body1 | markdownInline | safe }}
           </p>
           <p style="color:var(--kw-muted); line-height:1.75; margin-bottom:18px;">
-            {{ cms.about.overviewBody2 }}
+            {{ cms.about.overview.body2 | markdownInline | safe }}
           </p>
           <p style="color:var(--kw-muted); line-height:1.75; margin-bottom:32px;">
-            {{ cms.about.overviewBody3 }}
+            {{ cms.about.overview.body3 | markdownInline | safe }}
           </p>
 
           <!-- Meeting Details Card -->
@@ -50,8 +50,8 @@ navActive: about
         </div>
 
         <div class="reveal reveal-d2" style="border-radius:20px; overflow:hidden; aspect-ratio:4/3; background:var(--kw-light);">
-          <img src="{{ cms.about.overviewImage }}"
-               alt="{{ cms.about.overviewImageAlt }}"
+          <img src="{{ cms.about.overview.image }}"
+               alt="{{ cms.about.overview.imageAlt }}"
                class="img-cover"
                loading="lazy">
         </div>

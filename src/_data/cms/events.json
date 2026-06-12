@@ -1,10 +1,16 @@
 {
-  "heroImage": "/assets/uploads/2024/09/Picnic-13-1024x768.jpg",
-  "heroPosition": "center 48%",
-  "heroTitle": "Events & Newsletters",
-  "heroSubtitle": "Photos from recent Kiwanis gatherings and our full archive of monthly newsletters going back to 2021.",
-  "eventsTitle": "Recent Events",
-  "eventsIntro": "Photos and recaps from recent Kiwanis service projects, celebrations, meetings, and community gatherings.",
-  "newslettersTitle": "Newsletter Archive",
-  "newslettersIntro": "Monthly newsletters packed with club news, event recaps, member spotlights, and upcoming activities. All available as downloadable PDFs."
+  "hero": {
+    "image": "/assets/uploads/2024/09/Picnic-13-1024x768.jpg",
+    "position": "center 48%",
+    "title": "Events & Newsletters",
+    "subtitle": "Photos from recent Kiwanis gatherings and our full archive of monthly newsletters going back to 2021."
+  },
+  "eventsSection": {
+    "title": "Recent Events",
+    "intro": "Photos and recaps from recent Kiwanis service projects, celebrations, meetings, and community gatherings."
+  },
+  "newslettersSection": {
+    "title": "Newsletter Archive",
+    "intro": "Monthly newsletters packed with club news, event recaps, member spotlights, and upcoming activities. All available as downloadable PDFs."
+  }
 }

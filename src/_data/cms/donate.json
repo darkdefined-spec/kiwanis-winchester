@@ -1,8 +1,12 @@
 {
-  "heroImage": "/assets/uploads/2026/06/WhatWeDoHero.png",
-  "heroPosition": "center 30%",
-  "heroTitle": "Support Our Mission",
-  "heroSubtitle": "Your gift funds youth leadership, community grants, scholarships, and programs that put Winchester's children first.",
-  "mainTitle": "Every Dollar Stays Local",
-  "mainIntro": "The Kiwanis Club of Winchester is a 501(c)(3) nonprofit organization. All donations are tax-deductible to the extent allowed by law and go directly toward programs serving Winchester children, families, and community organizations."
+  "hero": {
+    "image": "/assets/uploads/2026/06/WhatWeDoHero.png",
+    "position": "center 30%",
+    "title": "Support Our Mission",
+    "subtitle": "Your gift funds youth leadership, community grants, scholarships, and programs that put Winchester's children first."
+  },
+  "main": {
+    "title": "Every Dollar Stays Local",
+    "intro": "The Kiwanis Club of Winchester is a 501(c)(3) nonprofit organization. All donations are tax-deductible to the extent allowed by law and go directly toward programs serving Winchester children, families, and community organizations."
+  }
 }

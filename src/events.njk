@@ -6,15 +6,15 @@ canonical: /events/
 navActive: events
 ---
 
-  <div class="page-hero" style="--page-hero-image:url('{{ cms.events.heroImage }}'); --page-hero-position:{{ cms.events.heroPosition }};">
+  <div class="page-hero" style="--page-hero-image:url('{{ cms.events.hero.image }}'); --page-hero-position:{{ cms.events.hero.position }};">
     <div class="kw-container">
       <nav class="breadcrumb-nav" aria-label="Breadcrumb">
         <a href="/">Home</a>
         <span class="breadcrumb-sep" aria-hidden="true">/</span>
         <span style="color:rgba(255,255,255,0.9);">Events &amp; Newsletters</span>
       </nav>
-      <h1>{{ cms.events.heroTitle }}</h1>
-      <p class="hero-sub">{{ cms.events.heroSubtitle }}</p>
+      <h1>{{ cms.events.hero.title }}</h1>
+      <p class="hero-sub">{{ cms.events.hero.subtitle | markdownInline | safe }}</p>
     </div>
   </div>
 
@@ -31,8 +31,8 @@ navActive: events
     <div class="kw-container">
       <div class="reveal" style="margin-bottom:40px;">
         <span class="tag tag-blue" style="margin-bottom:12px; display:inline-flex;">Photos</span>
-        <h2 id="events-heading" class="section-title">{{ cms.events.eventsTitle }}</h2>
-        <p style="color:var(--kw-muted); max-width:560px; line-height:1.7;">{{ cms.events.eventsIntro }}</p>
+        <h2 id="events-heading" class="section-title">{{ cms.events.eventsSection.title }}</h2>
+        <p style="color:var(--kw-muted); max-width:560px; line-height:1.7;">{{ cms.events.eventsSection.intro | markdownInline | safe }}</p>
       </div>
 
       {% for event in collections.events %}
@@ -80,8 +80,8 @@ navActive: events
     <div class="kw-container">
       <div class="reveal" style="margin-bottom:48px;">
         <span class="tag tag-blue" style="margin-bottom:12px; display:inline-flex;">Archive</span>
-        <h2 id="newsletters-heading" class="section-title">{{ cms.events.newslettersTitle }}</h2>
-        <p style="color:var(--kw-muted); max-width:560px; line-height:1.7;">{{ cms.events.newslettersIntro }}</p>
+        <h2 id="newsletters-heading" class="section-title">{{ cms.events.newslettersSection.title }}</h2>
+        <p style="color:var(--kw-muted); max-width:560px; line-height:1.7;">{{ cms.events.newslettersSection.intro | markdownInline | safe }}</p>
       </div>
 
       {% for group in collections.newslettersByYear %}

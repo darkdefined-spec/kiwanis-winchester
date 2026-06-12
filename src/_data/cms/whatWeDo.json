@@ -1,11 +1,17 @@
 {
-  "heroImage": "/assets/uploads/2026/06/WhatWeDoHero.png",
-  "heroPosition": "center 40%",
-  "heroTitle": "What We Do",
-  "heroSubtitle": "Real programs. Real impact. Serving children, families, and the Winchester community every week.",
-  "introEyebrow": "Service in Action",
-  "introTitle": "Real Work, Real Impact - Every Week",
-  "introBody": "Since 1922, the Kiwanis Club of Winchester has organized dozens of programs and thousands of service hours - each one making a direct, tangible difference for our neighbors.",
-  "youthProgramImage": "/assets/uploads/2026/06/KidsClub.png",
-  "pancakeImage": "/assets/uploads/2023/02/Pancake.png"
+  "hero": {
+    "image": "/assets/uploads/2026/06/WhatWeDoHero.png",
+    "position": "center 40%",
+    "title": "What We Do",
+    "subtitle": "Real programs. Real impact. Serving children, families, and the Winchester community every week."
+  },
+  "intro": {
+    "eyebrow": "Service in Action",
+    "title": "Real Work, Real Impact - Every Week",
+    "body": "Since 1922, the Kiwanis Club of Winchester has organized dozens of programs and thousands of service hours - each one making a direct, tangible difference for our neighbors."
+  },
+  "featureImages": {
+    "youthProgram": "/assets/uploads/2026/06/KidsClub.png",
+    "pancake": "/assets/uploads/2023/02/Pancake.png"
+  }
 }

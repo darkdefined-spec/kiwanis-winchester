@@ -1,14 +1,18 @@
 {
-  "heroImage": "/assets/uploads/2026/06/WincKiwan.png",
-  "heroImageAlt": "Children smiling together in a warm Winchester Kiwanis community service scene",
-  "heroEyebrow": "Serving Winchester since 1922",
-  "heroLine1": "Changing",
-  "heroLine2": "Winchester,",
-  "heroLine3": "One",
-  "heroHighlight": "Child",
-  "heroLede": "A volunteer service club helping children, families, and neighbors across the Shenandoah Valley.",
-  "heroNote": "Weekly meetings: Wednesdays at noon at the Winchester Moose Club.",
-  "missionTitle": "Dedicated to Children & Community Since Day One",
-  "missionBody": "Kiwanis is a global organization of volunteers dedicated to improving the world one child and one community at a time. Our Winchester club has embodied this mission since we were chartered in 1922.",
-  "missionBody2": "We meet every Wednesday at noon at the Winchester Moose Club, and we welcome guests to join us at any service project. Whether you're looking to volunteer, donate, or become a full member - there's a place for you here."
+  "hero": {
+    "image": "/assets/uploads/2026/06/WincKiwan.png",
+    "imageAlt": "Children smiling together in a warm Winchester Kiwanis community service scene",
+    "eyebrow": "Serving Winchester since 1922",
+    "line1": "Changing",
+    "line2": "Winchester,",
+    "line3": "One",
+    "highlight": "Child",
+    "lede": "A volunteer service club helping children, families, and neighbors across the Shenandoah Valley.",
+    "note": "Weekly meetings: Wednesdays at noon at the Winchester Moose Club."
+  },
+  "mission": {
+    "title": "Dedicated to Children & Community Since Day One",
+    "body": "Kiwanis is a global organization of volunteers dedicated to improving the world one child and one community at a time. Our Winchester club has embodied this mission since we were chartered in 1922.",
+    "body2": "We meet every Wednesday at noon at the Winchester Moose Club, and we welcome guests to join us at any service project. Whether you're looking to volunteer, donate, or become a full member - there's a place for you here."
+  }
 }

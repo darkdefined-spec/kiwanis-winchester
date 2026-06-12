@@ -6,15 +6,15 @@ canonical: /contact/
 navActive: contact
 ---
 
-  <div class="page-hero" style="--page-hero-image:url('{{ cms.contact.heroImage }}'); --page-hero-position:{{ cms.contact.heroPosition }};">
+  <div class="page-hero" style="--page-hero-image:url('{{ cms.contact.hero.image }}'); --page-hero-position:{{ cms.contact.hero.position }};">
     <div class="kw-container">
       <nav class="breadcrumb-nav" aria-label="Breadcrumb">
         <a href="/">Home</a>
         <span class="breadcrumb-sep" aria-hidden="true">/</span>
         <span style="color:rgba(255,255,255,0.9);">Contact</span>
       </nav>
-      <h1>{{ cms.contact.heroTitle }}</h1>
-      <p class="hero-sub">{{ cms.contact.heroSubtitle }}</p>
+      <h1>{{ cms.contact.hero.title }}</h1>
+      <p class="hero-sub">{{ cms.contact.hero.subtitle | markdownInline | safe }}</p>
     </div>
   </div>
 
@@ -100,8 +100,8 @@ navActive: contact
         <!-- Form -->
         <div class="reveal">
           <span class="tag tag-blue" style="margin-bottom:16px; display:inline-flex;">Send a Message</span>
-          <h2 id="form-heading" class="section-title">{{ cms.contact.formTitle }}</h2>
-          <p style="color:var(--kw-muted); line-height:1.7; margin-bottom:32px;">{{ cms.contact.formIntro }} <a href="mailto:sec@winvakiw.org" style="color:var(--kw-blue); font-weight:600;">sec@winvakiw.org</a>.</p>
+          <h2 id="form-heading" class="section-title">{{ cms.contact.form.title }}</h2>
+          <p style="color:var(--kw-muted); line-height:1.7; margin-bottom:32px;">{{ cms.contact.form.intro | markdownInline | safe }} <a href="mailto:sec@winvakiw.org" style="color:var(--kw-blue); font-weight:600;">sec@winvakiw.org</a>.</p>
 
           <form id="contact-form" novalidate aria-label="Contact form">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-5" style="margin-bottom:20px;">
