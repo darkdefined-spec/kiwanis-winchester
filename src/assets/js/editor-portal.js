@@ -10,10 +10,13 @@
 
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+  const params = new URLSearchParams(window.location.search);
+  const isLivePublishDemo = params.get('live') === '1';
   const IS_TEST_LOGIN =
-    ['localhost', '127.0.0.1', '0.0.0.0'].includes(window.location.hostname) ||
-    window.location.hostname.endsWith('.pages.dev') ||
-    window.location.search.includes('editorTest=1');
+    !isLivePublishDemo &&
+    (['localhost', '127.0.0.1', '0.0.0.0'].includes(window.location.hostname) ||
+      window.location.hostname.endsWith('.pages.dev') ||
+      params.has('editorTest'));
 
   function uid(prefix) {
     return `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`;
