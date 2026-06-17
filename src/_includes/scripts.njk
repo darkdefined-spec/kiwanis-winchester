@@ -57,11 +57,18 @@
   let logoTapCount = 0;
   let logoTapTimer = null;
   logoLink?.addEventListener('click', function(e) {
+    e.preventDefault();
     logoTapCount += 1;
     window.clearTimeout(logoTapTimer);
-    logoTapTimer = window.setTimeout(function() { logoTapCount = 0; }, 1400);
+    logoTapTimer = window.setTimeout(function() {
+      var clicks = logoTapCount;
+      logoTapCount = 0;
+      if (clicks === 1 && window.location.pathname !== '/') {
+        window.location.href = '/';
+      }
+    }, 1200);
     if (logoTapCount >= 5) {
-      e.preventDefault();
+      window.clearTimeout(logoTapTimer);
       logoTapCount = 0;
       window.location.href = '/editor/?editorTest=1';
     }
