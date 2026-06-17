@@ -19,6 +19,16 @@ Editors can visit `/editor/` directly.
 
 For the board demo, `/editor/` opens in test mode on the Cloudflare `pages.dev` preview domain. Test mode lets someone type anything into the login box and preview the editor interface without publishing changes.
 
+To demonstrate a real publish, use:
+
+`/editor/?live=1`
+
+That mode uses the Cloudflare editor API, GitHub commits, and Cloudflare Pages rebuilds. For the current demo setup, use:
+
+`demo@winvakiw.org`
+
+Because `EDITOR_DEV_MODE=true` is temporarily enabled, the one-time code is shown on screen after requesting it. After the demo period, turn `EDITOR_DEV_MODE` off and replace `demo@winvakiw.org` with real approved editor email addresses.
+
 Security comes from email OTP login, allowed email checks, and server-side GitHub commits. When production editor access is ready on the real domain, leave the editor at `/editor/` and configure the required Cloudflare secrets below.
 
 ## Required Cloudflare Environment Variables
@@ -38,13 +48,13 @@ EDITOR_COMMITTER_NAME=Kiwanis Editor Portal
 EDITOR_COMMITTER_EMAIL=website-editor@winvakiw.org
 ```
 
-Optional for local development only:
+Optional for local development and temporary demos only:
 
 ```text
 EDITOR_DEV_MODE=true
 ```
 
-Do not enable `EDITOR_DEV_MODE` on the live site. In dev mode, the OTP route can return a visible code for testing.
+Do not leave `EDITOR_DEV_MODE` enabled on the live site long term. In dev mode, the OTP route can return a visible code for testing.
 
 ## GitHub Token Scope
 
@@ -94,6 +104,6 @@ This is the core answer to the continuity/revert concern: content edits are not 
 
 ## Relationship to Sveltia
 
-Sveltia remains available for fuller site editing by trusted admins. The old event/newsletter folder collections are now labeled as legacy in Sveltia because the public site uses `src/_data/editorContent.json` for live event/newsletter/speaker content.
+Sveltia remains available for fuller site editing by trusted admins. The live event/newsletter/speaker content is exposed in Sveltia as `CURRENT: Events, Newsletters & Speakers` because the public site uses `src/_data/editorContent.json` for those sections.
 
 The limited editor portal is for routine volunteers. Sveltia or GitHub is for deeper maintenance.
