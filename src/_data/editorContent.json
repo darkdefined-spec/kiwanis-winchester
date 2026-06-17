@@ -1,0 +1,147 @@
+{
+  "events": [
+    {
+      "id": "annual-picnic-2024",
+      "title": "Annual Picnic 2024",
+      "date": "2024-08-14",
+      "category": "Community Event",
+      "eventMeta": "August 14, 2024 - Jim Barnett Park - Winchester, VA",
+      "headerColor": "gold",
+      "facebookUrl": "https://www.facebook.com/winkiwanis",
+      "photos": [
+        {
+          "src": "/assets/uploads/2024/09/Picnic-13-1024x768.jpg",
+          "alt": "Members enjoying the Annual Picnic, August 14 2024",
+          "objectPosition": "center center"
+        },
+        {
+          "src": "/assets/uploads/2024/09/Picnic-5-1024x768.jpg",
+          "alt": "Helen and Roger Zebarth at the Annual Picnic",
+          "objectPosition": "center center"
+        },
+        {
+          "src": "/assets/uploads/2024/09/Picnic-15-1024x768.jpg",
+          "alt": "Ginny Grant with Key Club members",
+          "objectPosition": "center center"
+        },
+        {
+          "src": "/assets/uploads/2024/09/Picnic-22-768x1024.jpg",
+          "alt": "2023-2024 Club President John Conrad",
+          "objectPosition": "top center"
+        }
+      ]
+    },
+    {
+      "id": "members-in-service",
+      "title": "Members in Service",
+      "date": "2024-01-01",
+      "category": "Service",
+      "eventMeta": "Ongoing - Serving the Winchester community year-round",
+      "headerColor": "blue",
+      "facebookUrl": "",
+      "photos": [
+        {
+          "src": "/assets/uploads/2023/02/Conrad.jpeg",
+          "alt": "Kiwanis Club member John Conrad in service",
+          "objectPosition": "top center"
+        },
+        {
+          "src": "/assets/uploads/2024/09/Bruce-3-701x1024.jpg",
+          "alt": "Kiwanis Club member Bruce in service",
+          "objectPosition": "top center"
+        }
+      ]
+    }
+  ],
+  "newsletters": [
+    {
+      "id": "2026-01",
+      "title": "January 2026",
+      "date": "2026-01-01",
+      "year": "2026",
+      "pdfUrl": "/assets/uploads/2026/01/2026-01-Jan-Kourier-rev1.pdf"
+    },
+    {
+      "id": "2025-12",
+      "title": "December 2025",
+      "date": "2025-12-01",
+      "year": "2025",
+      "pdfUrl": "/assets/uploads/2026/01/December-2025-newsletter.pdf"
+    },
+    {
+      "id": "2025-11",
+      "title": "November 2025",
+      "date": "2025-11-01",
+      "year": "2025",
+      "pdfUrl": "/assets/uploads/2026/01/November-2025-Newsletter.pdf"
+    },
+    {
+      "id": "2025-09",
+      "title": "September 2025",
+      "date": "2025-09-01",
+      "year": "2025",
+      "pdfUrl": "/assets/uploads/2025/09/September-2025.pdf"
+    },
+    {
+      "id": "2025-08",
+      "title": "August 2025",
+      "date": "2025-08-01",
+      "year": "2025",
+      "pdfUrl": "/assets/uploads/2025/08/August-2025-newsletter.pdf"
+    },
+    {
+      "id": "2025-07",
+      "title": "July 2025",
+      "date": "2025-07-01",
+      "year": "2025",
+      "pdfUrl": "/assets/uploads/2025/07/July-2025-Newsletter.pdf"
+    },
+    {
+      "id": "2025-06",
+      "title": "June 2025",
+      "date": "2025-06-01",
+      "year": "2025",
+      "pdfUrl": "/assets/uploads/2025/06/June-2025.pdf"
+    },
+    {
+      "id": "2025-05",
+      "title": "May 2025",
+      "date": "2025-05-01",
+      "year": "2025",
+      "pdfUrl": "/assets/uploads/2025/05/May-2025.pdf"
+    },
+    {
+      "id": "2025-04",
+      "title": "April 2025",
+      "date": "2025-04-01",
+      "year": "2025",
+      "pdfUrl": "/assets/uploads/2025/04/April-2025-newsletter.pdf"
+    },
+    {
+      "id": "2025-03",
+      "title": "March 2025",
+      "date": "2025-03-01",
+      "year": "2025",
+      "pdfUrl": "/assets/uploads/2025/03/March-2025.pdf"
+    },
+    {
+      "id": "2025-02",
+      "title": "February 2025",
+      "date": "2025-02-01",
+      "year": "2025",
+      "pdfUrl": "/assets/uploads/2025/01/February-2025.pdf"
+    },
+    {
+      "id": "2025-01",
+      "title": "January 2025",
+      "date": "2025-01-01",
+      "year": "2025",
+      "pdfUrl": "/assets/uploads/2025/01/January-2025.pdf"
+    }
+  ],
+  "speakers": {
+    "intro": "Each week at our Wednesday noon meeting, we hear from community leaders, local organizations, and subject-matter experts on topics ranging from local government to health, business, and service opportunities.",
+    "upcoming": [],
+    "recent": []
+  }
+}

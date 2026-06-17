@@ -78,11 +78,95 @@ collections:
           - { label: "Site Description", name: description, widget: text, hint: "Used in search/social metadata and short summaries." }
 
   # ── Events ────────────────────────────────────────
+  - name: editor_content
+    label: "🗓️ Live Events, Newsletters & Speakers"
+    icon: edit_calendar
+    description: "The live data used by the small editor portal and the public Events/Speakers sections."
+    delete: false
+    editor:
+      preview: true
+    files:
+      - name: editorContent
+        label: "Editor Portal Content"
+        file: src/_data/editorContent.json
+        preview_path: /events/
+        fields:
+          - label: "Events"
+            name: events
+            widget: list
+            summary: "{{fields.title}} - {{fields.date}}"
+            fields:
+              - { label: "ID", name: id, widget: string, required: false }
+              - { label: "Event Title", name: title, widget: string }
+              - { label: "Event Date", name: date, widget: datetime, format: "YYYY-MM-DD", date_format: "MMMM D, YYYY", time_format: false }
+              - { label: "Category", name: category, widget: string }
+              - { label: "Event Details Line", name: eventMeta, widget: string }
+              - label: "Card Header Color"
+                name: headerColor
+                widget: select
+                options:
+                  - { label: "Blue", value: blue }
+                  - { label: "Gold", value: gold }
+                default: blue
+              - { label: "Facebook Link", name: facebookUrl, widget: string, type: url, required: false }
+              - label: "Photos"
+                name: photos
+                widget: list
+                required: false
+                fields:
+                  - { label: "Photo", name: src, widget: image }
+                  - { label: "Alt Text", name: alt, widget: string }
+                  - label: "Photo Crop Focus"
+                    name: objectPosition
+                    widget: select
+                    required: false
+                    options:
+                      - { label: "Center", value: "center center" }
+                      - { label: "Top", value: "top center" }
+                      - { label: "Bottom", value: "bottom center" }
+                      - { label: "Left", value: "center left" }
+                      - { label: "Right", value: "center right" }
+          - label: "Newsletters"
+            name: newsletters
+            widget: list
+            summary: "{{fields.title}} - {{fields.date}}"
+            fields:
+              - { label: "ID", name: id, widget: string, required: false }
+              - { label: "Newsletter Title", name: title, widget: string }
+              - { label: "Publication Date", name: date, widget: datetime, format: "YYYY-MM-DD", date_format: "MMMM YYYY", time_format: false }
+              - { label: "Year", name: year, widget: string, required: false }
+              - { label: "PDF File", name: pdfUrl, widget: file, media_folder: /src/assets/uploads/newsletters, public_folder: /assets/uploads/newsletters }
+          - label: "Speakers"
+            name: speakers
+            widget: object
+            fields:
+              - { label: "Speaker Section Intro", name: intro, widget: markdown, buttons: [bold, italic, link], editor_components: [] }
+              - label: "Upcoming Speakers"
+                name: upcoming
+                widget: list
+                required: false
+                summary: "{{fields.date}} - {{fields.name}}"
+                fields: &speaker_fields
+                  - { label: "ID", name: id, widget: string, required: false }
+                  - { label: "Date", name: date, widget: datetime, format: "YYYY-MM-DD", date_format: "MMMM D, YYYY", time_format: false, required: false }
+                  - { label: "Name", name: name, widget: string, required: false }
+                  - { label: "Organization", name: organization, widget: string, required: false }
+                  - { label: "Topic", name: topic, widget: string, required: false }
+                  - { label: "Title/Role", name: title, widget: string, required: false }
+                  - { label: "Location/Time", name: meta, widget: string, required: false }
+                  - { label: "Description", name: description, widget: markdown, buttons: [bold, italic, link], editor_components: [], required: false }
+              - label: "Recent & Past Guests"
+                name: recent
+                widget: list
+                required: false
+                summary: "{{fields.date}} - {{fields.name}}"
+                fields: *speaker_fields
+
   - name: events
-    label: "📸 Events"
+    label: "📸 Legacy Events (not live)"
     label_singular: "Event"
     icon: photo_camera
-    description: "Add event recaps and photo galleries. Uploaded images are stored under `/assets/uploads/events/`."
+    description: "Legacy event files kept for reference. The live public page now uses 'Live Events, Newsletters & Speakers'."
     folder: src/content/events
     media_folder: /src/assets/uploads/events
     public_folder: /assets/uploads/events
@@ -138,10 +222,10 @@ collections:
 
   # ── Newsletters ────────────────────────────────────
   - name: newsletters
-    label: "📰 Newsletters"
+    label: "📰 Legacy Newsletters (not live)"
     label_singular: "Newsletter"
     icon: article
-    description: "Upload PDF newsletters. Files are stored under `/assets/uploads/newsletters/`."
+    description: "Legacy newsletter files kept for reference. The live public page now uses 'Live Events, Newsletters & Speakers'."
     folder: src/content/newsletters
     media_folder: /src/assets/uploads/newsletters
     public_folder: /assets/uploads/newsletters

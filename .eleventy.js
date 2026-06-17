@@ -33,6 +33,21 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addFilter("markdownInline", (value) =>
     markdown.renderInline(value || "")
   );
+  eleventyConfig.addFilter("json", (value) => JSON.stringify(value || null));
+  eleventyConfig.addFilter("groupNewslettersByYear", (items) => {
+    const byYear = {};
+    for (const item of items || []) {
+      const year = String(item.year || item.date || "").slice(0, 4) || "Archive";
+      if (!byYear[year]) byYear[year] = [];
+      byYear[year].push(item);
+    }
+    return Object.entries(byYear)
+      .sort(([a], [b]) => parseInt(b, 10) - parseInt(a, 10))
+      .map(([year, entries]) => ({
+        year,
+        items: entries.sort((a, b) => String(b.date || "").localeCompare(String(a.date || ""))),
+      }));
+  });
 
   // Sort newsletters by date descending, grouped by year
   eleventyConfig.addCollection("newslettersByYear", function (collectionApi) {

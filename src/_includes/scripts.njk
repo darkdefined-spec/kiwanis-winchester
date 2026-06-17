@@ -52,6 +52,21 @@
     }
   });
 
+  // Hidden editor doorway. Test mode lets the board demo the portal without publishing changes.
+  const logoLink = document.querySelector('.nav-logo-link');
+  let logoTapCount = 0;
+  let logoTapTimer = null;
+  logoLink?.addEventListener('click', function(e) {
+    logoTapCount += 1;
+    window.clearTimeout(logoTapTimer);
+    logoTapTimer = window.setTimeout(function() { logoTapCount = 0; }, 1400);
+    if (logoTapCount >= 5) {
+      e.preventDefault();
+      logoTapCount = 0;
+      window.location.href = '/editor/?editorTest=1';
+    }
+  });
+
   // Scroll reveal
   const revealObserver = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); } });

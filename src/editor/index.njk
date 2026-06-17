@@ -1,0 +1,156 @@
+---
+layout: false
+permalink: /editor/
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Kiwanis Editor Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/editor.css">
+</head>
+<body>
+  <main class="editor-shell">
+    <section class="editor-login" id="login-panel">
+      <div class="brand-lockup">
+        <img src="/assets/uploads/2023/03/kiwanis-seal.png" alt="" aria-hidden="true">
+        <div>
+          <p class="eyebrow">Kiwanis Club of Winchester</p>
+          <h1>Editor Portal</h1>
+        </div>
+      </div>
+      <p class="login-copy">A small editor for events, newsletters, and meeting speakers. This does not edit the full site.</p>
+      <form id="otp-request-form" class="auth-card">
+        <label for="editor-email">Email address</label>
+        <div class="inline-row">
+          <input id="editor-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+          <button type="submit">Send Code</button>
+        </div>
+        <p class="hint">Only approved editor emails can receive a working code.</p>
+      </form>
+      <form id="otp-verify-form" class="auth-card hidden">
+        <label for="editor-code">One-time code</label>
+        <div class="inline-row">
+          <input id="editor-code" name="code" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="123456" required>
+          <button type="submit">Log In</button>
+        </div>
+        <p class="hint">Codes expire quickly. Request a fresh code if needed.</p>
+      </form>
+      <div id="auth-status" class="status-note"></div>
+    </section>
+
+    <section class="editor-app hidden" id="editor-app">
+      <header class="app-header">
+        <div class="brand-lockup compact">
+          <img src="/assets/uploads/2023/03/kiwanis-seal.png" alt="" aria-hidden="true">
+          <div>
+            <p class="eyebrow">Limited editor</p>
+            <h1>Events, Newsletters & Speakers</h1>
+          </div>
+        </div>
+        <div class="header-actions">
+          <a href="/events/" target="_blank" rel="noopener">View Events Page</a>
+          <a href="/what-we-do/#guest-speakers" target="_blank" rel="noopener">View Speakers</a>
+          <button type="button" id="logout-btn" class="ghost">Log Out</button>
+        </div>
+      </header>
+
+      <div class="editor-grid">
+        <aside class="side-panel">
+          <button class="tab-button active" data-tab="events">Events</button>
+          <button class="tab-button" data-tab="newsletters">Newsletters</button>
+          <button class="tab-button" data-tab="speakers">Speakers</button>
+          <button class="tab-button" data-tab="history">Save History</button>
+          <div class="revert-note">
+            <strong>Mistake safety:</strong>
+            <span>Each save creates a GitHub commit. A maintainer can restore a previous version or revert a bad save.</span>
+          </div>
+        </aside>
+
+        <form id="editor-form" class="content-panel">
+          <div id="events-tab" class="tab-panel active">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">Recent Events</p>
+                <h2>Event Cards</h2>
+              </div>
+              <button type="button" data-add="event">Add Event</button>
+            </div>
+            <div id="events-list" class="item-list"></div>
+          </div>
+
+          <div id="newsletters-tab" class="tab-panel">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">Newsletter Archive</p>
+                <h2>Newsletter PDFs</h2>
+              </div>
+              <button type="button" data-add="newsletter">Add Newsletter</button>
+            </div>
+            <div id="newsletters-list" class="item-list"></div>
+          </div>
+
+          <div id="speakers-tab" class="tab-panel">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">Wednesday Meetings</p>
+                <h2>Speakers</h2>
+              </div>
+            </div>
+            <label class="field full">
+              <span>Section intro</span>
+              <textarea id="speakers-intro" rows="3"></textarea>
+            </label>
+            <div class="split-panel">
+              <section>
+                <div class="mini-head">
+                  <h3>Upcoming Speakers</h3>
+                  <button type="button" data-add="upcomingSpeaker">Add</button>
+                </div>
+                <div id="upcoming-speakers-list" class="item-list compact-list"></div>
+              </section>
+              <section>
+                <div class="mini-head">
+                  <h3>Recent & Past Guests</h3>
+                  <button type="button" data-add="recentSpeaker">Add</button>
+                </div>
+                <div id="recent-speakers-list" class="item-list compact-list"></div>
+              </section>
+            </div>
+          </div>
+
+          <div id="history-tab" class="tab-panel">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">Audit Trail</p>
+                <h2>Recent Saves</h2>
+              </div>
+              <button type="button" id="refresh-history">Refresh</button>
+            </div>
+            <div class="history-box">
+              <p>The editor saves to GitHub. If someone makes a mistake, a site maintainer can restore an earlier version from this commit history.</p>
+              <div id="history-list" class="history-list"></div>
+            </div>
+          </div>
+
+          <footer class="save-bar">
+            <div>
+              <strong id="dirty-label">No unsaved changes</strong>
+              <span id="save-status">Loaded content will publish through GitHub and Cloudflare Pages.</span>
+            </div>
+            <button type="submit" id="save-btn">Save & Publish</button>
+          </footer>
+        </form>
+      </div>
+    </section>
+  </main>
+  <template id="event-template"></template>
+  <script type="application/json" id="editor-initial-content">{{ editorContent | json | safe }}</script>
+  <script src="/assets/js/editor-portal.js" defer></script>
+</body>
+</html>

@@ -131,21 +131,61 @@ navActive: what-we-do
       <div class="section-header text-center reveal" style="max-width:640px; margin:0 auto 56px;">
         <span class="eyebrow-rule center" style="margin-bottom:16px;">Wednesday Meetings</span>
         <h2 id="speakers-heading" class="section-title" style="margin-top:0;">Guest Speakers &amp; Programs</h2>
-        <p class="section-body" style="margin:0 auto;">Each week at our Wednesday noon meeting, we hear from community leaders, local organizations, and subject-matter experts on topics ranging from local government to health, business, and service opportunities.</p>
+        <p class="section-body" style="margin:0 auto;">{{ editorContent.speakers.intro | markdownInline | safe }}</p>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-start reveal">
         <div>
           <h3 style="font-size:1.1rem; font-family:var(--font-display); font-weight:700; color:var(--kw-blue); margin-bottom:20px; display:flex; align-items:center; gap:10px;"><span style="width:8px; height:8px; background:var(--kw-gold); border-radius:50%; flex-shrink:0; display:inline-block;"></span>Upcoming Speakers</h3>
+          {% if editorContent.speakers.upcoming and editorContent.speakers.upcoming.length %}
+          <div style="display:grid; gap:12px;">
+            {% for speaker in editorContent.speakers.upcoming %}
+            <article style="background:white; border-radius:14px; padding:18px 20px; border:1px solid var(--kw-border);">
+              <p style="font-size:0.78rem; color:var(--kw-blue); font-weight:800; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:5px;">{{ speaker.date }}{% if speaker.meta %} · {{ speaker.meta }}{% endif %}</p>
+              <h4 style="font-size:1.02rem; color:var(--kw-navy); margin-bottom:4px;">{{ speaker.name if speaker.name else speaker.topic }}</h4>
+              {% if speaker.organization or speaker.title %}
+              <p style="font-size:0.86rem; color:var(--kw-muted); margin-bottom:8px;">{{ speaker.title }}{% if speaker.title and speaker.organization %}, {% endif %}{{ speaker.organization }}</p>
+              {% endif %}
+              {% if speaker.topic and speaker.name %}
+              <p style="font-weight:700; color:var(--kw-dark); margin-bottom:6px;">{{ speaker.topic }}</p>
+              {% endif %}
+              {% if speaker.description %}
+              <p style="font-size:0.9rem; color:var(--kw-muted); line-height:1.6;">{{ speaker.description | markdownInline | safe }}</p>
+              {% endif %}
+            </article>
+            {% endfor %}
+          </div>
+          {% else %}
           <div style="background:white; border-radius:14px; padding:20px 22px; border:1px solid var(--kw-border); display:flex; align-items:center; gap:16px;">
             <div style="width:44px; height:44px; background:var(--kw-blue-light); border-radius:10px; flex-shrink:0; display:flex; align-items:center; justify-content:center; color:var(--kw-blue);"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
             <div><p style="font-weight:600; color:var(--kw-navy); margin-bottom:2px; font-size:0.95rem;">Speaker announcements coming soon</p><p style="font-size:0.85rem; color:var(--kw-muted);">Check back or join us Wednesday at noon</p></div>
           </div>
+          {% endif %}
         </div>
         <div>
           <h3 style="font-size:1.1rem; font-family:var(--font-display); font-weight:700; color:var(--kw-navy); margin-bottom:20px; display:flex; align-items:center; gap:10px;"><span style="width:8px; height:8px; background:var(--kw-blue); border-radius:50%; flex-shrink:0; display:inline-block;"></span>Recent &amp; Past Guests</h3>
+          {% if editorContent.speakers.recent and editorContent.speakers.recent.length %}
+          <div style="display:grid; gap:12px;">
+            {% for speaker in editorContent.speakers.recent %}
+            <article style="background:white; border-radius:14px; padding:18px 20px; border:1px solid var(--kw-border);">
+              <p style="font-size:0.78rem; color:var(--kw-blue); font-weight:800; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:5px;">{{ speaker.date }}{% if speaker.meta %} · {{ speaker.meta }}{% endif %}</p>
+              <h4 style="font-size:1.02rem; color:var(--kw-navy); margin-bottom:4px;">{{ speaker.name if speaker.name else speaker.topic }}</h4>
+              {% if speaker.organization or speaker.title %}
+              <p style="font-size:0.86rem; color:var(--kw-muted); margin-bottom:8px;">{{ speaker.title }}{% if speaker.title and speaker.organization %}, {% endif %}{{ speaker.organization }}</p>
+              {% endif %}
+              {% if speaker.topic and speaker.name %}
+              <p style="font-weight:700; color:var(--kw-dark); margin-bottom:6px;">{{ speaker.topic }}</p>
+              {% endif %}
+              {% if speaker.description %}
+              <p style="font-size:0.9rem; color:var(--kw-muted); line-height:1.6;">{{ speaker.description | markdownInline | safe }}</p>
+              {% endif %}
+            </article>
+            {% endfor %}
+          </div>
+          {% else %}
           <div style="background:white; border-radius:14px; padding:18px 22px; border:1px solid var(--kw-border);">
             <p style="font-size:0.875rem; color:var(--kw-muted); font-style:italic;">Past speaker information will be listed here as the club shares details. If you've presented at a Winchester Kiwanis meeting and would like to be listed, <a href="/contact/" style="color:var(--kw-blue); font-weight:600;">contact us.</a></p>
           </div>
+          {% endif %}
         </div>
       </div>
       <div class="text-center reveal" style="margin-top:48px;">
