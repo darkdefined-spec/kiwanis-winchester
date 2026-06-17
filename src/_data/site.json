@@ -23,5 +23,9 @@
   "logoWhite": "assets/uploads/2023/03/logo-1C-e1677883446960.png",
   "defaultImage": "https://winvakiw.org/assets/uploads/2023/03/logo-1C-e1677883446960.png",
   "founded": "1922",
-  "description": "The Kiwanis Club of Winchester, VA — a nonprofit service club chartered in 1922, dedicated to improving the lives of children in our community."
+  "description": "The Kiwanis Club of Winchester, VA — a nonprofit service club chartered in 1922, dedicated to improving the lives of children in our community.",
+  "footer": {
+    "description": "The Kiwanis Club of Winchester, Virginia — a nonprofit service club chartered in 1922, dedicated to changing the world one child and one community at a time.",
+    "affiliation": "Part of Kiwanis International • WIN-VA District"
+  }
 }

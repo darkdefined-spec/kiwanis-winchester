@@ -1,5 +1,6 @@
 <!-- ═══ FOOTER ═══ -->
 <footer id="site-footer" aria-label="Site footer">
+  {% set footer = site.footer or {} %}
   <div class="kw-container">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10" style="margin-bottom:0;">
       <!-- Brand -->
@@ -14,7 +15,7 @@
           </div>
         </a>
         <p class="footer-text" style="max-width:360px; margin-bottom:24px;">
-          The Kiwanis Club of Winchester, Virginia — a nonprofit service club chartered in 1922, dedicated to changing the world one child and one community at a time.
+          {{ footer.description or "The Kiwanis Club of Winchester, Virginia — a nonprofit service club chartered in 1922, dedicated to changing the world one child and one community at a time." }}
         </p>
         <a href="{{ site.facebook }}" target="_blank" rel="noopener noreferrer"
            class="footer-link" style="display:inline-flex; align-items:center; gap:8px; font-weight:600;">
@@ -57,7 +58,7 @@
 
     <div style="display:flex; flex-direction:column; gap:8px; align-items:center; text-align:center;">
       <p style="color:rgba(255,255,255,0.35); font-size:0.85rem;">&copy; {{ site.name }}. All rights reserved.</p>
-      <p style="color:rgba(255,255,255,0.22); font-size:0.8rem;">Part of Kiwanis International &bull; WIN-VA District</p>
+      <p style="color:rgba(255,255,255,0.22); font-size:0.8rem;">{{ footer.affiliation or "Part of Kiwanis International • WIN-VA District" }}</p>
     </div>
   </div>
 </footer>

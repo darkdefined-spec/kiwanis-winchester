@@ -76,12 +76,19 @@ collections:
               - { label: "Location Name", name: location, widget: string }
               - { label: "Street Address", name: street, widget: string }
           - { label: "Site Description", name: description, widget: text, hint: "Used in search/social metadata and short summaries." }
+          - label: "Footer"
+            name: footer
+            widget: object
+            collapsed: false
+            fields:
+              - { label: "Footer Description", name: description, widget: text, hint: "Short paragraph shown below the footer logo." }
+              - { label: "Affiliation Line", name: affiliation, widget: string, hint: "Small line shown at the very bottom of the footer." }
 
-  # ── Events ────────────────────────────────────────
+  # ── Current Live Updates ──────────────────────────
   - name: editor_content
-    label: "🗓️ Live Events, Newsletters & Speakers"
+    label: "CURRENT: Events, Newsletters & Speakers"
     icon: edit_calendar
-    description: "The live data used by the small editor portal and the public Events/Speakers sections."
+    description: "This is the live data used by the public Events page, newsletter archive, speaker sections, and the smaller /editor portal."
     delete: false
     editor:
       preview: true
@@ -161,87 +168,6 @@ collections:
                 required: false
                 summary: "{{fields.date}} - {{fields.name}}"
                 fields: *speaker_fields
-
-  - name: events
-    label: "📸 Legacy Events (not live)"
-    label_singular: "Event"
-    icon: photo_camera
-    description: "Legacy event files kept for reference. The live public page now uses 'Live Events, Newsletters & Speakers'."
-    folder: src/content/events
-    media_folder: /src/assets/uploads/events
-    public_folder: /assets/uploads/events
-    create: true
-    slug: "{{slug}}"
-    summary: "{{title}} — {{date}}"
-    thumbnail: photos.*.src
-    preview_path: /events/
-    sortable_fields: [date, title]
-    view_groups:
-      - label: "By year"
-        field: date
-        pattern: \d{4}
-    view_filters:
-      - label: "Gold Header"
-        field: headerColor
-        pattern: gold
-      - label: "Blue Header"
-        field: headerColor
-        pattern: blue
-    fields:
-      - { label: "Event Title", name: title, widget: string }
-      - { label: "Event Date", name: date, widget: datetime, format: "YYYY-MM-DD", date_format: "MMMM D, YYYY", time_format: false }
-      - { label: "Category", name: category, widget: string, hint: "Example: Community Event, Service, Fundraiser" }
-      - { label: "Event Details Line", name: eventMeta, widget: string, hint: "Example: August 14, 2024 · Jim Barnett Park · Winchester, VA" }
-      - label: "Card Header Color"
-        name: headerColor
-        widget: select
-        options:
-          - { label: "🔵 Blue", value: blue }
-          - { label: "🟡 Gold", value: gold }
-        default: blue
-      - { label: "Facebook Link", name: facebookUrl, widget: string, type: url, required: false, hint: "Optional link to the Facebook post or album." }
-      - label: "Photos"
-        name: photos
-        widget: list
-        required: false
-        summary: "{{fields.alt}}"
-        fields:
-          - { label: "Photo", name: src, widget: image, hint: "Upload or select an event photo. Landscape photos usually work best." }
-          - { label: "Alt Text", name: alt, widget: string, hint: "Describe the photo for visitors using screen readers." }
-          - label: "Photo Crop Focus"
-            name: objectPosition
-            widget: select
-            required: false
-            hint: "Choose where the important part of the photo sits."
-            options:
-              - { label: "Center", value: "center center" }
-              - { label: "Top", value: "top center" }
-              - { label: "Bottom", value: "bottom center" }
-              - { label: "Left", value: "center left" }
-              - { label: "Right", value: "center right" }
-
-  # ── Newsletters ────────────────────────────────────
-  - name: newsletters
-    label: "📰 Legacy Newsletters (not live)"
-    label_singular: "Newsletter"
-    icon: article
-    description: "Legacy newsletter files kept for reference. The live public page now uses 'Live Events, Newsletters & Speakers'."
-    folder: src/content/newsletters
-    media_folder: /src/assets/uploads/newsletters
-    public_folder: /assets/uploads/newsletters
-    create: true
-    slug: "{{year}}-{{month}}"
-    summary: "{{title}} ({{date}})"
-    preview_path: /events/#newsletters
-    sortable_fields: [date, title]
-    view_groups:
-      - label: "By year"
-        field: date
-        pattern: \d{4}
-    fields:
-      - { label: "Newsletter Title", name: title, widget: string, hint: "Example: January 2026" }
-      - { label: "Publication Date", name: date, widget: datetime, format: "YYYY-MM-DD", date_format: "MMMM YYYY", time_format: false }
-      - { label: "PDF File", name: pdfUrl, widget: file, media_folder: /src/assets/uploads/newsletters, public_folder: /assets/uploads/newsletters, hint: "Upload the PDF newsletter file." }
 
   # ── Pages (Editable Content Blocks) ───────────────
   - name: pages
