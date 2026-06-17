@@ -15,11 +15,11 @@ The public pages read from `src/_data/editorContent.json`, so edits in the porta
 
 ## Hidden Doorway
 
-Editors can visit `/editor/` directly. The navbar logo also opens the editor after five quick clicks.
+Editors can visit `/editor/` directly.
 
-For the board demo, the logo shortcut currently opens `/editor/?editorTest=1`. Test mode lets someone type anything into the login box and preview the editor interface without publishing changes.
+For the board demo, `/editor/` opens in test mode on the Cloudflare `pages.dev` preview domain. Test mode lets someone type anything into the login box and preview the editor interface without publishing changes.
 
-The logo click is only a doorway. It is not the security layer. Security comes from email OTP login, allowed email checks, and server-side GitHub commits. When production editor access is ready, change the shortcut in `src/_includes/scripts.njk` from `/editor/?editorTest=1` back to `/editor/`.
+Security comes from email OTP login, allowed email checks, and server-side GitHub commits. When production editor access is ready on the real domain, leave the editor at `/editor/` and configure the required Cloudflare secrets below.
 
 ## Required Cloudflare Environment Variables
 

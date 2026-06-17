@@ -12,6 +12,7 @@
   const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
   const IS_TEST_LOGIN =
     ['localhost', '127.0.0.1', '0.0.0.0'].includes(window.location.hostname) ||
+    window.location.hostname.endsWith('.pages.dev') ||
     window.location.search.includes('editorTest=1');
 
   function uid(prefix) {
