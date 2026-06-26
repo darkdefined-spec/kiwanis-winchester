@@ -1,212 +1,130 @@
-# Kiwanis Website — CMS & Deployment Setup Guide
+# Kiwanis Website Editing Setup
 
-This document covers everything needed to take the site from local files to a fully live, CMS-editable website. Complete the steps in order.
+This site now uses native editing portals instead of Sveltia CMS.
 
----
+## Editing Model
 
-## Overview of the Stack
+| Portal | Route | Intended users | Scope |
+|---|---|---|---|
+| Admin Portal | `/admin/` | Trusted site administrators | Site settings and page-level JSON content |
+| Editor Portal | `/editor/` | Routine content editors | Events, newsletter PDFs, and speakers |
+
+Both portals save through Cloudflare Pages Functions. A publish creates GitHub commits, then Cloudflare Pages rebuilds the static site.
+
+The Admin Portal includes a live preview. Admins can move through pages, click highlighted text or images, stage changes into a draft, then publish the full draft when finished.
+
+The current public pages are also covered by `src/_data/siteEdits.json`, a generated visual-edit manifest. That manifest captures visible text, images, and page hero backgrounds from the current rendered site so hardcoded template content can still be edited from the Admin Portal.
+
+## Stack
 
 | Layer | Tool | Purpose |
 |---|---|---|
-| Static site generator | Eleventy (11ty) | Converts templates + Markdown into HTML |
-| CMS admin UI | Sveltia CMS | WordPress-like editor at `/admin/` |
-| Hosting | Cloudflare Pages | Rebuilds site on every GitHub push |
-| Content storage | GitHub | All content edits are git commits |
-| CMS authentication | Cloudflare Worker (sveltia-cms-auth) | GitHub OAuth proxy |
+| Static site generator | Eleventy | Converts templates and JSON content into HTML |
+| Hosting | Cloudflare Pages | Serves the static site and rebuilds on GitHub commits |
+| Content storage | GitHub | Versioned content, uploads, and rollback history |
+| Authentication | Email OTP | Approved emails receive one-time login codes |
+| Email delivery | Resend | Sends editor/admin login codes |
 
----
+## Required Cloudflare Environment Variables
 
-## Step 1 — Create the GitHub Repository
-
-1. Go to [github.com](https://github.com) and sign in (or create an account).
-2. Click **New repository**.
-3. Name it `kiwanis-winchester` (or any name you prefer).
-4. Set it to **Public** (required for Cloudflare Pages free tier; private works on paid plans).
-5. Do **not** initialize with a README — the repo already has files.
-6. Click **Create repository**.
-7. Copy the remote URL shown (e.g. `https://github.com/YOUR_USERNAME/kiwanis-winchester.git`).
-
----
-
-## Step 2 — Push the Code to GitHub
-
-Open Terminal and run:
-
-```bash
-cd /Users/cameronanderson/Desktop/Kiwanis/website
-git remote add origin https://github.com/YOUR_USERNAME/kiwanis-winchester.git
-git branch -M main
-git push -u origin main
+```text
+EDITOR_AUTH_SECRET=<long random secret>
+EDITOR_ALLOWED_EMAILS=editor1@example.com,editor2@example.com
+ADMIN_ALLOWED_EMAILS=admin1@example.com,admin2@example.com
+GITHUB_TOKEN=<fine-grained GitHub token with contents read/write for this repo>
+GITHUB_OWNER=darkdefined-spec
+GITHUB_REPO=kiwanis-winchester
+GITHUB_BRANCH=main
+RESEND_API_KEY=<email sending API key>
+EDITOR_EMAIL_FROM=Kiwanis Website <website@winvakiw.org>
+EDITOR_COMMITTER_NAME=Kiwanis Website Editor
+EDITOR_COMMITTER_EMAIL=website-editor@winvakiw.org
 ```
 
-Replace `YOUR_USERNAME` with your actual GitHub username.
+Optional for temporary demos only:
 
----
-
-## Step 3 — Connect Cloudflare Pages
-
-1. Log in to [Cloudflare Dashboard](https://dash.cloudflare.com).
-2. Go to **Workers & Pages** → **Create** → **Pages** → **Connect to Git**.
-3. Authorize GitHub and select the `kiwanis-winchester` repository.
-4. Under **Build settings**, set:
-   - **Framework preset**: None
-   - **Build command**: `npx @11ty/eleventy`
-   - **Build output directory**: `_site`
-5. Click **Save and Deploy**.
-
-Cloudflare will build and publish the site. Every future git push to `main` triggers an automatic rebuild.
-
-After the first deploy, note your Cloudflare Pages URL (e.g. `https://kiwanis-winchester.pages.dev`). You can add your custom domain (winvakiw.org) in the Pages → Custom Domains tab.
-
----
-
-## Step 4 — Create a GitHub OAuth App
-
-This is needed so the CMS can authenticate editors via GitHub login.
-
-1. Go to **GitHub** → **Settings** → **Developer settings** → **OAuth Apps** → **New OAuth App**.
-2. Fill in:
-   - **Application name**: `Kiwanis Winchester CMS`
-   - **Homepage URL**: `https://winvakiw.org` (or your Pages URL)
-   - **Authorization callback URL**: `https://YOUR_AUTH_WORKER.workers.dev/callback`
-     *(You'll fill in the worker URL after Step 5 — you can update this later)*
-3. Click **Register application**.
-4. Click **Generate a new client secret**.
-5. Save both the **Client ID** and **Client Secret** — you'll need them in Step 5.
-
----
-
-## Step 5 — Deploy the Auth Worker (sveltia-cms-auth)
-
-This Cloudflare Worker handles the GitHub OAuth flow securely.
-
-```bash
-# Install wrangler if you haven't
-npm install -g wrangler
-wrangler login
-
-# Clone and deploy the auth worker
-git clone https://github.com/sveltia/sveltia-cms-auth.git /tmp/sveltia-cms-auth
-cd /tmp/sveltia-cms-auth
-npm install
-wrangler deploy
-
-# Set your GitHub OAuth secrets
-wrangler secret put GITHUB_CLIENT_ID
-# (paste your Client ID when prompted)
-
-wrangler secret put GITHUB_CLIENT_SECRET
-# (paste your Client Secret when prompted)
+```text
+EDITOR_DEV_MODE=true
 ```
 
-After `wrangler deploy`, you'll get a worker URL like `https://sveltia-cms-auth.YOUR_SUBDOMAIN.workers.dev`.
+Do not leave `EDITOR_DEV_MODE` enabled on the live site long term. In dev mode, the OTP route can return a visible code for testing.
 
-Go back to your GitHub OAuth App and update the **Authorization callback URL** to:
-`https://sveltia-cms-auth.YOUR_SUBDOMAIN.workers.dev/callback`
+## Role Behavior
 
----
+Admins listed in `ADMIN_ALLOWED_EMAILS` can log into `/admin/` and `/editor/`.
 
-## Step 6 — Update the CMS Config
+Editors listed only in `EDITOR_ALLOWED_EMAILS` can log into `/editor/` but cannot use the admin APIs.
 
-Open `src/admin/config.yml` in the site files and replace the two placeholder values:
+The admin API only allows editing known JSON files:
 
-```yaml
-backend:
-  name: github
-  repo: YOUR_USERNAME/kiwanis-winchester   # ← replace this
-  branch: main
-  base_url: https://sveltia-cms-auth.YOUR_SUBDOMAIN.workers.dev  # ← replace this
-```
+- `src/_data/siteEdits.json`
+- `src/_data/site.json`
+- `src/_data/cms/home.json`
+- `src/_data/cms/about.json`
+- `src/_data/cms/whatWeDo.json`
+- `src/_data/cms/youthPrograms.json`
+- `src/_data/cms/pancake.json`
+- `src/_data/cms/events.json`
+- `src/_data/cms/resources.json`
+- `src/_data/cms/join.json`
+- `src/_data/cms/donate.json`
+- `src/_data/cms/contact.json`
 
-Save, commit, and push:
+The limited editor API only saves `src/_data/editorContent.json` and uploads approved image/PDF files under `src/assets/uploads/editor/`.
 
-```bash
-cd /Users/cameronanderson/Desktop/Kiwanis/website
-git add src/admin/config.yml
-git commit -m "Configure CMS with GitHub repo and auth worker"
-git push
-```
+## GitHub Token Scope
 
-Cloudflare Pages will rebuild automatically.
+Use a fine-grained GitHub token limited to this repository.
 
----
+Minimum access:
 
-## Step 7 — Log in to the CMS
+- Repository contents: read and write
+- Metadata: read
 
-1. Go to `https://winvakiw.org/admin/` (or your Pages URL + `/admin/`).
-2. Click **Login with GitHub**.
-3. Authorize the OAuth app.
-4. You'll land in the Sveltia CMS dashboard — it works like WordPress.
+Avoid broad account tokens.
 
----
+## Day-to-Day Editing
 
-## Day-to-Day Content Editing
+Use `/editor/` for recurring updates:
 
-### Adding an Event
-1. Go to `/admin/` → **Events** → **New Event**.
-2. Fill in: Title, Date, Category, Event Meta (short subtitle), Header Color, optional Facebook URL.
-3. Add photos using the photo list — each has a Source URL and Alt text.
-4. Click **Save** — this creates a git commit, which triggers a Cloudflare rebuild (takes ~30 seconds).
+- Add or edit event cards
+- Upload newsletter PDFs
+- Update upcoming and past speakers
 
-### Adding a Newsletter
-1. Go to `/admin/` → **Newsletters** → **New Newsletter**.
-2. Fill in: Title (e.g. "March 2026"), Date, and PDF URL.
-3. The PDF itself must be uploaded to `src/assets/uploads/YEAR/MONTH/` first — use the **Media** tab in the CMS or upload directly to GitHub.
-4. Save → auto-rebuild.
+Use `/admin/` for broader site edits:
 
-### Uploading Photos/PDFs
-- Use the **Media** tab in the CMS admin, or
-- Upload directly to `src/assets/uploads/` in the GitHub repo web interface.
-- Files in `src/assets/uploads/` are copied to the live site at `/assets/uploads/`.
+- Meeting details
+- Contact email and social links
+- Page headlines and body copy
+- Page hero images and alt text
+- Donation, joining, resources, and Pancake Day page copy
+- Events, newsletters, and speakers when a full administrator needs access
 
-### Editing Site-Wide Settings
-1. Go to `/admin/` → **Settings** → **Site Settings**.
-2. Edit meeting info, contact email, address, social links, etc.
-3. Save → rebuild.
+## Admin Live Editing
 
----
+1. Log in at `/admin/`.
+2. Choose a page or content file from the left sidebar.
+3. Use the live preview to click highlighted text or images.
+4. Edit the selected value in the inspector.
+5. Click **Stage Change**.
+6. Continue through other pages/files as needed.
+7. Click **Publish Draft** when all edits are ready.
+
+The structured field editor remains below the preview for fields that are not easy to select visually.
+
+Important: the visual editor publishes JSON-backed changes. Page-specific CMS JSON handles structured sections, while `src/_data/siteEdits.json` covers the currently rendered hardcoded text/images. Longer term, high-value repeated sections can still be promoted into page-specific CMS JSON for cleaner structured editing.
+
+## Mistake Recovery
+
+Every save creates a GitHub commit. If someone makes a bad edit, a maintainer can restore the previous file version or revert the commit in GitHub.
 
 ## Local Development
 
-To preview changes locally before pushing:
-
 ```bash
 cd /Users/cameronanderson/Desktop/Kiwanis/website
-export PATH="/usr/local/bin:$PATH"
 npm run dev
 ```
 
-Then open `http://localhost:8080` in your browser. The site live-reloads as you edit files.
+Then open `http://localhost:8080`.
 
----
-
-## File Structure Reference
-
-```
-website/
-├── src/
-│   ├── _layouts/        # Page templates (base.njk)
-│   ├── _includes/       # Nav, footer, scripts partials
-│   ├── _data/           # site.json — global site data
-│   ├── content/
-│   │   ├── events/      # One .md file per event (managed by CMS)
-│   │   └── newsletters/ # One .md file per newsletter (managed by CMS)
-│   ├── assets/          # Images, uploads, favicons
-│   ├── css/             # Stylesheets
-│   ├── admin/           # Sveltia CMS (config.yml + index.html)
-│   ├── index.njk        # Home page
-│   ├── about.njk
-│   ├── events.njk       # Data-driven — auto-populates from content/events/
-│   ├── what-we-do.njk
-│   ├── youth-programs.njk
-│   ├── pancake-day.njk
-│   ├── resources.njk
-│   ├── join.njk
-│   ├── donate.njk
-│   └── contact.njk
-├── _site/               # Build output (auto-generated, not in git)
-├── .eleventy.js         # Eleventy configuration
-├── package.json
-├── wrangler.toml        # Cloudflare Pages config
-└── CMS-SETUP.md         # This file
-```
+The public site builds locally. The live editor/admin save APIs require Cloudflare Pages Functions and the environment variables above.

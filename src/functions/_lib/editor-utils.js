@@ -1,5 +1,20 @@
 const CONTENT_PATH = 'src/_data/editorContent.json';
 const ASSET_ROOT = 'src/assets/uploads/editor';
+const ADMIN_CONTENT_FILES = [
+  { id: 'site', label: 'Site Settings', path: 'src/_data/site.json', previewPath: '/' },
+  { id: 'home', label: 'Home Page', path: 'src/_data/cms/home.json', previewPath: '/' },
+  { id: 'about', label: 'About Page', path: 'src/_data/cms/about.json', previewPath: '/about/' },
+  { id: 'whatWeDo', label: 'What We Do Page', path: 'src/_data/cms/whatWeDo.json', previewPath: '/what-we-do/' },
+  { id: 'youthPrograms', label: 'Youth Programs Page', path: 'src/_data/cms/youthPrograms.json', previewPath: '/youth-programs/' },
+  { id: 'pancake', label: 'Pancake Day Page', path: 'src/_data/cms/pancake.json', previewPath: '/pancake-day/' },
+  { id: 'events', label: 'Events Page Copy', path: 'src/_data/cms/events.json', previewPath: '/events/' },
+  { id: 'resources', label: 'Resources Page', path: 'src/_data/cms/resources.json', previewPath: '/resources/' },
+  { id: 'join', label: 'Join Page', path: 'src/_data/cms/join.json', previewPath: '/join/' },
+  { id: 'donate', label: 'Donate Page', path: 'src/_data/cms/donate.json', previewPath: '/donate/' },
+  { id: 'contact', label: 'Contact Page', path: 'src/_data/cms/contact.json', previewPath: '/contact/' },
+  { id: 'editorContent', label: 'Events, Newsletters & Speakers', path: 'src/_data/editorContent.json', previewPath: '/events/' },
+  { id: 'siteEdits', label: 'Visual Page Edits', path: 'src/_data/siteEdits.json', previewPath: '/' },
+];
 
 function json(body, status = 200) {
   return new Response(JSON.stringify(body), {
@@ -15,17 +30,35 @@ function normalizeEmail(email) {
   return String(email || '').trim().toLowerCase();
 }
 
-function getAllowedEmails(env) {
-  return String(env.EDITOR_ALLOWED_EMAILS || '')
+function getAllowedEmailsForEnvValue(value) {
+  return String(value || '')
     .split(',')
     .map(normalizeEmail)
     .filter(Boolean);
+}
+
+function getAllowedEmails(env) {
+  return [
+    ...getAllowedEmailsForEnvValue(env.EDITOR_ALLOWED_EMAILS),
+    ...getAllowedEmailsForEnvValue(env.ADMIN_ALLOWED_EMAILS || env.EDITOR_ADMIN_EMAILS),
+  ].filter((email, index, list) => list.indexOf(email) === index);
+}
+
+function getAdminEmails(env) {
+  return getAllowedEmailsForEnvValue(env.ADMIN_ALLOWED_EMAILS || env.EDITOR_ADMIN_EMAILS);
 }
 
 function isAllowedEmail(email, env) {
   const allowed = getAllowedEmails(env);
   if (!allowed.length) return false;
   return allowed.includes(normalizeEmail(email));
+}
+
+function getRoleForEmail(email, env) {
+  const normalized = normalizeEmail(email);
+  if (getAdminEmails(env).includes(normalized)) return 'admin';
+  if (getAllowedEmailsForEnvValue(env.EDITOR_ALLOWED_EMAILS).includes(normalized)) return 'editor';
+  return '';
 }
 
 function getSecret(env) {
@@ -184,6 +217,30 @@ async function listContentCommits(env) {
   }));
 }
 
+async function listFileCommits(env, path, perPage = 8) {
+  const { branch } = getGithubConfig(env);
+  const commits = await githubFetch(env, `/commits?sha=${encodeURIComponent(branch)}&path=${encodeURIComponent(path)}&per_page=${Number(perPage) || 8}`);
+  return (Array.isArray(commits) ? commits : []).map((item) => ({
+    sha: item.sha,
+    message: item.commit?.message || '',
+    date: item.commit?.committer?.date || item.commit?.author?.date || '',
+    author: item.commit?.author?.name || item.author?.login || '',
+    url: item.html_url || '',
+  }));
+}
+
+function getAdminContentFile(fileIdOrPath) {
+  const value = String(fileIdOrPath || '').trim();
+  return ADMIN_CONTENT_FILES.find((file) => file.id === value || file.path === value) || null;
+}
+
+function validateAdminContent(content) {
+  if (!content || typeof content !== 'object' || Array.isArray(content)) {
+    throw new Error('Admin content must be a JSON object.');
+  }
+  return JSON.parse(JSON.stringify(content));
+}
+
 function encodeURIComponentPath(path) {
   return String(path).split('/').map(encodeURIComponent).join('/');
 }
@@ -262,22 +319,34 @@ async function requireEditor(request, env) {
   const payload = await verifySignedPayload(header.slice('Bearer '.length), env);
   const email = normalizeEmail(payload.email);
   if (!email || !isAllowedEmail(email, env)) throw new Error('Editor is not authorized.');
-  return { email, role: payload.role || 'editor' };
+  return { email, role: getRoleForEmail(email, env) || payload.role || 'editor' };
+}
+
+async function requireAdmin(request, env) {
+  const editor = await requireEditor(request, env);
+  if (editor.role !== 'admin') throw new Error('Admin access is required.');
+  return editor;
 }
 
 export {
   CONTENT_PATH,
+  ADMIN_CONTENT_FILES,
   json,
   normalizeEmail,
   isAllowedEmail,
+  getRoleForEmail,
   codeHash,
   signPayload,
   verifySignedPayload,
   requireEditor,
+  requireAdmin,
   readGithubFile,
   writeGithubFile,
   writeGithubBase64,
   listContentCommits,
+  listFileCommits,
+  getAdminContentFile,
   safeUploadPath,
   validateContent,
+  validateAdminContent,
 };

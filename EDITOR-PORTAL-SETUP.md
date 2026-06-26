@@ -102,8 +102,18 @@ If someone makes a mistake, a maintainer can restore the previous version of `sr
 
 This is the core answer to the continuity/revert concern: content edits are not invisible database mutations. They are versioned commits.
 
-## Relationship to Sveltia
+## Relationship to the Admin Portal
 
-Sveltia remains available for fuller site editing by trusted admins. The live event/newsletter/speaker content is exposed in Sveltia as `CURRENT: Events, Newsletters & Speakers` because the public site uses `src/_data/editorContent.json` for those sections.
+The site also includes a native admin portal at:
 
-The limited editor portal is for routine volunteers. Sveltia or GitHub is for deeper maintenance.
+`/admin/`
+
+The limited editor portal is for routine volunteers. It only edits recurring operational content: events, newsletters, and speakers.
+
+The admin portal is for trusted site administrators. It edits the broader JSON files behind page copy, page images, meeting details, contact information, and site-wide settings.
+
+Admins can use a live preview in `/admin/`: click highlighted content, stage edits into a draft, move between pages, and publish the draft when finished.
+
+The Admin Portal also uses `src/_data/siteEdits.json` to cover currently rendered hardcoded page content, so existing text and images can be edited before every section is formally moved into page-specific CMS JSON.
+
+Both portals use the same OTP login system and GitHub commit workflow. Set `ADMIN_ALLOWED_EMAILS` for full-site administrators and `EDITOR_ALLOWED_EMAILS` for limited editors.

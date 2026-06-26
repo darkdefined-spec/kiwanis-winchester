@@ -3,11 +3,126 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kiwanis CMS — Admin</title>
   <meta name="robots" content="noindex,nofollow">
+  <title>Kiwanis Admin Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/editor.css">
 </head>
 <body>
-  <!-- Sveltia CMS — drop-in replacement for Decap/Netlify CMS with better UI -->
-  <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script>
+  <main class="editor-shell admin-shell">
+    <section class="editor-login" id="login-panel">
+      <div class="brand-lockup">
+        <img src="/assets/uploads/2023/03/kiwanis-seal.png" alt="" aria-hidden="true">
+        <div>
+          <p class="eyebrow">Kiwanis Club of Winchester</p>
+          <h1>Admin Portal</h1>
+        </div>
+      </div>
+      <p class="login-copy">A site-wide editor for approved administrators. Admins can edit page copy, page images, meeting details, contact information, and other structured website settings.</p>
+      <form id="otp-request-form" class="auth-card">
+        <label for="admin-email">Email address</label>
+        <div class="inline-row">
+          <input id="admin-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+          <button type="submit">Send Code</button>
+        </div>
+        <p class="hint">Only approved admin emails can open the full-site editor.</p>
+      </form>
+      <form id="otp-verify-form" class="auth-card hidden">
+        <label for="admin-code">One-time code</label>
+        <div class="inline-row">
+          <input id="admin-code" name="code" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="123456" required>
+          <button type="submit">Log In</button>
+        </div>
+        <p class="hint">Codes expire quickly. Request a fresh code if needed.</p>
+      </form>
+      <div id="auth-status" class="status-note"></div>
+    </section>
+
+    <section class="editor-app hidden" id="admin-app">
+      <header class="app-header">
+        <div class="brand-lockup compact">
+          <img src="/assets/uploads/2023/03/kiwanis-seal.png" alt="" aria-hidden="true">
+          <div>
+            <p class="eyebrow">Full-site admin</p>
+            <h1>Website Pages & Settings</h1>
+          </div>
+        </div>
+        <div class="header-actions">
+          <a href="/editor/" target="_blank" rel="noopener">Open Limited Editor</a>
+          <a id="preview-link" href="/" target="_blank" rel="noopener">View Page</a>
+          <button type="button" id="publish-all-btn">Publish Draft</button>
+          <button type="button" id="logout-btn" class="ghost">Log Out</button>
+        </div>
+      </header>
+
+      <div class="editor-grid admin-grid">
+        <aside class="side-panel">
+          <div id="admin-tabs" class="admin-tabs"></div>
+          <div class="revert-note">
+            <strong>Mistake safety:</strong>
+            <span>Each admin save creates a GitHub commit for one JSON file. A maintainer can restore an earlier version if needed.</span>
+          </div>
+        </aside>
+
+        <form id="admin-form" class="content-panel">
+          <div class="tab-panel active admin-panel">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow" id="active-file-path">Admin content</p>
+                <h2 id="active-file-label">Loading...</h2>
+              </div>
+              <button type="button" id="reload-file">Reload</button>
+            </div>
+            <div class="live-admin-layout">
+              <section class="live-preview-shell" aria-label="Live page preview">
+                <div class="live-preview-bar">
+                  <strong id="live-preview-title">Live Preview</strong>
+                  <span>Click highlighted text or images to edit.</span>
+                </div>
+                <iframe id="live-preview" title="Live site preview"></iframe>
+              </section>
+              <aside class="live-inspector" aria-label="Selected content editor">
+                <p class="eyebrow">Selected Item</p>
+                <h3 id="selected-label">Nothing selected</h3>
+                <p id="selected-path" class="hint">Click an outlined item in the preview.</p>
+                <label class="field full" id="quick-edit-field">
+                  <span>Value</span>
+                  <textarea id="quick-edit-value" rows="7" disabled></textarea>
+                </label>
+                <div class="field full hidden" id="quick-upload-field">
+                  <span>Upload replacement image</span>
+                  <div class="upload-row">
+                    <input type="file" id="quick-upload-file" accept="image/*">
+                    <button type="button" id="quick-upload-btn">Upload Image</button>
+                  </div>
+                </div>
+                <button type="button" id="stage-selected-btn" disabled>Stage Change</button>
+                <p class="hint" id="draft-summary">No staged changes yet.</p>
+              </aside>
+            </div>
+            <details class="admin-advanced-fields">
+              <summary>Structured fields for this page</summary>
+            <div id="admin-fields" class="admin-fields"></div>
+            </details>
+            <div class="history-box admin-history">
+              <p>Recent saves for this file</p>
+              <div id="history-list" class="history-list"></div>
+            </div>
+          </div>
+
+          <footer class="save-bar">
+            <div>
+              <strong id="dirty-label">No unsaved changes</strong>
+              <span id="save-status">Stage changes as a draft, then publish when all page edits are ready.</span>
+            </div>
+            <button type="submit" id="save-btn">Stage Page</button>
+          </footer>
+        </form>
+      </div>
+    </section>
+  </main>
+  <script src="/assets/js/admin-portal.js" defer></script>
 </body>
 </html>
