@@ -49,7 +49,7 @@ EDITOR_DEV_MODE=true
 
 Do not leave `EDITOR_DEV_MODE` enabled on the live site long term. In dev mode, the OTP route can return a visible code for testing.
 
-For a no-risk Admin Portal rehearsal, open `/admin/?adminTest=1`. Demo mode accepts any email address, asks for a fake numeric OTP such as `123456`, loads the full admin interface with sample content, and never calls the live save API or creates GitHub commits.
+For a no-risk Admin Portal rehearsal, open `/admin/?demo=1` or `/admin/?adminTest=1`. Demo mode accepts any email address, asks for a fake numeric OTP such as `123456`, loads the full admin interface with sample content, and never calls the live save API or creates GitHub commits.
 
 ## Role Behavior
 
@@ -116,7 +116,7 @@ The structured field editor remains below the preview for fields that are not ea
 
 Important: the visual editor publishes JSON-backed changes. Page-specific content JSON handles structured sections, while `src/_data/siteEdits.json` covers the currently rendered hardcoded text/images. Longer term, high-value repeated sections can still be promoted into page-specific content JSON for cleaner structured editing.
 
-For board demos, use `/admin/?adminTest=1` unless you intentionally want a real publish. The test route is designed to show the login, preview, staging, and publish flow without touching the live repository.
+For board demos, use `/admin/?demo=1` unless you intentionally want a real publish. The test route is designed to show the login, preview, staging, and publish flow without touching the live repository.
 
 ## Mistake Recovery
 

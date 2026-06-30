@@ -17,7 +17,7 @@ The public pages read from `src/_data/editorContent.json`, so edits in the porta
 
 Editors can visit `/editor/` directly.
 
-For the board demo, `/editor/` opens in test mode on the Cloudflare `pages.dev` preview domain. Test mode lets someone type anything into the login box and preview the editor interface without publishing changes.
+For the board demo, `/editor/?demo=1` opens in test mode. Test mode lets someone type any email address, enter a fake numeric OTP such as `123456`, and preview the editor interface without publishing changes.
 
 To demonstrate a real publish, use:
 
@@ -120,4 +120,4 @@ The Admin Portal also uses `src/_data/siteEdits.json` to cover currently rendere
 
 Both portals use the same OTP login system and GitHub commit workflow. Set `ADMIN_ALLOWED_EMAILS` for full-site administrators and `EDITOR_ALLOWED_EMAILS` for limited editors.
 
-For a no-risk board rehearsal of the full Admin Portal, use `/admin/?adminTest=1`. That route accepts any email, asks for a fake numeric OTP such as `123456`, and keeps every change UI-only.
+For a no-risk board rehearsal, use `/admin/?demo=1` for the full Admin Portal and `/editor/?demo=1` for the limited Editor Portal. Those routes accept any email, ask for a fake numeric OTP such as `123456`, and keep every change UI-only.

@@ -14,7 +14,7 @@
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
   const params = new URLSearchParams(window.location.search);
-  const IS_TEST_LOGIN = params.has('adminTest');
+  const IS_TEST_LOGIN = params.has('adminTest') || params.has('demo');
 
   function setStatus(message, isError) {
     const authStatus = $('#auth-status');

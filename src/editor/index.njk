@@ -31,7 +31,7 @@ permalink: /editor/
           <input id="editor-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
           <button type="submit">Send Code</button>
         </div>
-        <p class="hint">Only approved editor emails can receive a working code.</p>
+        <p class="hint" id="editor-email-hint">Only approved editor emails can receive a working code.</p>
       </form>
       <form id="otp-verify-form" class="auth-card hidden">
         <label for="editor-code">One-time code</label>
@@ -39,9 +39,9 @@ permalink: /editor/
           <input id="editor-code" name="code" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="123456" required>
           <button type="submit">Log In</button>
         </div>
-        <p class="hint">Codes expire quickly. Request a fresh code if needed.</p>
+        <p class="hint" id="editor-code-hint">Codes expire quickly. Request a fresh code if needed.</p>
       </form>
-      <div id="auth-status" class="status-note"></div>
+      <div id="auth-status" class="status-note" role="status" aria-live="polite"></div>
     </section>
 
     <section class="editor-app hidden" id="editor-app">

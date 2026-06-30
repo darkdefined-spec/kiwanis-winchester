@@ -16,7 +16,8 @@
     !isLivePublishDemo &&
     (['localhost', '127.0.0.1', '0.0.0.0'].includes(window.location.hostname) ||
       window.location.hostname.endsWith('.pages.dev') ||
-      params.has('editorTest'));
+      params.has('editorTest') ||
+      params.has('demo'));
 
   function uid(prefix) {
     return `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`;
@@ -34,6 +35,14 @@
   function setDirty(value) {
     state.dirty = value;
     $('#dirty-label').textContent = value ? 'Unsaved changes' : 'No unsaved changes';
+  }
+
+  function setDemoLoginCopy() {
+    if (!IS_TEST_LOGIN) return;
+    const emailHint = $('#editor-email-hint');
+    const codeHint = $('#editor-code-hint');
+    if (emailHint) emailHint.textContent = 'Demo mode: enter any email address. No real login email will be sent.';
+    if (codeHint) codeHint.textContent = 'Demo mode: enter any fake six-digit code, such as 123456.';
   }
 
   async function api(path, options = {}) {
@@ -404,10 +413,10 @@
       event.preventDefault();
       state.email = $('#editor-email').value.trim().toLowerCase();
       if (IS_TEST_LOGIN) {
-        state.token = 'test';
-        localStorage.setItem(SESSION_KEY, state.token);
-        showApp();
-        await loadContent();
+        state.challenge = 'editor-demo-mode';
+        $('#otp-verify-form').classList.remove('hidden');
+        $('#editor-code').focus();
+        setStatus('Demo mode: enter any fake six-digit code, such as 123456.');
         return;
       }
       try {
@@ -427,6 +436,15 @@
     $('#otp-verify-form').addEventListener('submit', async (event) => {
       event.preventDefault();
       try {
+        if (IS_TEST_LOGIN) {
+          const code = $('#editor-code').value.trim();
+          if (!/^\d{4,6}$/.test(code)) throw new Error('Enter any fake numeric code to continue in demo mode.');
+          state.token = 'test';
+          localStorage.removeItem(SESSION_KEY);
+          showApp();
+          await loadContent();
+          return;
+        }
         const payload = await api('/api/editor/verify-otp', {
           method: 'POST',
           body: JSON.stringify({
@@ -565,6 +583,7 @@
     });
   }
 
+  setDemoLoginCopy();
   bindEvents();
   if (state.token) {
     if (IS_TEST_LOGIN) state.token = 'test';
