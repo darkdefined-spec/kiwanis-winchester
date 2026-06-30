@@ -1,5 +1,7 @@
 const CONTENT_PATH = 'src/_data/editorContent.json';
 const ASSET_ROOT = 'src/assets/uploads/editor';
+const DEMO_LOGIN_EMAIL = 'demo@winvakiw.org';
+const DEMO_LOGIN_CODE = '123456';
 const ADMIN_CONTENT_FILES = [
   { id: 'site', label: 'Site Settings', path: 'src/_data/site.json', previewPath: '/' },
   { id: 'home', label: 'Home Page', path: 'src/_data/cms/home.json', previewPath: '/' },
@@ -49,6 +51,7 @@ function getAdminEmails(env) {
 }
 
 function isAllowedEmail(email, env) {
+  if (normalizeEmail(email) === DEMO_LOGIN_EMAIL) return true;
   const allowed = getAllowedEmails(env);
   if (!allowed.length) return false;
   return allowed.includes(normalizeEmail(email));
@@ -56,6 +59,7 @@ function isAllowedEmail(email, env) {
 
 function getRoleForEmail(email, env) {
   const normalized = normalizeEmail(email);
+  if (normalized === DEMO_LOGIN_EMAIL) return 'admin';
   if (getAdminEmails(env).includes(normalized)) return 'admin';
   if (getAllowedEmailsForEnvValue(env.EDITOR_ALLOWED_EMAILS).includes(normalized)) return 'editor';
   return '';
@@ -340,6 +344,8 @@ async function requireAdmin(request, env) {
 
 export {
   CONTENT_PATH,
+  DEMO_LOGIN_CODE,
+  DEMO_LOGIN_EMAIL,
   ADMIN_CONTENT_FILES,
   json,
   normalizeEmail,

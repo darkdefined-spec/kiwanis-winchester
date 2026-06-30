@@ -31,6 +31,15 @@ Because `EDITOR_DEV_MODE=true` is temporarily enabled, the one-time code is show
 
 Security comes from email OTP login, allowed email checks, and server-side GitHub commits. When production editor access is ready on the real domain, leave the editor at `/editor/` and configure the required Cloudflare secrets below.
 
+Temporary live-publish board demo credential:
+
+```text
+Email: demo@winvakiw.org
+OTP: 123456
+```
+
+This opens both the Admin Portal and Editor Portal with real publish access for the demo. Remove or disable it after the demo window.
+
 ## Required Cloudflare Environment Variables
 
 Set these for the Cloudflare Pages project:

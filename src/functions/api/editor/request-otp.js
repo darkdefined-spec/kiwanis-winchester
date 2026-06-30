@@ -1,4 +1,4 @@
-import { codeHash, isAllowedEmail, json, normalizeEmail, signPayload } from '../../_lib/editor-utils.js';
+import { DEMO_LOGIN_CODE, DEMO_LOGIN_EMAIL, codeHash, isAllowedEmail, json, normalizeEmail, signPayload } from '../../_lib/editor-utils.js';
 
 function makeCode() {
   return String(Math.floor(100000 + Math.random() * 900000));
@@ -46,7 +46,7 @@ export async function onRequestPost({ request, env }) {
       return json({ ok: true, message: 'If that email is approved, a code has been sent.' });
     }
 
-    const code = makeCode();
+    const code = email === DEMO_LOGIN_EMAIL ? DEMO_LOGIN_CODE : makeCode();
     const challenge = await signPayload({
       email,
       codeHash: await codeHash(email, code, env),
@@ -54,15 +54,17 @@ export async function onRequestPost({ request, env }) {
       nonce: crypto.randomUUID(),
     }, env);
 
-    const emailResult = await sendOtpEmail(env, email, code);
+    const emailResult = email === DEMO_LOGIN_EMAIL
+      ? { sent: true, demo: true }
+      : await sendOtpEmail(env, email, code);
     if (!emailResult.sent && String(env.EDITOR_DEV_MODE || '') !== 'true') {
       throw new Error('Editor email delivery is not configured yet.');
     }
     return json({
       ok: true,
       challenge,
-      message: 'If that email is approved, a code has been sent.',
-      ...(String(env.EDITOR_DEV_MODE || '') === 'true' ? { devCode: code } : {}),
+      message: email === DEMO_LOGIN_EMAIL ? 'Demo code ready.' : 'If that email is approved, a code has been sent.',
+      ...((String(env.EDITOR_DEV_MODE || '') === 'true' || email === DEMO_LOGIN_EMAIL) ? { devCode: code } : {}),
     });
   } catch (error) {
     return json({ error: error.message || 'Unable to request editor code.' }, 500);

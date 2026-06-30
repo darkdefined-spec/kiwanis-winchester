@@ -49,6 +49,15 @@ EDITOR_DEV_MODE=true
 
 Do not leave `EDITOR_DEV_MODE` enabled on the live site long term. In dev mode, the OTP route can return a visible code for testing.
 
+Temporary live-publish demo credential:
+
+```text
+Email: demo@winvakiw.org
+OTP: 123456
+```
+
+This demo credential has admin role behavior so it can open both `/admin/` and `/editor/` and publish real GitHub-backed changes during a board presentation. Remove or disable it after the demo window.
+
 For a no-risk Admin Portal rehearsal, open `/admin/?demo=1` or `/admin/?adminTest=1`. Demo mode accepts any email address, asks for a fake numeric OTP such as `123456`, loads the full admin interface with sample content, and never calls the live save API or creates GitHub commits.
 
 ## Role Behavior
