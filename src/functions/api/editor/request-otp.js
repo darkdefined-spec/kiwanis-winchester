@@ -46,6 +46,15 @@ export async function onRequestPost({ request, env }) {
       return json({ ok: true, message: 'If that email is approved, a code has been sent.' });
     }
 
+    if (email === DEMO_LOGIN_EMAIL) {
+      return json({
+        ok: true,
+        challenge: 'kiwanis-live-demo-challenge',
+        message: 'Demo code ready.',
+        devCode: DEMO_LOGIN_CODE,
+      });
+    }
+
     const code = email === DEMO_LOGIN_EMAIL ? DEMO_LOGIN_CODE : makeCode();
     const challenge = await signPayload({
       email,

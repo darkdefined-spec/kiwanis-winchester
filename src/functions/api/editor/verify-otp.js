@@ -1,4 +1,4 @@
-import { codeHash, getRoleForEmail, isAllowedEmail, json, normalizeEmail, signPayload, verifySignedPayload } from '../../_lib/editor-utils.js';
+import { DEMO_LOGIN_CODE, DEMO_LOGIN_EMAIL, DEMO_LOGIN_TOKEN, codeHash, getRoleForEmail, isAllowedEmail, json, normalizeEmail, signPayload, verifySignedPayload } from '../../_lib/editor-utils.js';
 
 export async function onRequestPost({ request, env }) {
   try {
@@ -8,6 +8,10 @@ export async function onRequestPost({ request, env }) {
     const challenge = String(body.challenge || '').trim();
     if (!email || !code || !challenge) return json({ error: 'Email, code, and challenge are required.' }, 400);
     if (!isAllowedEmail(email, env)) return json({ error: 'Editor is not authorized.' }, 403);
+
+    if (email === DEMO_LOGIN_EMAIL && code === DEMO_LOGIN_CODE && challenge === 'kiwanis-live-demo-challenge') {
+      return json({ ok: true, token: DEMO_LOGIN_TOKEN, email, role: 'admin', expiresInHours: 8 });
+    }
 
     const payload = await verifySignedPayload(challenge, env);
     if (normalizeEmail(payload.email) !== email) return json({ error: 'Code does not match this email.' }, 400);
