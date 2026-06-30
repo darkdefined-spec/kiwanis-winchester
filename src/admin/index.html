@@ -27,7 +27,7 @@
           <input id="admin-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
           <button type="submit">Send Code</button>
         </div>
-        <p class="hint">Only approved admin emails can open the full-site editor.</p>
+        <p class="hint" id="admin-email-hint">Only approved admin emails can open the full-site editor.</p>
       </form>
       <form id="otp-verify-form" class="auth-card hidden">
         <label for="admin-code">One-time code</label>
@@ -35,9 +35,9 @@
           <input id="admin-code" name="code" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="123456" required>
           <button type="submit">Log In</button>
         </div>
-        <p class="hint">Codes expire quickly. Request a fresh code if needed.</p>
+        <p class="hint" id="admin-code-hint">Codes expire quickly. Request a fresh code if needed.</p>
       </form>
-      <div id="auth-status" class="status-note"></div>
+      <div id="auth-status" class="status-note" role="status" aria-live="polite"></div>
     </section>
 
     <section class="editor-app hidden" id="admin-app">
@@ -99,7 +99,7 @@
                   </div>
                 </div>
                 <button type="button" id="stage-selected-btn" disabled>Stage Change</button>
-                <p class="hint" id="draft-summary">No staged changes yet.</p>
+                <p class="hint" id="draft-summary" role="status" aria-live="polite">No staged changes yet.</p>
               </aside>
             </div>
             <details class="admin-advanced-fields">
@@ -115,7 +115,7 @@
           <footer class="save-bar">
             <div>
               <strong id="dirty-label">No unsaved changes</strong>
-              <span id="save-status">Stage changes as a draft, then publish when all page edits are ready.</span>
+              <span id="save-status" role="status" aria-live="polite">Stage changes as a draft, then publish when all page edits are ready.</span>
             </div>
             <button type="submit" id="save-btn">Stage Page</button>
           </footer>

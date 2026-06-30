@@ -182,6 +182,16 @@ async function readGithubFile(env, path = CONTENT_PATH) {
   };
 }
 
+async function readGithubFileAtRef(env, path = CONTENT_PATH, ref = '') {
+  const cleanRef = String(ref || '').trim();
+  if (!/^[a-f0-9]{7,40}$/i.test(cleanRef)) throw new Error('A valid commit SHA is required.');
+  const payload = await githubFetch(env, `/contents/${encodeURIComponentPath(path)}?ref=${encodeURIComponent(cleanRef)}`);
+  return {
+    sha: payload.sha,
+    text: base64ToText(payload.content || ''),
+  };
+}
+
 async function writeGithubFile(env, path, text, message, sha = null) {
   return writeGithubBase64(env, path, textToBase64(text), message, sha);
 }
@@ -341,6 +351,7 @@ export {
   requireEditor,
   requireAdmin,
   readGithubFile,
+  readGithubFileAtRef,
   writeGithubFile,
   writeGithubBase64,
   listContentCommits,

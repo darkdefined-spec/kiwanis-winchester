@@ -4,7 +4,7 @@ The site now includes a small editor portal at:
 
 `/editor/`
 
-It is intentionally not a full-site CMS. It only edits:
+It is intentionally not the full-site editor. It only edits:
 
 - Recent events
 - Newsletter PDF entries
@@ -102,6 +102,8 @@ If someone makes a mistake, a maintainer can restore the previous version of `sr
 
 This is the core answer to the continuity/revert concern: content edits are not invisible database mutations. They are versioned commits.
 
+The Editor Portal history also includes a restore action for previous content commits. Restoring creates a new GitHub commit instead of rewriting history.
+
 ## Relationship to the Admin Portal
 
 The site also includes a native admin portal at:
@@ -114,6 +116,8 @@ The admin portal is for trusted site administrators. It edits the broader JSON f
 
 Admins can use a live preview in `/admin/`: click highlighted content, stage edits into a draft, move between pages, and publish the draft when finished.
 
-The Admin Portal also uses `src/_data/siteEdits.json` to cover currently rendered hardcoded page content, so existing text and images can be edited before every section is formally moved into page-specific CMS JSON.
+The Admin Portal also uses `src/_data/siteEdits.json` to cover currently rendered hardcoded page content, so existing text and images can be edited before every section is formally moved into page-specific content JSON.
 
 Both portals use the same OTP login system and GitHub commit workflow. Set `ADMIN_ALLOWED_EMAILS` for full-site administrators and `EDITOR_ALLOWED_EMAILS` for limited editors.
+
+For a no-risk board rehearsal of the full Admin Portal, use `/admin/?adminTest=1`. That route accepts any email, asks for a fake numeric OTP such as `123456`, and keeps every change UI-only.

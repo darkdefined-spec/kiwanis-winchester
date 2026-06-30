@@ -256,6 +256,24 @@ textarea { resize: vertical; line-height: 1.5; }
   font-size: 0.9rem;
 }
 .history-row small { color: var(--kw-muted); display: block; margin-top: 3px; }
+.history-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.history-restore {
+  padding: 7px 10px;
+  border: 1px solid var(--kw-border);
+  background: white;
+  color: var(--kw-blue);
+  font-size: 0.8rem;
+}
+.history-restore:hover {
+  background: var(--kw-blue-light);
+  color: var(--kw-blue-dark);
+}
 .admin-grid {
   grid-template-columns: 300px minmax(0, 1fr);
 }

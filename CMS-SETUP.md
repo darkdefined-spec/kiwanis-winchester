@@ -1,6 +1,6 @@
 # Kiwanis Website Editing Setup
 
-This site now uses native editing portals instead of Sveltia CMS.
+This site now uses native editing portals backed by GitHub and Cloudflare.
 
 ## Editing Model
 
@@ -48,6 +48,8 @@ EDITOR_DEV_MODE=true
 ```
 
 Do not leave `EDITOR_DEV_MODE` enabled on the live site long term. In dev mode, the OTP route can return a visible code for testing.
+
+For a no-risk Admin Portal rehearsal, open `/admin/?adminTest=1`. Demo mode accepts any email address, asks for a fake numeric OTP such as `123456`, loads the full admin interface with sample content, and never calls the live save API or creates GitHub commits.
 
 ## Role Behavior
 
@@ -112,11 +114,13 @@ Use `/admin/` for broader site edits:
 
 The structured field editor remains below the preview for fields that are not easy to select visually.
 
-Important: the visual editor publishes JSON-backed changes. Page-specific CMS JSON handles structured sections, while `src/_data/siteEdits.json` covers the currently rendered hardcoded text/images. Longer term, high-value repeated sections can still be promoted into page-specific CMS JSON for cleaner structured editing.
+Important: the visual editor publishes JSON-backed changes. Page-specific content JSON handles structured sections, while `src/_data/siteEdits.json` covers the currently rendered hardcoded text/images. Longer term, high-value repeated sections can still be promoted into page-specific content JSON for cleaner structured editing.
+
+For board demos, use `/admin/?adminTest=1` unless you intentionally want a real publish. The test route is designed to show the login, preview, staging, and publish flow without touching the live repository.
 
 ## Mistake Recovery
 
-Every save creates a GitHub commit. If someone makes a bad edit, a maintainer can restore the previous file version or revert the commit in GitHub.
+Every save creates a GitHub commit. If someone makes a bad edit, the Admin Portal history can restore a known admin content file from an earlier commit. The restore creates a new GitHub commit, so the recovery is auditable too. A maintainer can also restore a previous file version or revert the commit directly in GitHub.
 
 ## Local Development
 

@@ -14,9 +14,7 @@
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
   const params = new URLSearchParams(window.location.search);
-  const IS_TEST_LOGIN =
-    params.has('adminTest') &&
-    ['localhost', '127.0.0.1', '0.0.0.0'].includes(window.location.hostname);
+  const IS_TEST_LOGIN = params.has('adminTest');
 
   function setStatus(message, isError) {
     const authStatus = $('#auth-status');
@@ -27,6 +25,14 @@
     }
     if (authStatus) authStatus.style.color = isError ? '#b42318' : '';
     if (saveStatus) saveStatus.style.color = isError ? '#b42318' : '';
+  }
+
+  function setDemoLoginCopy() {
+    if (!IS_TEST_LOGIN) return;
+    const emailHint = $('#admin-email-hint');
+    const codeHint = $('#admin-code-hint');
+    if (emailHint) emailHint.textContent = 'Demo mode: enter any email address. No real login email will be sent.';
+    if (codeHint) codeHint.textContent = 'Demo mode: enter any fake six-digit code, such as 123456.';
   }
 
   function escapeHtml(value) {
@@ -202,13 +208,17 @@
       list.innerHTML = '<p class="hint">No recent saves found yet.</p>';
       return;
     }
+    const canRestore = !(IS_TEST_LOGIN && state.token === 'test-admin');
     list.innerHTML = history.map((commit) => `
       <div class="history-row">
         <div>
           <strong>${escapeHtml(commit.message || 'Admin update')}</strong>
           <small>${escapeHtml(commit.date || '')} by ${escapeHtml(commit.author || 'Unknown')}</small>
         </div>
-        ${commit.url ? `<a href="${escapeHtml(commit.url)}" target="_blank" rel="noopener">View</a>` : ''}
+        <div class="history-actions">
+          ${commit.url ? `<a href="${escapeHtml(commit.url)}" target="_blank" rel="noopener">View</a>` : ''}
+          ${canRestore && commit.sha ? `<button type="button" class="history-restore" data-restore-sha="${escapeHtml(commit.sha)}">Restore</button>` : ''}
+        </div>
       </div>
     `).join('');
   }
@@ -270,11 +280,22 @@
     return cleanValue && cleanCandidate && cleanValue === cleanCandidate;
   }
 
+  function isVisiblePreviewElement(element) {
+    const rect = element.getBoundingClientRect();
+    if (!rect.width || !rect.height) return false;
+    const view = element.ownerDocument.defaultView;
+    if (rect.right < 0 || rect.bottom < 0 || rect.left > view.innerWidth || rect.top > view.innerHeight) return false;
+    const styles = element.ownerDocument.defaultView.getComputedStyle(element);
+    return styles.display !== 'none' && styles.visibility !== 'hidden' && styles.opacity !== '0';
+  }
+
   function matchElement(element, values) {
     if (element.dataset.adminFile && element.dataset.adminPath) return null;
+    if (!isVisiblePreviewElement(element)) return null;
 
     const tag = element.tagName.toLowerCase();
     if (tag === 'img') {
+      if (element.classList.contains('hero-bg-img')) return null;
       const src = element.getAttribute('src') || '';
       return values.find((item) => pathMatchesAsset(item.value, src));
     }
@@ -459,6 +480,15 @@
       { id: 'site', label: 'Site Settings', path: 'src/_data/site.json', previewPath: '/' },
       { id: 'home', label: 'Home Page', path: 'src/_data/cms/home.json', previewPath: '/' },
       { id: 'about', label: 'About Page', path: 'src/_data/cms/about.json', previewPath: '/about/' },
+      { id: 'whatWeDo', label: 'What We Do Page', path: 'src/_data/cms/whatWeDo.json', previewPath: '/what-we-do/' },
+      { id: 'youthPrograms', label: 'Youth Programs Page', path: 'src/_data/cms/youthPrograms.json', previewPath: '/youth-programs/' },
+      { id: 'pancake', label: 'Pancake Day Page', path: 'src/_data/cms/pancake.json', previewPath: '/pancake-day/' },
+      { id: 'events', label: 'Events Page Copy', path: 'src/_data/cms/events.json', previewPath: '/events/' },
+      { id: 'resources', label: 'Resources Page', path: 'src/_data/cms/resources.json', previewPath: '/resources/' },
+      { id: 'join', label: 'Join Page', path: 'src/_data/cms/join.json', previewPath: '/join/' },
+      { id: 'donate', label: 'Donate Page', path: 'src/_data/cms/donate.json', previewPath: '/donate/' },
+      { id: 'contact', label: 'Contact Page', path: 'src/_data/cms/contact.json', previewPath: '/contact/' },
+      { id: 'editorContent', label: 'Events, Newsletters & Speakers', path: 'src/_data/editorContent.json', previewPath: '/events/' },
       { id: 'siteEdits', label: 'Visual Page Edits', path: 'src/_data/siteEdits.json', previewPath: '/' },
     ];
     const entries = [
@@ -508,6 +538,152 @@
       {
         ...files[3],
         content: {
+          hero: {
+            image: '/assets/uploads/2026/06/WhatWeDoHero.png',
+            title: 'What We Do',
+            subtitle: 'Service projects, youth leadership, fundraising, and community support.',
+          },
+          intro: {
+            eyebrow: 'Local service',
+            title: 'Hands-on help for children and neighbors',
+            body: 'The club supports youth programs, scholarships, food security, and community partners across Winchester.',
+          },
+        },
+        history: [],
+      },
+      {
+        ...files[4],
+        content: {
+          hero: {
+            image: '/assets/uploads/2026/06/YouthProgramsHero.png',
+            title: 'Youth Programs',
+            subtitle: 'Helping students build confidence, service habits, and leadership skills.',
+          },
+          intro: {
+            title: 'Leadership starts early',
+            body1: 'Kiwanis supports student leadership through the Kiwanis family of clubs.',
+            body2: 'These programs give young people a practical path into service.',
+          },
+        },
+        history: [],
+      },
+      {
+        ...files[5],
+        content: {
+          hero: {
+            image: '/assets/uploads/2026/06/PancakeDayHero.png',
+            eyebrow: 'Pancake Day',
+            highlight: 'Breakfast',
+            lede: 'A beloved fundraiser that helps support children and families in Winchester.',
+            note: 'Final date and ticket details can be updated after board approval.',
+          },
+          event: {
+            hours: 'To be announced',
+            location: 'To be announced',
+            statusBanner: 'Event details will be published when confirmed.',
+          },
+        },
+        history: [],
+      },
+      {
+        ...files[6],
+        content: {
+          hero: {
+            image: '/assets/uploads/2024/09/Picnic-13-1024x768.jpg',
+            title: 'Events & Newsletters',
+            subtitle: 'Recent club activity, newsletters, photos, and meeting updates.',
+          },
+          eventsSection: {
+            title: 'Recent Events',
+            intro: 'Highlights from club service, fellowship, and community projects.',
+          },
+          newslettersSection: {
+            title: 'Newsletter Archive',
+            intro: 'Download recent editions of the Kiwanis Kourier.',
+          },
+        },
+        history: [],
+      },
+      {
+        ...files[7],
+        content: {
+          hero: {
+            image: '/assets/uploads/2023/02/Bright-Futures.png',
+            title: 'Resources & Support',
+            subtitle: 'Helpful links for members, partners, and community organizations.',
+          },
+          quickLinks: {
+            title: 'Common Requests',
+            intro: 'Find newsletters, support guidance, member resources, and contact paths.',
+          },
+        },
+        history: [],
+      },
+      {
+        ...files[8],
+        content: {
+          hero: {
+            image: '/assets/uploads/2026/06/KiwanisHero.png',
+            title: 'Join Our Club',
+            subtitle: 'Serve children, meet neighbors, and make Winchester stronger.',
+          },
+          why: {
+            title: 'Why Join Kiwanis',
+            intro: 'Members build friendships while doing practical service that matters locally.',
+          },
+        },
+        history: [],
+      },
+      {
+        ...files[9],
+        content: {
+          hero: {
+            image: '/assets/uploads/2026/06/WhatWeDoHero.png',
+            title: 'Donate',
+            subtitle: 'Support service projects that help children and families.',
+          },
+          main: {
+            title: 'Support the Kiwanis Club of Winchester',
+            intro: 'Donation instructions can be updated after the board approves the final process.',
+          },
+        },
+        history: [],
+      },
+      {
+        ...files[10],
+        content: {
+          hero: {
+            image: '/assets/uploads/2024/09/Picnic-5-1024x768.jpg',
+            title: 'Contact Us',
+            subtitle: 'Ask about membership, meetings, support requests, and club projects.',
+          },
+          form: {
+            title: 'Send a Message',
+            intro: 'Use the club contact path for questions and support requests.',
+          },
+        },
+        history: [],
+      },
+      {
+        ...files[11],
+        content: {
+          events: [
+            { id: 'demo-event', title: 'Demo Service Event', date: '2026-07-01', category: 'Club Event', eventMeta: 'Demo mode only', headerColor: 'blue', facebookUrl: '', photos: [] },
+          ],
+          newsletters: [
+            { id: 'demo-newsletter', title: 'Demo Newsletter', date: '2026-07-01', year: '2026', pdfUrl: '/assets/uploads/2026/01/2026-01-Jan-Kourier-rev1.pdf' },
+          ],
+          speakers: {
+            intro: 'Demo speaker content for board review.',
+            upcoming: [{ id: 'demo-speaker', date: '2026-07-08', name: 'Guest Speaker', organization: 'Community Partner', topic: 'Service in Winchester', title: '', meta: 'Wednesday noon meeting', description: 'Demo mode only.' }],
+            recent: [],
+          },
+        },
+        history: [],
+      },
+      {
+        ...files[12],
+        content: {
           version: 1,
           pages: {
             '/': [
@@ -529,7 +705,7 @@
     state.entries = new Map(entries.map((entry) => [entry.id, entry]));
     state.activeId = files[1].id;
     renderActiveFile();
-    setStatus('Local admin test mode. Changes are UI-only.');
+    setStatus('Admin demo mode. Changes are UI-only and will not create GitHub commits.');
   }
 
   async function loadContent(fileId = '') {
@@ -621,15 +797,35 @@
     }
   }
 
+  async function restoreActiveFile(commitSha) {
+    const entry = activeEntry();
+    if (!entry || !commitSha) return;
+    if (state.drafts.has(entry.id) && !window.confirm('Discard staged changes and restore this file from the selected commit?')) return;
+    if (!window.confirm(`Restore ${entry.label} to commit ${commitSha.slice(0, 7)}? This will create a new restore commit.`)) return;
+
+    try {
+      setStatus(`Restoring ${entry.label} from ${commitSha.slice(0, 7)}...`);
+      await api('/api/admin/restore', {
+        method: 'POST',
+        body: JSON.stringify({ file: entry.id, commitSha }),
+      });
+      state.drafts.delete(entry.id);
+      await loadContent(entry.id);
+      setStatus('Restore published. Cloudflare Pages should rebuild shortly.');
+    } catch (error) {
+      setStatus(error.message, true);
+    }
+  }
+
   function bindEvents() {
     $('#otp-request-form').addEventListener('submit', async (event) => {
       event.preventDefault();
       state.email = $('#admin-email').value.trim().toLowerCase();
       if (IS_TEST_LOGIN) {
-        state.token = 'test-admin';
-        localStorage.setItem(SESSION_KEY, state.token);
-        showApp();
-        await loadContent();
+        state.challenge = 'admin-demo-mode';
+        $('#otp-verify-form').classList.remove('hidden');
+        $('#admin-code').focus();
+        setStatus('Demo mode: enter any fake six-digit code, such as 123456.');
         return;
       }
       try {
@@ -649,6 +845,15 @@
     $('#otp-verify-form').addEventListener('submit', async (event) => {
       event.preventDefault();
       try {
+        if (IS_TEST_LOGIN) {
+          const code = $('#admin-code').value.trim();
+          if (!/^\d{4,6}$/.test(code)) throw new Error('Enter any fake numeric code to continue in demo mode.');
+          state.token = 'test-admin';
+          localStorage.removeItem(SESSION_KEY);
+          showApp();
+          await loadContent();
+          return;
+        }
         const payload = await api('/api/editor/verify-otp', {
           method: 'POST',
           body: JSON.stringify({
@@ -684,6 +889,12 @@
       state.drafts.set(state.activeId, collectActiveFile());
       updateDraftSummary();
       decoratePreview();
+    });
+
+    $('#history-list').addEventListener('click', (event) => {
+      const button = event.target.closest('[data-restore-sha]');
+      if (!button) return;
+      restoreActiveFile(button.dataset.restoreSha);
     });
 
     $('#reload-file').addEventListener('click', async () => {
@@ -740,11 +951,16 @@
     });
   }
 
+  setDemoLoginCopy();
   bindEvents();
   $('#publish-all-btn').disabled = true;
 
+  if (IS_TEST_LOGIN && state.token === 'test-admin') {
+    state.token = '';
+    localStorage.removeItem(SESSION_KEY);
+  }
+
   if (state.token) {
-    if (IS_TEST_LOGIN) state.token = 'test-admin';
     showApp();
     loadContent().catch((error) => {
       localStorage.removeItem(SESSION_KEY);

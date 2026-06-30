@@ -350,13 +350,17 @@
       list.innerHTML = '<p class="hint">No recent saves found yet.</p>';
       return;
     }
+    const canRestore = !(IS_TEST_LOGIN && state.token === 'test');
     list.innerHTML = history.map((commit) => `
       <div class="history-row">
         <div>
           <strong>${escapeHtml(commit.message || 'Content update')}</strong>
           <small>${escapeHtml(commit.date || '')} by ${escapeHtml(commit.author || 'Unknown')}</small>
         </div>
-        ${commit.url ? `<a href="${escapeHtml(commit.url)}" target="_blank" rel="noopener">View</a>` : ''}
+        <div class="history-actions">
+          ${commit.url ? `<a href="${escapeHtml(commit.url)}" target="_blank" rel="noopener">View</a>` : ''}
+          ${canRestore && commit.sha ? `<button type="button" class="history-restore" data-restore-sha="${escapeHtml(commit.sha)}">Restore</button>` : ''}
+        </div>
       </div>
     `).join('');
   }
@@ -375,6 +379,24 @@
     }
     const payload = await api('/api/editor/content');
     renderHistory(payload.history || []);
+  }
+
+  async function restoreContent(commitSha) {
+    if (!commitSha) return;
+    if (state.dirty && !window.confirm('Discard unsaved changes and restore from the selected commit?')) return;
+    if (!window.confirm(`Restore editor content to commit ${commitSha.slice(0, 7)}? This will create a new restore commit.`)) return;
+
+    try {
+      setStatus(`Restoring editor content from ${commitSha.slice(0, 7)}...`);
+      await api('/api/editor/restore', {
+        method: 'POST',
+        body: JSON.stringify({ commitSha }),
+      });
+      await loadContent();
+      setStatus('Restore published. Cloudflare Pages should rebuild shortly.');
+    } catch (error) {
+      setStatus(error.message, true);
+    }
   }
 
   function bindEvents() {
@@ -529,6 +551,12 @@
     });
 
     $('#refresh-history').addEventListener('click', refreshHistory);
+
+    $('#history-list').addEventListener('click', (event) => {
+      const button = event.target.closest('[data-restore-sha]');
+      if (!button) return;
+      restoreContent(button.dataset.restoreSha);
+    });
 
     window.addEventListener('beforeunload', (event) => {
       if (!state.dirty) return;
