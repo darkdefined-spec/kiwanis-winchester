@@ -15,7 +15,6 @@
   const IS_TEST_LOGIN =
     !isLivePublishDemo &&
     (['localhost', '127.0.0.1', '0.0.0.0'].includes(window.location.hostname) ||
-      window.location.hostname.endsWith('.pages.dev') ||
       params.has('editorTest') ||
       params.has('demo'));
 
@@ -450,7 +449,7 @@
           body: JSON.stringify({
             email: state.email,
             code: $('#editor-code').value.trim(),
-            challenge: state.challenge,
+            challenge: state.challenge || (state.email === 'demo@winvakiw.org' ? 'kiwanis-live-demo-challenge' : ''),
           }),
         });
         state.token = payload.token;
