@@ -127,6 +127,24 @@
     return payload;
   }
 
+  function delay(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  async function waitForSiteEditsSha(expectedSha) {
+    if (!expectedSha) return false;
+    for (let attempt = 0; attempt < 8; attempt += 1) {
+      const response = await fetch(`/api/site-edits?path=/&t=${Date.now()}`, {
+        headers: { accept: 'application/json' },
+        cache: 'no-store',
+      });
+      const payload = await response.json().catch(() => ({}));
+      if (payload.sha === expectedSha) return true;
+      await delay(750);
+    }
+    return false;
+  }
+
   function showApp() {
     $('#login-panel').classList.add('hidden');
     $('#admin-app').classList.remove('hidden');
@@ -786,14 +804,18 @@
         const [fileId, content] = staged[index];
         const label = state.entries.get(fileId)?.label || fileId;
         setStatus(`Publishing ${label} (${index + 1} of ${staged.length})...`);
-        await api('/api/admin/save', {
+        const payload = await api('/api/admin/save', {
           method: 'POST',
           body: JSON.stringify({ file: fileId, content }),
         });
+        if (fileId === 'siteEdits' && payload.contentSha) {
+          setStatus('Published. Waiting for the live page editor data to catch up...');
+          await waitForSiteEditsSha(payload.contentSha);
+        }
       }
       state.drafts.clear();
       await loadContent(state.activeId);
-      setStatus('Draft published. Cloudflare Pages should rebuild shortly.');
+      setStatus('Draft published. Refresh the public site to show the latest live content.');
     } catch (error) {
       setStatus(error.message, true);
     } finally {
@@ -813,10 +835,15 @@
       await api('/api/admin/restore', {
         method: 'POST',
         body: JSON.stringify({ file: entry.id, commitSha }),
+      }).then(async (payload) => {
+        if (entry.id === 'siteEdits' && payload.contentSha) {
+          setStatus('Restore committed. Waiting for the live page editor data to catch up...');
+          await waitForSiteEditsSha(payload.contentSha);
+        }
       });
       state.drafts.delete(entry.id);
       await loadContent(entry.id);
-      setStatus('Restore published. Cloudflare Pages should rebuild shortly.');
+      setStatus('Restore published. Refresh the public site to show the restored content.');
     } catch (error) {
       setStatus(error.message, true);
     }

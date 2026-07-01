@@ -11,6 +11,7 @@ export async function onRequestPost({ request, env }) {
     const result = await writeGithubFile(env, CONTENT_PATH, text, message, latest.sha);
     return json({
       ok: true,
+      contentSha: result.content?.sha || '',
       commit: {
         sha: result.commit?.sha || '',
         url: result.commit?.html_url || '',

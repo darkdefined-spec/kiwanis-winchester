@@ -23,6 +23,7 @@ export async function onRequestPost({ request, env }) {
     return json({
       ok: true,
       file,
+      contentSha: result.content?.sha || '',
       commit: {
         sha: result.commit?.sha || '',
         url: result.commit?.html_url || '',

@@ -56,6 +56,24 @@
     return payload;
   }
 
+  function delay(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  async function waitForEditorContentSha(expectedSha) {
+    if (!expectedSha) return false;
+    for (let attempt = 0; attempt < 8; attempt += 1) {
+      const response = await fetch(`/api/editor-content?t=${Date.now()}`, {
+        headers: { accept: 'application/json' },
+        cache: 'no-store',
+      });
+      const payload = await response.json().catch(() => ({}));
+      if (payload.sha === expectedSha) return true;
+      await delay(750);
+    }
+    return false;
+  }
+
   function showApp() {
     $('#login-panel').classList.add('hidden');
     $('#editor-app').classList.remove('hidden');
@@ -396,12 +414,16 @@
 
     try {
       setStatus(`Restoring editor content from ${commitSha.slice(0, 7)}...`);
-      await api('/api/editor/restore', {
+      const payload = await api('/api/editor/restore', {
         method: 'POST',
         body: JSON.stringify({ commitSha }),
       });
+      if (payload.contentSha) {
+        setStatus('Restore committed. Waiting for the live site data to catch up...');
+        await waitForEditorContentSha(payload.contentSha);
+      }
       await loadContent();
-      setStatus('Restore published. Cloudflare Pages should rebuild shortly.');
+      setStatus('Restore published. Refresh the public page to show the restored content.');
     } catch (error) {
       setStatus(error.message, true);
     }
@@ -557,8 +579,12 @@
           method: 'POST',
           body: JSON.stringify({ content }),
         });
+        if (payload.contentSha) {
+          setStatus('Saved to GitHub. Waiting for the live site data to catch up...');
+          await waitForEditorContentSha(payload.contentSha);
+        }
         setDirty(false);
-        setStatus(`Saved. Commit ${payload.commit?.sha?.slice(0, 7) || ''} created. Cloudflare Pages should rebuild shortly.`);
+        setStatus(`Saved. Commit ${payload.commit?.sha?.slice(0, 7) || ''} created. Refresh the public page to show the latest content.`);
         await refreshHistory();
       } catch (error) {
         setStatus(error.message, true);

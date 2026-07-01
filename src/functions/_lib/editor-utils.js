@@ -162,9 +162,12 @@ async function githubFetch(env, pathname, options = {}) {
   const { owner, repo, token } = getGithubConfig(env);
   const response = await fetch(`https://api.github.com/repos/${owner}/${repo}${pathname}`, {
     ...options,
+    cache: 'no-store',
     headers: {
       accept: 'application/vnd.github+json',
       authorization: `Bearer ${token}`,
+      'cache-control': 'no-cache',
+      pragma: 'no-cache',
       'x-github-api-version': '2022-11-28',
       'user-agent': 'kiwanis-editor-portal',
       ...(options.body ? { 'content-type': 'application/json' } : {}),
