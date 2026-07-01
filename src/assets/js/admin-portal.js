@@ -14,7 +14,8 @@
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
   const params = new URLSearchParams(window.location.search);
-  const IS_TEST_LOGIN = params.has('adminTest') || params.has('demo');
+  const IS_LOCAL_HOST = ['localhost', '127.0.0.1', '0.0.0.0'].includes(window.location.hostname);
+  const IS_TEST_LOGIN = IS_LOCAL_HOST && (params.has('adminTest') || params.has('demo'));
 
   function setStatus(message, isError) {
     const authStatus = $('#auth-status');
@@ -319,6 +320,10 @@
     const pagePath = normalizePath(iframe.contentWindow.location.pathname);
     const siteEntries = siteEditEntriesForPath(pagePath);
     const values = allEditableValues();
+    doc.querySelectorAll('[data-admin-wrapped-text="true"]').forEach((wrapper) => {
+      const text = doc.createTextNode(wrapper.textContent || '');
+      wrapper.replaceWith(text);
+    });
     doc.querySelectorAll('.admin-live-editable').forEach((element) => {
       element.classList.remove('admin-live-editable', 'admin-live-selected');
       element.removeAttribute('data-admin-file');
@@ -334,7 +339,7 @@
 
       if (entry.kind === 'text') {
         const node = element.childNodes[Number(entry.nodeIndex)];
-        if (!node || node.nodeType !== Node.TEXT_NODE || node.parentElement?.dataset.adminWrappedText === 'true') return;
+        if (!node || node.nodeType !== Node.TEXT_NODE) return;
         const wrapper = doc.createElement('span');
         wrapper.textContent = node.nodeValue;
         wrapper.dataset.adminWrappedText = 'true';

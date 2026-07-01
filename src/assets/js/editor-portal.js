@@ -12,11 +12,11 @@
   const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
   const params = new URLSearchParams(window.location.search);
   const isLivePublishDemo = params.get('live') === '1';
+  const isLocalHost = ['localhost', '127.0.0.1', '0.0.0.0'].includes(window.location.hostname);
   const IS_TEST_LOGIN =
     !isLivePublishDemo &&
-    (['localhost', '127.0.0.1', '0.0.0.0'].includes(window.location.hostname) ||
-      params.has('editorTest') ||
-      params.has('demo'));
+    isLocalHost &&
+    (params.has('editorTest') || params.has('demo') || window.location.hostname === 'localhost');
 
   function uid(prefix) {
     return `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`;

@@ -97,6 +97,7 @@
 {% set currentSiteEdits = { "version": siteEdits.version, "entries": siteEdits.pages[page.url] or [] } %}
 <script type="application/json" id="site-edits-data">{{ currentSiteEdits | json | safe }}</script>
 <script src="/assets/js/site-edits.js" defer></script>
+<script src="/assets/js/editor-content-live.js" defer></script>
 <script src="/assets/js/kiwanis-assistant.js" defer></script>
 </body>
 </html>

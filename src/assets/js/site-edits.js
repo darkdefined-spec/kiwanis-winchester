@@ -75,6 +75,8 @@
       .then((entries) => {
         liveEntries = entries;
         applyLiveEntries();
+        const params = new URLSearchParams(window.location.search);
+        if (params.has('adminPreview')) return;
         setTimeout(applyLiveEntries, 80);
         setTimeout(applyLiveEntries, 300);
         setTimeout(applyLiveEntries, 1000);

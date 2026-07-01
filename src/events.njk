@@ -35,29 +35,31 @@ navActive: events
         <p style="color:var(--kw-muted); max-width:560px; line-height:1.7;">{{ cms.events.eventsSection.intro | markdownInline | safe }}</p>
       </div>
 
-      {% for event in editorContent.events %}
-      <div class="event-card reveal" style="margin-bottom:24px;">
-        <div class="event-card-header event-card-header--{{ event.headerColor | default('blue') }}">
-          <div>
-            <span class="event-card-eyebrow">{{ event.category }}</span>
-            <h3 class="event-card-title">{{ event.title }}</h3>
-            <p class="event-card-meta">{{ event.eventMeta }}</p>
+      <div data-live-events-list>
+        {% for event in editorContent.events %}
+        <div class="event-card reveal" style="margin-bottom:24px;">
+          <div class="event-card-header event-card-header--{{ event.headerColor | default('blue') }}">
+            <div>
+              <span class="event-card-eyebrow">{{ event.category }}</span>
+              <h3 class="event-card-title">{{ event.title }}</h3>
+              <p class="event-card-meta">{{ event.eventMeta }}</p>
+            </div>
+            {% if event.facebookUrl %}
+            <a href="{{ event.facebookUrl }}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">More on Facebook</a>
+            {% endif %}
           </div>
-          {% if event.facebookUrl %}
-          <a href="{{ event.facebookUrl }}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">More on Facebook</a>
+          {% if event.photos and event.photos.length > 0 %}
+          <div class="event-card-photos event-card-photos--{{ event.photos.length }}">
+            {% for photo in event.photos %}
+            <div class="event-photo">
+              <img src="{{ photo.src }}" alt="{{ photo.alt }}" loading="lazy"{% if photo.objectPosition %} style="object-position:{{ photo.objectPosition }};"{% endif %}>
+            </div>
+            {% endfor %}
+          </div>
           {% endif %}
         </div>
-        {% if event.photos and event.photos.length > 0 %}
-        <div class="event-card-photos event-card-photos--{{ event.photos.length }}">
-          {% for photo in event.photos %}
-          <div class="event-photo">
-            <img src="{{ photo.src }}" alt="{{ photo.alt }}" loading="lazy"{% if photo.objectPosition %} style="object-position:{{ photo.objectPosition }};"{% endif %}>
-          </div>
-          {% endfor %}
-        </div>
-        {% endif %}
+        {% endfor %}
       </div>
-      {% endfor %}
 
       <!-- Facebook CTA -->
       <div class="reveal" style="background:var(--kw-blue-light); border-radius:16px; padding:32px; display:flex; gap:16px; align-items:center; flex-wrap:wrap; justify-content:space-between;">
@@ -84,24 +86,26 @@ navActive: events
         <p style="color:var(--kw-muted); max-width:560px; line-height:1.7;">{{ cms.events.newslettersSection.intro | markdownInline | safe }}</p>
       </div>
 
-      {% for group in editorContent.newsletters | groupNewslettersByYear %}
-      <div class="reveal" style="margin-bottom:40px;">
-        <h3 style="font-size:1.1rem; color:var(--kw-navy); margin-bottom:16px; padding-bottom:10px; border-bottom:2px solid {% if loop.first %}var(--kw-gold){% else %}var(--kw-blue-light){% endif %}; display:inline-block;">{{ group.year }}</h3>
-        <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:10px;">
-          {% for nl in group.items %}
-          <a href="{{ nl.pdfUrl }}" target="_blank" rel="noopener noreferrer" class="nl-card">
-            <div class="nl-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-            </div>
-            <div>
-              <p style="font-family:var(--font-display); font-weight:600; font-size:0.9rem; margin-bottom:2px;">{{ nl.title }}</p>
-              <p style="font-size:0.78rem; color:var(--kw-muted);">PDF · Download</p>
-            </div>
-          </a>
-          {% endfor %}
+      <div data-live-newsletters-list>
+        {% for group in editorContent.newsletters | groupNewslettersByYear %}
+        <div class="reveal" style="margin-bottom:40px;">
+          <h3 style="font-size:1.1rem; color:var(--kw-navy); margin-bottom:16px; padding-bottom:10px; border-bottom:2px solid {% if loop.first %}var(--kw-gold){% else %}var(--kw-blue-light){% endif %}; display:inline-block;">{{ group.year }}</h3>
+          <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:10px;">
+            {% for nl in group.items %}
+            <a href="{{ nl.pdfUrl }}" target="_blank" rel="noopener noreferrer" class="nl-card">
+              <div class="nl-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              </div>
+              <div>
+                <p style="font-family:var(--font-display); font-weight:600; font-size:0.9rem; margin-bottom:2px;">{{ nl.title }}</p>
+                <p style="font-size:0.78rem; color:var(--kw-muted);">PDF · Download</p>
+              </div>
+            </a>
+            {% endfor %}
+          </div>
         </div>
+        {% endfor %}
       </div>
-      {% endfor %}
 
       <!-- Older Archive Notice -->
       <div class="reveal" style="background:white; border-radius:14px; border:1px solid var(--kw-border); padding:24px 28px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
